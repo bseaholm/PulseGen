@@ -3403,7 +3403,7 @@
     </Group>
     <Group key="52f31aa9-2f0a-497d-9a1f-1424095e13e6">
       <Group key="0">
-        <Data key="Port Format" value="3,1" />
+        <Data key="Port Format" value="3,2" />
       </Group>
     </Group>
     <Group key="84feac38-f6b7-4250-ab8f-eb9e8d792e69">
@@ -3426,6 +3426,8 @@
         <Data key="Port Format" value="3,7" />
       </Group>
     </Group>
+    <Group key="UnAssigned Pins" />
+    <Group key="Unlocked Pins" />
   </Group>
   <Group key="PlaceDir">
     <Data key="count" value="0" />

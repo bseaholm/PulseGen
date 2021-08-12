@@ -1,5 +1,5 @@
 -- Project:   PulseGenerator
--- Generated: 08/11/2021 20:17:56
+-- Generated: 08/12/2021 14:35:56
 -- PSoC Creator  4.1 Update 1
 
 ENTITY PulseGenerator IS
@@ -43,9 +43,9 @@ ARCHITECTURE __DEFAULT__ OF PulseGenerator IS
     ATTRIBUTE placement_force OF Net_1437 : SIGNAL IS "U(3,1,A)2";
     SIGNAL Net_1576 : bit;
     ATTRIBUTE placement_force OF Net_1576 : SIGNAL IS "U(2,1,A)0";
-    SIGNAL Net_1579 : bit;
     SIGNAL Net_1619 : bit;
     SIGNAL Net_1629 : bit;
+    SIGNAL Net_1643 : bit;
     SIGNAL Net_82 : bit;
     SIGNAL PulseTrainOut(0)__PA : bit;
     SIGNAL \EnableAndDirection:control_2\ : bit;
@@ -162,7 +162,7 @@ ARCHITECTURE __DEFAULT__ OF PulseGenerator IS
     ATTRIBUTE lib_model OF \USBFS:Dp(0)\ : LABEL IS "iocell3";
     ATTRIBUTE Location OF \USBFS:Dp(0)\ : LABEL IS "P15[6]";
     ATTRIBUTE lib_model OF Enable(0) : LABEL IS "iocell4";
-    ATTRIBUTE Location OF Enable(0) : LABEL IS "P3[1]";
+    ATTRIBUTE Location OF Enable(0) : LABEL IS "P3[2]";
     ATTRIBUTE lib_model OF Direction(0) : LABEL IS "iocell5";
     ATTRIBUTE Location OF Direction(0) : LABEL IS "P0[1]";
     ATTRIBUTE lib_model OF \Timer1:TimerUDB:status_tc\ : LABEL IS "macrocell1";
@@ -1324,7 +1324,7 @@ BEGIN
         GENERIC MAP(
             cy_registers => "")
         PORT MAP(
-            sof_int => Net_1579,
+            sof_int => Net_1643,
             arb_int => \USBFS:Net_1889\,
             usb_int => \USBFS:Net_1876\,
             ept_int_8 => \USBFS:ep_int_8\,
@@ -1392,7 +1392,7 @@ BEGIN
             int_type => "10",
             is_nmi => 0)
         PORT MAP(
-            interrupt => Net_1579,
+            interrupt => Net_1643,
             clock => ClockBlock_BUS_CLK);
 
     \EnableAndDirection:Sync:ctrl_reg\:controlcell

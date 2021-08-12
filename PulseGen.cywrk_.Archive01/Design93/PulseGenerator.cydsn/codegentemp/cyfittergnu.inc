@@ -65,11 +65,11 @@
 .set Direction__SLW, CYREG_PRT0_SLW
 
 /* Enable */
-.set Enable__0__INTTYPE, CYREG_PICU3_INTTYPE1
-.set Enable__0__MASK, 0x02
-.set Enable__0__PC, CYREG_PRT3_PC1
+.set Enable__0__INTTYPE, CYREG_PICU3_INTTYPE2
+.set Enable__0__MASK, 0x04
+.set Enable__0__PC, CYREG_PRT3_PC2
 .set Enable__0__PORT, 3
-.set Enable__0__SHIFT, 1
+.set Enable__0__SHIFT, 2
 .set Enable__AG, CYREG_PRT3_AG
 .set Enable__AMUX, CYREG_PRT3_AMUX
 .set Enable__BIE, CYREG_PRT3_BIE
@@ -84,7 +84,7 @@
 .set Enable__INTTYPE_BASE, CYDEV_PICU_INTTYPE_PICU3_BASE
 .set Enable__LCD_COM_SEG, CYREG_PRT3_LCD_COM_SEG
 .set Enable__LCD_EN, CYREG_PRT3_LCD_EN
-.set Enable__MASK, 0x02
+.set Enable__MASK, 0x04
 .set Enable__PORT, 3
 .set Enable__PRT, CYREG_PRT3_PRT
 .set Enable__PRTDSI__CAPS_SEL, CYREG_PRT3_CAPS_SEL
@@ -95,7 +95,7 @@
 .set Enable__PRTDSI__OUT_SEL1, CYREG_PRT3_OUT_SEL1
 .set Enable__PRTDSI__SYNC_OUT, CYREG_PRT3_SYNC_OUT
 .set Enable__PS, CYREG_PRT3_PS
-.set Enable__SHIFT, 1
+.set Enable__SHIFT, 2
 .set Enable__SLW, CYREG_PRT3_SLW
 .set EnableAndDirection_Sync_ctrl_reg__0__MASK, 0x01
 .set EnableAndDirection_Sync_ctrl_reg__0__POS, 0

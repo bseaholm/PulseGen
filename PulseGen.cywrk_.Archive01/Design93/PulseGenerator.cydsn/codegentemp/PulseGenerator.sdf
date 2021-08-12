@@ -1,6 +1,6 @@
 (DELAYFILE
  (SDFVERSION "IEEE 1497 4.0")
- (DATE "2021-08-12T02:17:57Z")
+ (DATE "2021-08-12T20:35:57Z")
  (DESIGN "PulseGenerator")
  (VENDOR "Cypress Semiconductor")
  (PROGRAM "PSoC Creator")
@@ -60,9 +60,9 @@
     (INTERCONNECT ClockBlock.dclk_0 \\Sync_1\:genblk1\[0\]\:INST\\.in (5.211:5.211:5.211))
     (INTERCONNECT Net_1437.q PulseTrainOut\(0\).pin_input (6.211:6.211:6.211))
     (INTERCONNECT Net_1576.q cydff_1.clk_en (2.328:2.328:2.328))
-    (INTERCONNECT \\USBFS\:USB\\.sof_int \\USBFS\:sof_int\\.interrupt (1.000:1.000:1.000))
     (INTERCONNECT \\EnableAndDirection\:Sync\:ctrl_reg\\.control_1 Direction\(0\).pin_input (7.890:7.890:7.890))
     (INTERCONNECT \\EnableAndDirection\:Sync\:ctrl_reg\\.control_0 Enable\(0\).pin_input (5.277:5.277:5.277))
+    (INTERCONNECT \\USBFS\:USB\\.sof_int \\USBFS\:sof_int\\.interrupt (1.000:1.000:1.000))
     (INTERCONNECT \\TrigPulseTrain\:Sync\:ctrl_reg\\.control_0 \\Timer1\:TimerUDB\:rstSts\:stsreg\\.reset (5.720:5.720:5.720))
     (INTERCONNECT \\TrigPulseTrain\:Sync\:ctrl_reg\\.control_0 \\Timer1\:TimerUDB\:sT32\:timerdp\:u0\\.cs_addr_2 (2.875:2.875:2.875))
     (INTERCONNECT \\TrigPulseTrain\:Sync\:ctrl_reg\\.control_0 \\Timer1\:TimerUDB\:sT32\:timerdp\:u1\\.cs_addr_2 (3.017:3.017:3.017))

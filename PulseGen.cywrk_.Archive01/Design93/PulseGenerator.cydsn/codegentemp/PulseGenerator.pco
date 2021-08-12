@@ -1,5 +1,5 @@
 # PulseGenerator
-# 2021-08-12 02:17:56Z
+# 2021-08-12 20:35:56Z
 
 # IO_0@[IOP=(1)][IoId=(0)] is reserved: SWDDebugEnabled
 dont_use_io iocell 1 0
@@ -12,7 +12,7 @@ set_io "PulseTrainOut(0)" iocell 3 7
 set_io "\USBFS:Dm(0)\" iocell 15 7
 set_location "\USBFS:Dp\" logicalport -1 -1 15
 set_io "\USBFS:Dp(0)\" iocell 15 6
-set_io "Enable(0)" iocell 3 1
+set_io "Enable(0)" iocell 3 2
 set_io "Direction(0)" iocell 0 1
 set_location "\Timer1:TimerUDB:status_tc\" 2 1 0 2
 set_location "Net_1437" 3 1 0 2

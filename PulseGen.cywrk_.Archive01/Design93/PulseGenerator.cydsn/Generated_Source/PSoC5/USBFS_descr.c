@@ -90,24 +90,24 @@ const uint8 CYCODE USBFS_DEVICE0_CONFIGURATION0_DESCR[41u] = {
 /*  Endpoint Descriptor Length             */ 0x07u,
 /*  DescriptorType: ENDPOINT               */ 0x05u,
 /*  bEndpointAddress                       */ 0x81u,
-/*  bmAttributes                           */ 0x02u,
+/*  bmAttributes                           */ 0x03u,
 /*  wMaxPacketSize                         */ 0x40u, 0x00u,
-/*  bInterval                              */ 0x00u,
+/*  bInterval                              */ 0x0Au,
 /*********************************************************************
 * Endpoint Descriptor
 *********************************************************************/
 /*  Endpoint Descriptor Length             */ 0x07u,
 /*  DescriptorType: ENDPOINT               */ 0x05u,
 /*  bEndpointAddress                       */ 0x02u,
-/*  bmAttributes                           */ 0x02u,
+/*  bmAttributes                           */ 0x03u,
 /*  wMaxPacketSize                         */ 0x40u, 0x00u,
-/*  bInterval                              */ 0x00u
+/*  bInterval                              */ 0x0Au
 };
 
 /*********************************************************************
 * String Descriptor Table
 *********************************************************************/
-const uint8 CYCODE USBFS_STRING_DESCRIPTORS[141u] = {
+const uint8 CYCODE USBFS_STRING_DESCRIPTORS[107u] = {
 /*********************************************************************
 * Language ID Descriptor
 *********************************************************************/
@@ -123,32 +123,28 @@ const uint8 CYCODE USBFS_STRING_DESCRIPTORS[141u] = {
  (uint8)'i', 0u,(uint8)'c', 0u,(uint8)' ', 0u,(uint8)'H', 0u,(uint8)'I', 0u,
  (uint8)'D', 0u,
 /*********************************************************************
-* String Descriptor: "Resodyn Acoustic Mixers"
+* String Descriptor: "None"
 *********************************************************************/
-/* Descriptor Length                       */ 0x30u,
+/* Descriptor Length                       */ 0x0Au,
 /* DescriptorType: STRING                  */ 0x03u,
- (uint8)'R', 0u,(uint8)'e', 0u,(uint8)'s', 0u,(uint8)'o', 0u,(uint8)'d', 0u,
- (uint8)'y', 0u,(uint8)'n', 0u,(uint8)' ', 0u,(uint8)'A', 0u,(uint8)'c', 0u,
- (uint8)'o', 0u,(uint8)'u', 0u,(uint8)'s', 0u,(uint8)'t', 0u,(uint8)'i', 0u,
- (uint8)'c', 0u,(uint8)' ', 0u,(uint8)'M', 0u,(uint8)'i', 0u,(uint8)'x', 0u,
- (uint8)'e', 0u,(uint8)'r', 0u,(uint8)'s', 0u,
+ (uint8)'N', 0u,(uint8)'o', 0u,(uint8)'n', 0u,(uint8)'e', 0u,
 /*********************************************************************
-* String Descriptor: "Vacuum Module"
+* String Descriptor: "Stepper Module"
 *********************************************************************/
-/* Descriptor Length                       */ 0x1Cu,
+/* Descriptor Length                       */ 0x1Eu,
 /* DescriptorType: STRING                  */ 0x03u,
- (uint8)'V', 0u,(uint8)'a', 0u,(uint8)'c', 0u,(uint8)'u', 0u,(uint8)'u', 0u,
- (uint8)'m', 0u,(uint8)' ', 0u,(uint8)'M', 0u,(uint8)'o', 0u,(uint8)'d', 0u,
- (uint8)'u', 0u,(uint8)'l', 0u,(uint8)'e', 0u,
+ (uint8)'S', 0u,(uint8)'t', 0u,(uint8)'e', 0u,(uint8)'p', 0u,(uint8)'p', 0u,
+ (uint8)'e', 0u,(uint8)'r', 0u,(uint8)' ', 0u,(uint8)'M', 0u,(uint8)'o', 0u,
+ (uint8)'d', 0u,(uint8)'u', 0u,(uint8)'l', 0u,(uint8)'e', 0u,
 /*********************************************************************
-* String Descriptor: "Vacuum Module HID"
+* String Descriptor: "Stepper Module HID"
 *********************************************************************/
-/* Descriptor Length                       */ 0x24u,
+/* Descriptor Length                       */ 0x26u,
 /* DescriptorType: STRING                  */ 0x03u,
- (uint8)'V', 0u,(uint8)'a', 0u,(uint8)'c', 0u,(uint8)'u', 0u,(uint8)'u', 0u,
- (uint8)'m', 0u,(uint8)' ', 0u,(uint8)'M', 0u,(uint8)'o', 0u,(uint8)'d', 0u,
- (uint8)'u', 0u,(uint8)'l', 0u,(uint8)'e', 0u,(uint8)' ', 0u,(uint8)'H', 0u,
- (uint8)'I', 0u,(uint8)'D', 0u,
+ (uint8)'S', 0u,(uint8)'t', 0u,(uint8)'e', 0u,(uint8)'p', 0u,(uint8)'p', 0u,
+ (uint8)'e', 0u,(uint8)'r', 0u,(uint8)' ', 0u,(uint8)'M', 0u,(uint8)'o', 0u,
+ (uint8)'d', 0u,(uint8)'u', 0u,(uint8)'l', 0u,(uint8)'e', 0u,(uint8)' ', 0u,
+ (uint8)'H', 0u,(uint8)'I', 0u,(uint8)'D', 0u,
 /*********************************************************************/
 /* Marks the end of the list.              */ 0x00u};
 /*********************************************************************/
@@ -246,8 +242,8 @@ const T_USBFS_LUT CYCODE USBFS_DEVICE0_CONFIGURATION0_INTERFACE0_TABLE[1u] = {
 *********************************************************************/
 const T_USBFS_EP_SETTINGS_BLOCK CYCODE USBFS_DEVICE0_CONFIGURATION0_EP_SETTINGS_TABLE[2u] = {
 /* IFC  ALT    EPAddr bmAttr MaxPktSize Class ********************/
-{0x00u, 0x00u, 0x81u, 0x02u, 0x0040u,   0x03u},
-{0x00u, 0x00u, 0x02u, 0x02u, 0x0040u,   0x03u}
+{0x00u, 0x00u, 0x81u, 0x03u, 0x0040u,   0x03u},
+{0x00u, 0x00u, 0x02u, 0x03u, 0x0040u,   0x03u}
 };
 const uint8 CYCODE USBFS_DEVICE0_CONFIGURATION0_INTERFACE_CLASS[1u] = {
 0x03u

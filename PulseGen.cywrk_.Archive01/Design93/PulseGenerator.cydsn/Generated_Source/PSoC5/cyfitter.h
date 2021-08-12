@@ -65,11 +65,11 @@
 #define Direction__SLW CYREG_PRT0_SLW
 
 /* Enable */
-#define Enable__0__INTTYPE CYREG_PICU3_INTTYPE1
-#define Enable__0__MASK 0x02u
-#define Enable__0__PC CYREG_PRT3_PC1
+#define Enable__0__INTTYPE CYREG_PICU3_INTTYPE2
+#define Enable__0__MASK 0x04u
+#define Enable__0__PC CYREG_PRT3_PC2
 #define Enable__0__PORT 3u
-#define Enable__0__SHIFT 1u
+#define Enable__0__SHIFT 2u
 #define Enable__AG CYREG_PRT3_AG
 #define Enable__AMUX CYREG_PRT3_AMUX
 #define Enable__BIE CYREG_PRT3_BIE
@@ -84,7 +84,7 @@
 #define Enable__INTTYPE_BASE CYDEV_PICU_INTTYPE_PICU3_BASE
 #define Enable__LCD_COM_SEG CYREG_PRT3_LCD_COM_SEG
 #define Enable__LCD_EN CYREG_PRT3_LCD_EN
-#define Enable__MASK 0x02u
+#define Enable__MASK 0x04u
 #define Enable__PORT 3u
 #define Enable__PRT CYREG_PRT3_PRT
 #define Enable__PRTDSI__CAPS_SEL CYREG_PRT3_CAPS_SEL
@@ -95,7 +95,7 @@
 #define Enable__PRTDSI__OUT_SEL1 CYREG_PRT3_OUT_SEL1
 #define Enable__PRTDSI__SYNC_OUT CYREG_PRT3_SYNC_OUT
 #define Enable__PS CYREG_PRT3_PS
-#define Enable__SHIFT 1u
+#define Enable__SHIFT 2u
 #define Enable__SLW CYREG_PRT3_SLW
 #define EnableAndDirection_Sync_ctrl_reg__0__MASK 0x01u
 #define EnableAndDirection_Sync_ctrl_reg__0__POS 0

@@ -1,10 +1,4 @@
-C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/CortexM3/ARM_GCC_541/Debug/main.o : C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/AMC_Lib/include/eeprom_amc.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/AMC_Lib/include/usb.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/Clock_1.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/CyDmac.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/CyFlash.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/CyLib.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/CySpc.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/Direction.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/Direction_aliases.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/Enable.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/EnableAndDirection.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/Enable_aliases.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/PulseTrainOut.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/PulseTrainOut_aliases.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/Timer1.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/TrigPulseTrain.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/USBFS.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/USBFS_Dm.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/USBFS_Dm_aliases.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/USBFS_Dp.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/USBFS_Dp_aliases.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/USBFS_audio.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/USBFS_cdc.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/USBFS_cydmac.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/USBFS_hid.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/USBFS_midi.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/USBFS_msc.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/USBFS_pvt.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/core_cm3.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/core_cm3_psoc5.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/core_cmFunc.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/core_cmInstr.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/cyPm.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/cydevice.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/cydevice_trm.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/cydisabledsheets.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/cyfitter.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/cyfitter_cfg.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/cypins.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/cytypes.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/project.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/AMC.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/cyapicallbacks.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/main.c 
-
-C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/AMC_Lib/include/eeprom_amc.h : 
-
-C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/AMC_Lib/include/usb.h : 
-
-C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/Clock_1.h : 
+C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/CortexM3/ARM_GCC_541/Debug/USBFS_descr.o : C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/CyDmac.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/CyFlash.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/CyLib.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/CySpc.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/USBFS.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/USBFS_audio.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/USBFS_cdc.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/USBFS_descr.c C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/USBFS_midi.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/USBFS_msc.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/USBFS_pvt.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/cyPm.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/cydevice.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/cydevice_trm.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/cyfitter.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/cytypes.h C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/cyapicallbacks.h 
 
 C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/CyDmac.h : 
 
@@ -14,41 +8,13 @@ C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGener
 
 C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/CySpc.h : 
 
-C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/Direction.h : 
-
-C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/Direction_aliases.h : 
-
-C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/Enable.h : 
-
-C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/EnableAndDirection.h : 
-
-C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/Enable_aliases.h : 
-
-C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/PulseTrainOut.h : 
-
-C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/PulseTrainOut_aliases.h : 
-
-C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/Timer1.h : 
-
-C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/TrigPulseTrain.h : 
-
 C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/USBFS.h : 
-
-C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/USBFS_Dm.h : 
-
-C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/USBFS_Dm_aliases.h : 
-
-C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/USBFS_Dp.h : 
-
-C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/USBFS_Dp_aliases.h : 
 
 C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/USBFS_audio.h : 
 
 C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/USBFS_cdc.h : 
 
-C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/USBFS_cydmac.h : 
-
-C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/USBFS_hid.h : 
+C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/USBFS_descr.c : 
 
 C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/USBFS_midi.h : 
 
@@ -56,35 +22,15 @@ C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGener
 
 C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/USBFS_pvt.h : 
 
-C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/core_cm3.h : 
-
-C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/core_cm3_psoc5.h : 
-
-C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/core_cmFunc.h : 
-
-C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/core_cmInstr.h : 
-
 C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/cyPm.h : 
 
 C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/cydevice.h : 
 
 C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/cydevice_trm.h : 
 
-C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/cydisabledsheets.h : 
-
 C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/cyfitter.h : 
-
-C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/cyfitter_cfg.h : 
-
-C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/cypins.h : 
 
 C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/cytypes.h : 
 
-C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/Generated_Source/PSoC5/project.h : 
-
-C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/AMC.h : 
-
 C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/cyapicallbacks.h : 
-
-C:/_User/GitHub\ Projects/PulseGen/PulseGen.cywrk_.Archive01/Design93/PulseGenerator.cydsn/main.c : 
 

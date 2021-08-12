@@ -64,7 +64,7 @@ Port Name  Setup to Clk  Clock Name:Phase
 Port Name             Clock to Out  Clock Name:Phase  
 --------------------  ------------  ----------------  
 Direction(0)_PAD      26448         CyBUS_CLK:R       
-Enable(0)_PAD         23013         CyBUS_CLK:R       
+Enable(0)_PAD         23029         CyBUS_CLK:R       
 PulseTrainOut(0)_PAD  31661         CyBUS_CLK:R       
 
 

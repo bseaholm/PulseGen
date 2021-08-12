@@ -30,7 +30,7 @@ set_location "\USBFS:ep_1\" interrupt -1 -1 0
 set_location "\USBFS:ep_2\" interrupt -1 -1 1
 set_location "\USBFS:ep_0\" interrupt -1 -1 24
 set_location "\USBFS:dp_int\" interrupt -1 -1 12
-set_io "Enable(0)" iocell 3 1
+set_io "Enable(0)" iocell 3 2
 set_io "Direction(0)" iocell 0 1
 # Note: port 15 is the logical name for port 8
 set_io "\USBFS:Dm(0)\" iocell 15 7

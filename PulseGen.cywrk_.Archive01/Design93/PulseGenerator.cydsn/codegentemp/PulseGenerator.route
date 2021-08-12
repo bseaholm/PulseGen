@@ -414,13 +414,6 @@ net Net_1437
 	switch ":ioport3:inputs2_mux.pin7__pin_input==>:ioport3:pin7.pin_input"
 	term   ":ioport3:pin7.pin_input"
 end Net_1437
-net Net_1579
-	term   ":usbcell.sof_int"
-	switch ":usbcell.sof_int==>Stub-:dsiswitch_top@[DSI=(0,2)][side=top]:dsihc_top:v4+:dsiswitch_top@[DSI=(0,2)][side=top]:dsihc_top:v6"
-	switch "Stub-:dsiswitch_top@[DSI=(0,2)][side=top]:dsihc_top:v4+:dsiswitch_top@[DSI=(0,2)][side=top]:dsihc_top:v6==>:interrupt_idmux_21.in_0"
-	switch ":interrupt_idmux_21.interrupt_idmux_21__out==>:interrupt_21.interrupt"
-	term   ":interrupt_21.interrupt"
-end Net_1579
 net Net_1619
 	term   ":udb@[UDB=(3,0)]:controlcell.control_1"
 	switch ":udb@[UDB=(3,0)]:controlcell.control_1==>:udb@[UDB=(3,0)]:controlcell_control_1_permute.in_0"
@@ -452,9 +445,16 @@ net Net_1629
 	switch ":dsiswitch_bottom@[DSI=(1,0)][side=bottom]:dsihc_bottom:89,94_f"
 	switch "IStub-:dsiswitch_bottom@[DSI=(1,0)][side=bottom]:dsihc_bottom:v87+:dsiswitch_bottom@[DSI=(1,0)][side=bottom]:dsihc_bottom:v89+:dsiswitch_bottom@[DSI=(1,0)][side=bottom]:dsihc_bottom:v91"
 	switch "Stub-:dsiswitch_bottom@[DSI=(1,0)][side=bottom]:dsihc_bottom:v87+:dsiswitch_bottom@[DSI=(1,0)][side=bottom]:dsihc_bottom:v89+:dsiswitch_bottom@[DSI=(1,0)][side=bottom]:dsihc_bottom:v91==>:ioport3:inputs1_mux.in_3"
-	switch ":ioport3:inputs1_mux.pin1__pin_input==>:ioport3:pin1.pin_input"
-	term   ":ioport3:pin1.pin_input"
+	switch ":ioport3:inputs1_mux.pin2__pin_input==>:ioport3:pin2.pin_input"
+	term   ":ioport3:pin2.pin_input"
 end Net_1629
+net Net_1643
+	term   ":usbcell.sof_int"
+	switch ":usbcell.sof_int==>Stub-:dsiswitch_top@[DSI=(0,2)][side=top]:dsihc_top:v4+:dsiswitch_top@[DSI=(0,2)][side=top]:dsihc_top:v6"
+	switch "Stub-:dsiswitch_top@[DSI=(0,2)][side=top]:dsihc_top:v4+:dsiswitch_top@[DSI=(0,2)][side=top]:dsihc_top:v6==>:interrupt_idmux_21.in_0"
+	switch ":interrupt_idmux_21.interrupt_idmux_21__out==>:interrupt_21.interrupt"
+	term   ":interrupt_21.interrupt"
+end Net_1643
 net \Timer1:TimerUDB:sT32:timerdp:u1.ce0__sig\
 	term   ":udb@[UDB=(3,0)]:dp_wrapper:datapath.ce0"
 	switch ":udb@[UDB=(3,0)]:dp_wrapper:datapath.ce0==>:udb@[UDB=(3,1)]:dp_wrapper:datapath.ce0i"

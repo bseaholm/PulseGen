@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 1
 
 
    1              		.syntax unified
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
   29:Generated_Source\PSoC5/CyFlash.c **** * Holds the die temperature, updated by CySetTemp(). Used for flash writing.
   30:Generated_Source\PSoC5/CyFlash.c **** * The first byte is the sign of the temperature (0 = negative, 1 = positive).
   31:Generated_Source\PSoC5/CyFlash.c **** * The second byte is the magnitude.
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 2
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 2
 
 
   32:Generated_Source\PSoC5/CyFlash.c **** *******************************************************************************/
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
   86:Generated_Source\PSoC5/CyFlash.c ****     /***************************************************************************
   87:Generated_Source\PSoC5/CyFlash.c ****     * Enable flash. Active flash macros consume current, but re-enabling a
   88:Generated_Source\PSoC5/CyFlash.c ****     * disabled flash macro takes 5us. If the CPU attempts to fetch out of the
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 3
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 3
 
 
   89:Generated_Source\PSoC5/CyFlash.c ****     * macro during that time, it will be stalled. This bit allows the flash to
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  143:Generated_Source\PSoC5/CyFlash.c **** *  executing a series of Flash writing functions.
  144:Generated_Source\PSoC5/CyFlash.c **** *
  145:Generated_Source\PSoC5/CyFlash.c **** * Parameters:
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 4
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 4
 
 
  146:Generated_Source\PSoC5/CyFlash.c **** *  None
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  200:Generated_Source\PSoC5/CyFlash.c **** ********************************************************************************
  201:Generated_Source\PSoC5/CyFlash.c **** *
  202:Generated_Source\PSoC5/CyFlash.c **** * Summary:
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 5
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 5
 
 
  203:Generated_Source\PSoC5/CyFlash.c **** *  Sends a command to the SPC to download code into RAM.
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  231:Generated_Source\PSoC5/CyFlash.c ****                 CyDelayUs(1u);
   53              		.loc 1 231 0
   54 0018 0120     		movs	r0, #1
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 6
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 6
 
 
   55 001a FFF7FEFF 		bl	CyDelayUs
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
   92              		.align	2
   93              	.L9:
   94 0048 22470040 		.word	1073760034
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 7
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 7
 
 
   95              		.cfi_endproc
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  142 002a 0C4B     		ldr	r3, .L22+4
  143 002c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
  144 002e 13F0020F 		tst	r3, #2
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 8
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 8
 
 
  145 0032 F7D0     		beq	.L16
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  192              		.loc 1 59 0
  193              		.cfi_startproc
  194              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 9
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 9
 
 
  195              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  241 0048 01470040 		.word	1073760001
  242 004c AC430040 		.word	1073759148
  243 0050 00470040 		.word	1073760000
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 10
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 10
 
 
  244              		.cfi_endproc
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  293              	CySetTemp:
  294              	.LFB4:
  248:Generated_Source\PSoC5/CyFlash.c **** 
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 11
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 11
 
 
  249:Generated_Source\PSoC5/CyFlash.c **** 
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  283:Generated_Source\PSoC5/CyFlash.c **** }
  315              		.loc 1 283 0
  316 0010 1846     		mov	r0, r3
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 12
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 12
 
 
  317 0012 08BD     		pop	{r3, pc}
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  312:Generated_Source\PSoC5/CyFlash.c ****     #if(CYDEV_ECC_ENABLE == 0)
  313:Generated_Source\PSoC5/CyFlash.c **** 
  314:Generated_Source\PSoC5/CyFlash.c ****         if(NULL == buffer)
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 13
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 13
 
 
  343              		.loc 1 314 0
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  370              		.section	.text.CyWriteRowFull,"ax",%progbits
  371              		.align	2
  372              		.global	CyWriteRowFull
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 14
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 14
 
 
  373              		.thumb
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  388:Generated_Source\PSoC5/CyFlash.c ****     *
  389:Generated_Source\PSoC5/CyFlash.c ****     * Summary:
  390:Generated_Source\PSoC5/CyFlash.c ****     *  Sends a command to the SPC to load and program a row of config data in the
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 15
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 15
 
 
  391:Generated_Source\PSoC5/CyFlash.c ****     *  Flash. This function is only valid for Flash array IDs (not for EEPROM).
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  445:Generated_Source\PSoC5/CyFlash.c **** {
  378              		.loc 1 445 0
  379              		.cfi_startproc
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 16
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 16
 
 
  380              		@ args = 0, pretend = 0, frame = 0
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  418              	.L44:
  461:Generated_Source\PSoC5/CyFlash.c ****     }
  462:Generated_Source\PSoC5/CyFlash.c **** 
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 17
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 17
 
 
  463:Generated_Source\PSoC5/CyFlash.c ****     if(arrayId <=  CY_SPC_LAST_FLASH_ARRAYID)
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  449              		.loc 1 485 0
  450 003e 02B9     		cbnz	r2, .L48
  486:Generated_Source\PSoC5/CyFlash.c ****     {
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 18
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 18
 
 
  487:Generated_Source\PSoC5/CyFlash.c ****         status = CYRET_BAD_PARAM;
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  487              		.loc 1 500 0
  488 0070 1F4B     		ldr	r3, .L68
  489 0072 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 19
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 19
 
 
  490 0074 13F0020F 		tst	r3, #2
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  520:Generated_Source\PSoC5/CyFlash.c **** 
  521:Generated_Source\PSoC5/CyFlash.c ****                     if(CYRET_STARTED == status)
  527              		.loc 1 521 0
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 20
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 20
 
 
  528 00aa 0728     		cmp	r0, #7
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  540:Generated_Source\PSoC5/CyFlash.c ****             }
  541:Generated_Source\PSoC5/CyFlash.c ****             CySpcUnlock();
  562              		.loc 1 541 0
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 21
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 21
 
 
  563 00de FFF7FEFF 		bl	CySpcUnlock
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  606 0008 01E0     		b	.L71
  607              	.L72:
  608 000a 4FF48073 		mov	r3, #256
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 22
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 22
 
 
  609              	.L71:
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  573:Generated_Source\PSoC5/CyFlash.c ****     uint8 interruptState;
  574:Generated_Source\PSoC5/CyFlash.c **** 
  575:Generated_Source\PSoC5/CyFlash.c ****     /* Save current global interrupt enable and disable it */
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 23
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 23
 
 
  576:Generated_Source\PSoC5/CyFlash.c ****     interruptState = CyEnterCriticalSection();
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  672 003a 03F01F03 		and	r3, r3, #31
  673 003e 43F0C003 		orr	r3, r3, #192
  674 0042 1370     		strb	r3, [r2]
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 24
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 24
 
 
  675 0044 14E0     		b	.L76
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  707 0076 38BD     		pop	{r3, r4, r5, pc}
  708              	.LVL72:
  709              	.L83:
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 25
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 25
 
 
  710              		.align	2
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  735              		.loc 1 647 0
  736 0006 0F4A     		ldr	r2, .L87
  737 0008 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 26
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 26
 
 
  738 000a 43F00803 		orr	r3, r3, #8
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  675:Generated_Source\PSoC5/CyFlash.c **** 
  676:Generated_Source\PSoC5/CyFlash.c ****     CyExitCriticalSection(interruptState);
  765              		.loc 1 676 0
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 27
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 27
 
 
  766 003e FFF7FEFF 		bl	CyExitCriticalSection
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  699:Generated_Source\PSoC5/CyFlash.c **** 
  700:Generated_Source\PSoC5/CyFlash.c ****     CY_FLASH_PM_ACT_CFG12_REG    &= ((uint8)(~CY_FLASH_PM_ACT_CFG12_EN_EE));
  798              		.loc 1 700 0
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 28
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 28
 
 
  799 0006 064A     		ldr	r2, .L91
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  831              		@ link register save eliminated.
  723:Generated_Source\PSoC5/CyFlash.c ****     /* Make request for PHUB to have access */
  724:Generated_Source\PSoC5/CyFlash.c ****     CY_FLASH_EE_SCR_REG |= CY_FLASH_EE_SCR_AHB_EE_REQ;
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 29
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 29
 
 
  832              		.loc 1 724 0
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  862              		@ args = 0, pretend = 0, frame = 0
  863              		@ frame_needed = 0, uses_anonymous_args = 0
  864              		@ link register save eliminated.
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 30
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 30
 
 
  749:Generated_Source\PSoC5/CyFlash.c ****     CY_FLASH_EE_SCR_REG &= (uint8)(~CY_FLASH_EE_SCR_AHB_EE_REQ);
@@ -1798,7 +1798,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  918 0048 02       		.uleb128 0x2
  919 0049 04       		.byte	0x4
  920 004a 07       		.byte	0x7
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 31
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 31
 
 
  921 004b 8E010000 		.4byte	.LASF5
@@ -1858,7 +1858,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  975 00b6 72030000 		.4byte	.LASF16
  976 00ba 02       		.uleb128 0x2
  977 00bb 04       		.byte	0x4
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 32
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 32
 
 
  978 00bc 07       		.byte	0x7
@@ -1918,7 +1918,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  1032 0140 9D       		.byte	0x9d
  1033 0141 96000000 		.4byte	0x96
  1034 0145 34000000 		.4byte	.LLST1
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 33
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 33
 
 
  1035 0149 09       		.uleb128 0x9
@@ -1978,7 +1978,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  1089 01b8 DE010000 		.4byte	0x1de
  1090 01bc 08       		.uleb128 0x8
  1091 01bd 7F010000 		.4byte	.LASF21
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 34
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 34
 
 
  1092 01c1 01       		.byte	0x1
@@ -2038,7 +2038,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  1146 024d 21010000 		.4byte	0x121
  1147 0251 00       		.byte	0
  1148 0252 0D       		.uleb128 0xd
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 35
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 35
 
 
  1149 0253 BB000000 		.4byte	.LASF25
@@ -2098,7 +2098,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  1203 02e0 76000000 		.4byte	0x76
  1204 02e4 19010000 		.4byte	.LLST8
  1205 02e8 0F       		.uleb128 0xf
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 36
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 36
 
 
  1206 02e9 68010000 		.4byte	.LASF30
@@ -2158,7 +2158,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  1260 0355 01       		.uleb128 0x1
  1261 0356 50       		.byte	0x50
  1262 0357 01       		.uleb128 0x1
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 37
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 37
 
 
  1263 0358 31       		.byte	0x31
@@ -2218,7 +2218,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  1317 03c6 0F       		.uleb128 0xf
  1318 03c7 ED020000 		.4byte	.LASF33
  1319 03cb 01       		.byte	0x1
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 38
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 38
 
 
  1320 03cc 6E01     		.2byte	0x16e
@@ -2278,7 +2278,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  1374 045a 0B       		.uleb128 0xb
  1375 045b 01       		.uleb128 0x1
  1376 045c 50       		.byte	0x50
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 39
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 39
 
 
  1377 045d 01       		.uleb128 0x1
@@ -2338,7 +2338,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  1431 04d9 09       		.uleb128 0x9
  1432 04da 1E000000 		.4byte	.LVL76
  1433 04de 8B050000 		.4byte	0x58b
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 40
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 40
 
 
  1434 04e2 00       		.byte	0
@@ -2398,7 +2398,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  1488 0559 B3020000 		.4byte	.LASF43
  1489 055d 04       		.byte	0x4
  1490 055e 78       		.byte	0x78
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 41
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 41
 
 
  1491 055f 1A       		.uleb128 0x1a
@@ -2458,7 +2458,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  1545 000b 55       		.uleb128 0x55
  1546 000c 17       		.uleb128 0x17
  1547 000d 11       		.uleb128 0x11
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 42
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 42
 
 
  1548 000e 01       		.uleb128 0x1
@@ -2518,7 +2518,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  1602 0044 35       		.uleb128 0x35
  1603 0045 00       		.byte	0
  1604 0046 49       		.uleb128 0x49
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 43
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 43
 
 
  1605 0047 13       		.uleb128 0x13
@@ -2578,7 +2578,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  1659 0082 01       		.byte	0x1
  1660 0083 11       		.uleb128 0x11
  1661 0084 01       		.uleb128 0x1
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 44
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 44
 
 
  1662 0085 31       		.uleb128 0x31
@@ -2638,7 +2638,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  1716 00bf 13       		.uleb128 0x13
  1717 00c0 11       		.uleb128 0x11
  1718 00c1 01       		.uleb128 0x1
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 45
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 45
 
 
  1719 00c2 12       		.uleb128 0x12
@@ -2698,7 +2698,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  1773 00f9 00       		.byte	0
  1774 00fa 00       		.byte	0
  1775 00fb 12       		.uleb128 0x12
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 46
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 46
 
 
  1776 00fc 34       		.uleb128 0x34
@@ -2758,7 +2758,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  1830 0135 0E       		.uleb128 0xe
  1831 0136 3A       		.uleb128 0x3a
  1832 0137 0B       		.uleb128 0xb
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 47
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 47
 
 
  1833 0138 3B       		.uleb128 0x3b
@@ -2818,7 +2818,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  1887 016f 49       		.uleb128 0x49
  1888 0170 13       		.uleb128 0x13
  1889 0171 3F       		.uleb128 0x3f
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 48
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 48
 
 
  1890 0172 19       		.uleb128 0x19
@@ -2878,7 +2878,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  1944 004b 54       		.byte	0x54
  1945 004c 52000000 		.4byte	.LVL18
  1946 0050 54000000 		.4byte	.LVL19
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 49
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 49
 
 
  1947 0054 0300     		.2byte	0x3
@@ -2938,7 +2938,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  2001 00e3 30       		.byte	0x30
  2002 00e4 9F       		.byte	0x9f
  2003 00e5 1E000000 		.4byte	.LVL35
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 50
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 50
 
 
  2004 00e9 20000000 		.4byte	.LFE5
@@ -2998,7 +2998,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  2058 016d F8000000 		.4byte	.LFE7
  2059 0171 0400     		.2byte	0x4
  2060 0173 F3       		.byte	0xf3
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 51
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 51
 
 
  2061 0174 01       		.uleb128 0x1
@@ -3058,7 +3058,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  2115 01fd E6000000 		.4byte	.LVL61
  2116 0201 0100     		.2byte	0x1
  2117 0203 56       		.byte	0x56
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 52
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 52
 
 
  2118 0204 E6000000 		.4byte	.LVL61
@@ -3118,7 +3118,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  2172 0289 11000000 		.4byte	.LVL66-1
  2173 028d 0100     		.2byte	0x1
  2174 028f 53       		.byte	0x53
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 53
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 53
 
 
  2175 0290 00000000 		.4byte	0
@@ -3178,7 +3178,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  2229 0034 14000000 		.4byte	.LFE4-.LFB4
  2230 0038 00000000 		.4byte	.LFB5
  2231 003c 20000000 		.4byte	.LFE5-.LFB5
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 54
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 54
 
 
  2232 0040 00000000 		.4byte	.LFB7
@@ -3238,7 +3238,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  2282 0000 63797374 		.ascii	"cystatus\000"
  2282      61747573 
  2282      00
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 55
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 55
 
 
  2283              	.LASF15:
@@ -3298,7 +3298,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  2306      7369676E 
  2306      65642069 
  2307              	.LASF25:
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 56
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 56
 
 
  2308 00bb 43795365 		.ascii	"CySetFlashEEBuffer\000"
@@ -3358,7 +3358,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  2328      726500
  2329              	.LASF1:
  2330 01bd 756E7369 		.ascii	"unsigned char\000"
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 57
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 57
 
 
  2330      676E6564 
@@ -3418,7 +3418,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  2354 025f 4379466C 		.ascii	"CyFlashGetSpcAlgorithm\000"
  2354      61736847 
  2354      65745370 
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 58
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 58
 
 
  2354      63416C67 
@@ -3478,7 +3478,7 @@ ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 1
  2380      55736572 
  2380      5C476974 
  2380      48756220 
-ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccUcLSqC.s 			page 59
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccrMV8VA.s 			page 59
 
 
  2380      50726F6A 

@@ -11364,11 +11364,11 @@ ARM GAS  Generated_Source\PSoC5\CyBootAsmGnu.s 			page 1
   65              	.set Direction__SLW, CYREG_PRT0_SLW
   66              	
   67              	/* Enable */
-  68              	.set Enable__0__INTTYPE, CYREG_PICU3_INTTYPE1
-  69              	.set Enable__0__MASK, 0x02
-  70              	.set Enable__0__PC, CYREG_PRT3_PC1
+  68              	.set Enable__0__INTTYPE, CYREG_PICU3_INTTYPE2
+  69              	.set Enable__0__MASK, 0x04
+  70              	.set Enable__0__PC, CYREG_PRT3_PC2
   71              	.set Enable__0__PORT, 3
-  72              	.set Enable__0__SHIFT, 1
+  72              	.set Enable__0__SHIFT, 2
   73              	.set Enable__AG, CYREG_PRT3_AG
   74              	.set Enable__AMUX, CYREG_PRT3_AMUX
   75              	.set Enable__BIE, CYREG_PRT3_BIE
@@ -11383,7 +11383,7 @@ ARM GAS  Generated_Source\PSoC5\CyBootAsmGnu.s 			page 1
   84              	.set Enable__INTTYPE_BASE, CYDEV_PICU_INTTYPE_PICU3_BASE
   85              	.set Enable__LCD_COM_SEG, CYREG_PRT3_LCD_COM_SEG
   86              	.set Enable__LCD_EN, CYREG_PRT3_LCD_EN
-  87              	.set Enable__MASK, 0x02
+  87              	.set Enable__MASK, 0x04
   88              	.set Enable__PORT, 3
   89              	.set Enable__PRT, CYREG_PRT3_PRT
   90              	.set Enable__PRTDSI__CAPS_SEL, CYREG_PRT3_CAPS_SEL
@@ -11394,7 +11394,7 @@ ARM GAS  Generated_Source\PSoC5\CyBootAsmGnu.s 			page 1
   95              	.set Enable__PRTDSI__OUT_SEL1, CYREG_PRT3_OUT_SEL1
   96              	.set Enable__PRTDSI__SYNC_OUT, CYREG_PRT3_SYNC_OUT
   97              	.set Enable__PS, CYREG_PRT3_PS
-  98              	.set Enable__SHIFT, 1
+  98              	.set Enable__SHIFT, 2
   99              	.set Enable__SLW, CYREG_PRT3_SLW
  100              	.set EnableAndDirection_Sync_ctrl_reg__0__MASK, 0x01
  101              	.set EnableAndDirection_Sync_ctrl_reg__0__POS, 0

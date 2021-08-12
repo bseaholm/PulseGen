@@ -2,7 +2,7 @@
 --	Conversion of PulseGenerator.v to vh2:
 --
 --	Cypress Semiconductor - WARP Version 6.3 IR 41
---	Wed Aug 11 20:17:55 2021
+--	Thu Aug 12 14:35:55 2021
 --
 
 USE cypress.cypress.all;
@@ -409,7 +409,7 @@ SIGNAL \USBFS:tmpFB_0__Dp_net_0\ : bit;
 TERMINAL \USBFS:Net_1000\ : bit;
 SIGNAL \USBFS:tmpIO_0__Dp_net_0\ : bit;
 TERMINAL \USBFS:tmpSIOVREF__Dp_net_0\ : bit;
-SIGNAL Net_1579 : bit;
+SIGNAL Net_1643 : bit;
 SIGNAL \USBFS:Net_1889\ : bit;
 SIGNAL \USBFS:Net_1876\ : bit;
 SIGNAL \USBFS:ep_int_8\ : bit;
@@ -1122,7 +1122,7 @@ PulseTrainOut:cy_psoc3_pins_v1_10
 	GENERIC MAP(cy_registers=>"")
 	PORT MAP(dp=>\USBFS:Net_1000\,
 		dm=>\USBFS:Net_597\,
-		sof_int=>Net_1579,
+		sof_int=>Net_1643,
 		arb_int=>\USBFS:Net_1889\,
 		usb_int=>\USBFS:Net_1876\,
 		ept_int=>(\USBFS:ep_int_8\, \USBFS:ep_int_7\, \USBFS:ep_int_6\, \USBFS:ep_int_5\,
@@ -1155,7 +1155,7 @@ PulseTrainOut:cy_psoc3_pins_v1_10
 \USBFS:sof_int\:cy_isr_v1_0
 	GENERIC MAP(int_type=>"10",
 		is_nmi=>'0')
-	PORT MAP(int_signal=>Net_1579);
+	PORT MAP(int_signal=>Net_1643);
 Enable:cy_psoc3_pins_v1_10
 	GENERIC MAP(id=>"52f31aa9-2f0a-497d-9a1f-1424095e13e6",
 		drive_mode=>"110",
