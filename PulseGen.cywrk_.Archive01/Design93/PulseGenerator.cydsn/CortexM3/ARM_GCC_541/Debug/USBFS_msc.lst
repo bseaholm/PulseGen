@@ -1,0 +1,1239 @@
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\cci369Lb.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"USBFS_msc.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.USBFS_DispatchMSCClassRqst,"ax",%progbits
+  20              		.align	2
+  21              		.global	USBFS_DispatchMSCClassRqst
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	USBFS_DispatchMSCClassRqst, %function
+  25              	USBFS_DispatchMSCClassRqst:
+  26              	.LFB0:
+  27              		.file 1 "Generated_Source\\PSoC5\\USBFS_msc.c"
+   1:Generated_Source\PSoC5/USBFS_msc.c **** /***************************************************************************//**
+   2:Generated_Source\PSoC5/USBFS_msc.c **** * \file USBFS_cdc.c
+   3:Generated_Source\PSoC5/USBFS_msc.c **** * \version 3.10
+   4:Generated_Source\PSoC5/USBFS_msc.c **** *
+   5:Generated_Source\PSoC5/USBFS_msc.c **** * \brief
+   6:Generated_Source\PSoC5/USBFS_msc.c **** *  This file contains the USB MSC Class request handler and global API for MSC 
+   7:Generated_Source\PSoC5/USBFS_msc.c **** *  class.
+   8:Generated_Source\PSoC5/USBFS_msc.c **** *
+   9:Generated_Source\PSoC5/USBFS_msc.c **** * Related Document:
+  10:Generated_Source\PSoC5/USBFS_msc.c **** *  Universal Serial Bus Class Definitions for Communication Devices Version 1.1
+  11:Generated_Source\PSoC5/USBFS_msc.c **** *
+  12:Generated_Source\PSoC5/USBFS_msc.c **** ********************************************************************************
+  13:Generated_Source\PSoC5/USBFS_msc.c **** * \copyright
+  14:Generated_Source\PSoC5/USBFS_msc.c **** * Copyright 2012-2016, Cypress Semiconductor Corporation.  All rights reserved.
+  15:Generated_Source\PSoC5/USBFS_msc.c **** * You may use this file only in accordance with the license, terms, conditions,
+  16:Generated_Source\PSoC5/USBFS_msc.c **** * disclaimers, and limitations in the end user license agreement accompanying
+  17:Generated_Source\PSoC5/USBFS_msc.c **** * the software package with which this file was provided.
+  18:Generated_Source\PSoC5/USBFS_msc.c **** *******************************************************************************/
+  19:Generated_Source\PSoC5/USBFS_msc.c **** 
+  20:Generated_Source\PSoC5/USBFS_msc.c **** #include "USBFS_msc.h"
+  21:Generated_Source\PSoC5/USBFS_msc.c **** #include "USBFS_pvt.h"
+  22:Generated_Source\PSoC5/USBFS_msc.c **** #include "cyapicallbacks.h"
+  23:Generated_Source\PSoC5/USBFS_msc.c **** 
+  24:Generated_Source\PSoC5/USBFS_msc.c **** #if (USBFS_HANDLE_MSC_REQUESTS)
+  25:Generated_Source\PSoC5/USBFS_msc.c **** 
+  26:Generated_Source\PSoC5/USBFS_msc.c **** /***************************************
+  27:Generated_Source\PSoC5/USBFS_msc.c **** *          Internal variables
+  28:Generated_Source\PSoC5/USBFS_msc.c **** ***************************************/
+  29:Generated_Source\PSoC5/USBFS_msc.c **** 
+  30:Generated_Source\PSoC5/USBFS_msc.c **** static uint8 USBFS_lunCount = USBFS_MSC_LUN_NUMBER;
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\cci369Lb.s 			page 2
+
+
+  31:Generated_Source\PSoC5/USBFS_msc.c **** 
+  32:Generated_Source\PSoC5/USBFS_msc.c **** 
+  33:Generated_Source\PSoC5/USBFS_msc.c **** /*******************************************************************************
+  34:Generated_Source\PSoC5/USBFS_msc.c **** * Function Name: USBFS_DispatchMSCClassRqst
+  35:Generated_Source\PSoC5/USBFS_msc.c **** ****************************************************************************//**
+  36:Generated_Source\PSoC5/USBFS_msc.c **** *   
+  37:Generated_Source\PSoC5/USBFS_msc.c **** *  \internal 
+  38:Generated_Source\PSoC5/USBFS_msc.c **** *  This routine dispatches MSC class requests.
+  39:Generated_Source\PSoC5/USBFS_msc.c **** *
+  40:Generated_Source\PSoC5/USBFS_msc.c **** * \return
+  41:Generated_Source\PSoC5/USBFS_msc.c **** *  Status of request processing: handled or not handled.
+  42:Generated_Source\PSoC5/USBFS_msc.c **** *
+  43:Generated_Source\PSoC5/USBFS_msc.c **** * \globalvars
+  44:Generated_Source\PSoC5/USBFS_msc.c **** *  USBFS_lunCount - stores number of LUN (logical units).
+  45:Generated_Source\PSoC5/USBFS_msc.c **** *
+  46:Generated_Source\PSoC5/USBFS_msc.c **** * \reentrant
+  47:Generated_Source\PSoC5/USBFS_msc.c **** *  No.
+  48:Generated_Source\PSoC5/USBFS_msc.c **** *
+  49:Generated_Source\PSoC5/USBFS_msc.c **** *******************************************************************************/
+  50:Generated_Source\PSoC5/USBFS_msc.c **** uint8 USBFS_DispatchMSCClassRqst(void) 
+  51:Generated_Source\PSoC5/USBFS_msc.c **** {
+  28              		.loc 1 51 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 08B5     		push	{r3, lr}
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 3, -8
+  35              		.cfi_offset 14, -4
+  36              	.LVL0:
+  52:Generated_Source\PSoC5/USBFS_msc.c ****     uint8 requestHandled = USBFS_FALSE;
+  53:Generated_Source\PSoC5/USBFS_msc.c ****     
+  54:Generated_Source\PSoC5/USBFS_msc.c ****     /* Get request data. */
+  55:Generated_Source\PSoC5/USBFS_msc.c ****     uint16 value  = USBFS_GET_UINT16(USBFS_wValueHiReg,  USBFS_wValueLoReg);
+  37              		.loc 1 55 0
+  38 0002 1A4B     		ldr	r3, .L11
+  39 0004 D978     		ldrb	r1, [r3, #3]	@ zero_extendqisi2
+  40 0006 9A78     		ldrb	r2, [r3, #2]	@ zero_extendqisi2
+  41 0008 42EA0122 		orr	r2, r2, r1, lsl #8
+  42              	.LVL1:
+  56:Generated_Source\PSoC5/USBFS_msc.c ****     uint16 dataLength = USBFS_GET_UINT16(USBFS_wLengthHiReg, USBFS_wLengthLoReg);
+  43              		.loc 1 56 0
+  44 000c D879     		ldrb	r0, [r3, #7]	@ zero_extendqisi2
+  45 000e 9979     		ldrb	r1, [r3, #6]	@ zero_extendqisi2
+  46 0010 41EA0021 		orr	r1, r1, r0, lsl #8
+  47              	.LVL2:
+  57:Generated_Source\PSoC5/USBFS_msc.c ****        
+  58:Generated_Source\PSoC5/USBFS_msc.c ****     /* Check request direction: D2H or H2D. */
+  59:Generated_Source\PSoC5/USBFS_msc.c ****     if (0u != (USBFS_bmRequestTypeReg & USBFS_RQST_DIR_D2H))
+  48              		.loc 1 59 0
+  49 0014 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  50 0016 13F0800F 		tst	r3, #128
+  51 001a 0FD0     		beq	.L2
+  60:Generated_Source\PSoC5/USBFS_msc.c ****     {
+  61:Generated_Source\PSoC5/USBFS_msc.c ****         /* Handle direction from device to host. */
+  62:Generated_Source\PSoC5/USBFS_msc.c ****         
+  63:Generated_Source\PSoC5/USBFS_msc.c ****         if (USBFS_MSC_GET_MAX_LUN == USBFS_bRequestReg)
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\cci369Lb.s 			page 3
+
+
+  52              		.loc 1 63 0
+  53 001c 134B     		ldr	r3, .L11
+  54 001e 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+  55 0020 DBB2     		uxtb	r3, r3
+  56 0022 FE2B     		cmp	r3, #254
+  57 0024 16D1     		bne	.L4
+  64:Generated_Source\PSoC5/USBFS_msc.c ****         {
+  65:Generated_Source\PSoC5/USBFS_msc.c ****             /* Check request fields. */
+  66:Generated_Source\PSoC5/USBFS_msc.c ****             if ((value  == USBFS_MSC_GET_MAX_LUN_WVALUE) &&
+  58              		.loc 1 66 0
+  59 0026 BAB9     		cbnz	r2, .L5
+  60              		.loc 1 66 0 is_stmt 0 discriminator 1
+  61 0028 0129     		cmp	r1, #1
+  62 002a 17D1     		bne	.L6
+  67:Generated_Source\PSoC5/USBFS_msc.c ****                 (dataLength == USBFS_MSC_GET_MAX_LUN_WLENGTH))
+  68:Generated_Source\PSoC5/USBFS_msc.c ****             {
+  69:Generated_Source\PSoC5/USBFS_msc.c ****                 /* Reply to Get Max LUN request: setup control read. */
+  70:Generated_Source\PSoC5/USBFS_msc.c ****                 USBFS_currentTD.pData = &USBFS_lunCount;
+  63              		.loc 1 70 0 is_stmt 1
+  64 002c 104B     		ldr	r3, .L11+4
+  65 002e 114A     		ldr	r2, .L11+8
+  66              	.LVL3:
+  67 0030 5A60     		str	r2, [r3, #4]
+  71:Generated_Source\PSoC5/USBFS_msc.c ****                 USBFS_currentTD.count =  USBFS_MSC_GET_MAX_LUN_WLENGTH;
+  68              		.loc 1 71 0
+  69 0032 0122     		movs	r2, #1
+  70 0034 1A80     		strh	r2, [r3]	@ movhi
+  72:Generated_Source\PSoC5/USBFS_msc.c ****                 
+  73:Generated_Source\PSoC5/USBFS_msc.c ****                 requestHandled  = USBFS_InitControlRead();
+  71              		.loc 1 73 0
+  72 0036 FFF7FEFF 		bl	USBFS_InitControlRead
+  73              	.LVL4:
+  74 003a 08BD     		pop	{r3, pc}
+  75              	.LVL5:
+  76              	.L2:
+  74:Generated_Source\PSoC5/USBFS_msc.c ****             }
+  75:Generated_Source\PSoC5/USBFS_msc.c ****         }
+  76:Generated_Source\PSoC5/USBFS_msc.c ****     }
+  77:Generated_Source\PSoC5/USBFS_msc.c ****     else
+  78:Generated_Source\PSoC5/USBFS_msc.c ****     {
+  79:Generated_Source\PSoC5/USBFS_msc.c ****         /* Handle direction from host to device. */
+  80:Generated_Source\PSoC5/USBFS_msc.c ****         
+  81:Generated_Source\PSoC5/USBFS_msc.c ****         if (USBFS_MSC_RESET == USBFS_bRequestReg)
+  77              		.loc 1 81 0
+  78 003c 0B4B     		ldr	r3, .L11
+  79 003e 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+  80 0040 DBB2     		uxtb	r3, r3
+  81 0042 FF2B     		cmp	r3, #255
+  82 0044 0CD1     		bne	.L7
+  82:Generated_Source\PSoC5/USBFS_msc.c ****         {
+  83:Generated_Source\PSoC5/USBFS_msc.c ****             /* Check request fields. */
+  84:Generated_Source\PSoC5/USBFS_msc.c ****             if ((value  == USBFS_MSC_RESET_WVALUE) &&
+  83              		.loc 1 84 0
+  84 0046 6AB9     		cbnz	r2, .L8
+  85              		.loc 1 84 0 is_stmt 0 discriminator 1
+  86 0048 71B9     		cbnz	r1, .L9
+  85:Generated_Source\PSoC5/USBFS_msc.c ****                 (dataLength == USBFS_MSC_RESET_WLENGTH))
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\cci369Lb.s 			page 4
+
+
+  86:Generated_Source\PSoC5/USBFS_msc.c ****             {
+  87:Generated_Source\PSoC5/USBFS_msc.c ****                 /* Handle to Bulk-Only Reset request: no data control transfer. */
+  88:Generated_Source\PSoC5/USBFS_msc.c ****                 USBFS_currentTD.count = USBFS_MSC_RESET_WLENGTH;
+  87              		.loc 1 88 0 is_stmt 1
+  88 004a 094B     		ldr	r3, .L11+4
+  89 004c 1A80     		strh	r2, [r3]	@ movhi
+  89:Generated_Source\PSoC5/USBFS_msc.c ****                 
+  90:Generated_Source\PSoC5/USBFS_msc.c ****             #ifdef USBFS_DISPATCH_MSC_CLASS_MSC_RESET_RQST_CALLBACK
+  91:Generated_Source\PSoC5/USBFS_msc.c ****                 USBFS_DispatchMSCClass_MSC_RESET_RQST_Callback();
+  92:Generated_Source\PSoC5/USBFS_msc.c ****             #endif /* (USBFS_DISPATCH_MSC_CLASS_MSC_RESET_RQST_CALLBACK) */
+  93:Generated_Source\PSoC5/USBFS_msc.c ****                 
+  94:Generated_Source\PSoC5/USBFS_msc.c ****                 requestHandled = USBFS_InitNoDataControlTransfer();
+  90              		.loc 1 94 0
+  91 004e FFF7FEFF 		bl	USBFS_InitNoDataControlTransfer
+  92              	.LVL6:
+  93 0052 08BD     		pop	{r3, pc}
+  94              	.LVL7:
+  95              	.L4:
+  52:Generated_Source\PSoC5/USBFS_msc.c ****     
+  96              		.loc 1 52 0
+  97 0054 0020     		movs	r0, #0
+  98 0056 08BD     		pop	{r3, pc}
+  99              	.L5:
+ 100 0058 0020     		movs	r0, #0
+ 101 005a 08BD     		pop	{r3, pc}
+ 102              	.L6:
+ 103 005c 0020     		movs	r0, #0
+ 104 005e 08BD     		pop	{r3, pc}
+ 105              	.L7:
+ 106 0060 0020     		movs	r0, #0
+ 107 0062 08BD     		pop	{r3, pc}
+ 108              	.L8:
+ 109 0064 0020     		movs	r0, #0
+ 110 0066 08BD     		pop	{r3, pc}
+ 111              	.L9:
+ 112 0068 0020     		movs	r0, #0
+ 113              	.LVL8:
+  95:Generated_Source\PSoC5/USBFS_msc.c ****             }
+  96:Generated_Source\PSoC5/USBFS_msc.c ****         }
+  97:Generated_Source\PSoC5/USBFS_msc.c ****     }
+  98:Generated_Source\PSoC5/USBFS_msc.c ****     
+  99:Generated_Source\PSoC5/USBFS_msc.c ****     return (requestHandled);
+ 100:Generated_Source\PSoC5/USBFS_msc.c **** }
+ 114              		.loc 1 100 0
+ 115 006a 08BD     		pop	{r3, pc}
+ 116              	.L12:
+ 117              		.align	2
+ 118              	.L11:
+ 119 006c 00600040 		.word	1073766400
+ 120 0070 00000000 		.word	USBFS_currentTD
+ 121 0074 00000000 		.word	.LANCHOR0
+ 122              		.cfi_endproc
+ 123              	.LFE0:
+ 124              		.size	USBFS_DispatchMSCClassRqst, .-USBFS_DispatchMSCClassRqst
+ 125              		.section	.text.USBFS_MSC_SetLunCount,"ax",%progbits
+ 126              		.align	2
+ 127              		.global	USBFS_MSC_SetLunCount
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\cci369Lb.s 			page 5
+
+
+ 128              		.thumb
+ 129              		.thumb_func
+ 130              		.type	USBFS_MSC_SetLunCount, %function
+ 131              	USBFS_MSC_SetLunCount:
+ 132              	.LFB1:
+ 101:Generated_Source\PSoC5/USBFS_msc.c **** 
+ 102:Generated_Source\PSoC5/USBFS_msc.c **** 
+ 103:Generated_Source\PSoC5/USBFS_msc.c **** /*******************************************************************************
+ 104:Generated_Source\PSoC5/USBFS_msc.c **** * Function Name: USBFS_MSC_SetLunCount
+ 105:Generated_Source\PSoC5/USBFS_msc.c **** ****************************************************************************//**
+ 106:Generated_Source\PSoC5/USBFS_msc.c **** *
+ 107:Generated_Source\PSoC5/USBFS_msc.c **** *  This function sets the number of logical units supported in the application. 
+ 108:Generated_Source\PSoC5/USBFS_msc.c **** *  The default number of logical units is set in the component customizer.
+ 109:Generated_Source\PSoC5/USBFS_msc.c **** *
+ 110:Generated_Source\PSoC5/USBFS_msc.c **** *  \param lunCount: Count of the logical units. Valid range is between 1 and 16.
+ 111:Generated_Source\PSoC5/USBFS_msc.c **** *
+ 112:Generated_Source\PSoC5/USBFS_msc.c **** *
+ 113:Generated_Source\PSoC5/USBFS_msc.c **** * \globalvars
+ 114:Generated_Source\PSoC5/USBFS_msc.c **** *  USBFS_lunCount - stores number of LUN (logical units).
+ 115:Generated_Source\PSoC5/USBFS_msc.c **** *
+ 116:Generated_Source\PSoC5/USBFS_msc.c **** * \reentrant
+ 117:Generated_Source\PSoC5/USBFS_msc.c **** *  No.
+ 118:Generated_Source\PSoC5/USBFS_msc.c **** *
+ 119:Generated_Source\PSoC5/USBFS_msc.c **** *******************************************************************************/
+ 120:Generated_Source\PSoC5/USBFS_msc.c **** void USBFS_MSC_SetLunCount(uint8 lunCount) 
+ 121:Generated_Source\PSoC5/USBFS_msc.c **** {
+ 133              		.loc 1 121 0
+ 134              		.cfi_startproc
+ 135              		@ args = 0, pretend = 0, frame = 0
+ 136              		@ frame_needed = 0, uses_anonymous_args = 0
+ 137              		@ link register save eliminated.
+ 138              	.LVL9:
+ 122:Generated_Source\PSoC5/USBFS_msc.c ****     USBFS_lunCount = (lunCount - 1u);
+ 139              		.loc 1 122 0
+ 140 0000 0138     		subs	r0, r0, #1
+ 141              	.LVL10:
+ 142 0002 014B     		ldr	r3, .L14
+ 143 0004 1870     		strb	r0, [r3]
+ 144 0006 7047     		bx	lr
+ 145              	.L15:
+ 146              		.align	2
+ 147              	.L14:
+ 148 0008 00000000 		.word	.LANCHOR0
+ 149              		.cfi_endproc
+ 150              	.LFE1:
+ 151              		.size	USBFS_MSC_SetLunCount, .-USBFS_MSC_SetLunCount
+ 152              		.section	.text.USBFS_MSC_GetLunCount,"ax",%progbits
+ 153              		.align	2
+ 154              		.global	USBFS_MSC_GetLunCount
+ 155              		.thumb
+ 156              		.thumb_func
+ 157              		.type	USBFS_MSC_GetLunCount, %function
+ 158              	USBFS_MSC_GetLunCount:
+ 159              	.LFB2:
+ 123:Generated_Source\PSoC5/USBFS_msc.c **** }
+ 124:Generated_Source\PSoC5/USBFS_msc.c **** 
+ 125:Generated_Source\PSoC5/USBFS_msc.c **** 
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\cci369Lb.s 			page 6
+
+
+ 126:Generated_Source\PSoC5/USBFS_msc.c **** /*******************************************************************************
+ 127:Generated_Source\PSoC5/USBFS_msc.c **** * Function Name: USBFS_MSC_GetLunCount
+ 128:Generated_Source\PSoC5/USBFS_msc.c **** ****************************************************************************//**
+ 129:Generated_Source\PSoC5/USBFS_msc.c **** *
+ 130:Generated_Source\PSoC5/USBFS_msc.c **** *  This function returns the number of logical units.
+ 131:Generated_Source\PSoC5/USBFS_msc.c **** *
+ 132:Generated_Source\PSoC5/USBFS_msc.c **** * \return
+ 133:Generated_Source\PSoC5/USBFS_msc.c **** *   Number of the logical units.
+ 134:Generated_Source\PSoC5/USBFS_msc.c **** *
+ 135:Generated_Source\PSoC5/USBFS_msc.c **** * \globalvars
+ 136:Generated_Source\PSoC5/USBFS_msc.c **** *  USBFS_lunCount - stores number of LUN (logical units).
+ 137:Generated_Source\PSoC5/USBFS_msc.c **** *
+ 138:Generated_Source\PSoC5/USBFS_msc.c **** * \reentrant
+ 139:Generated_Source\PSoC5/USBFS_msc.c **** *  No.
+ 140:Generated_Source\PSoC5/USBFS_msc.c **** *
+ 141:Generated_Source\PSoC5/USBFS_msc.c **** *******************************************************************************/
+ 142:Generated_Source\PSoC5/USBFS_msc.c **** uint8 USBFS_MSC_GetLunCount(void) 
+ 143:Generated_Source\PSoC5/USBFS_msc.c **** {
+ 160              		.loc 1 143 0
+ 161              		.cfi_startproc
+ 162              		@ args = 0, pretend = 0, frame = 0
+ 163              		@ frame_needed = 0, uses_anonymous_args = 0
+ 164              		@ link register save eliminated.
+ 144:Generated_Source\PSoC5/USBFS_msc.c ****     return (USBFS_lunCount + 1u);
+ 165              		.loc 1 144 0
+ 166 0000 024B     		ldr	r3, .L17
+ 167 0002 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 168 0004 0130     		adds	r0, r0, #1
+ 145:Generated_Source\PSoC5/USBFS_msc.c **** }   
+ 169              		.loc 1 145 0
+ 170 0006 C0B2     		uxtb	r0, r0
+ 171 0008 7047     		bx	lr
+ 172              	.L18:
+ 173 000a 00BF     		.align	2
+ 174              	.L17:
+ 175 000c 00000000 		.word	.LANCHOR0
+ 176              		.cfi_endproc
+ 177              	.LFE2:
+ 178              		.size	USBFS_MSC_GetLunCount, .-USBFS_MSC_GetLunCount
+ 179              		.bss
+ 180              		.set	.LANCHOR0,. + 0
+ 181              		.type	USBFS_lunCount, %object
+ 182              		.size	USBFS_lunCount, 1
+ 183              	USBFS_lunCount:
+ 184 0000 00       		.space	1
+ 185              		.text
+ 186              	.Letext0:
+ 187              		.file 2 "Generated_Source\\PSoC5\\cytypes.h"
+ 188              		.file 3 "Generated_Source\\PSoC5\\USBFS.h"
+ 189              		.file 4 "Generated_Source\\PSoC5\\USBFS_pvt.h"
+ 190              		.section	.debug_info,"",%progbits
+ 191              	.Ldebug_info0:
+ 192 0000 10020000 		.4byte	0x210
+ 193 0004 0400     		.2byte	0x4
+ 194 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 195 000a 04       		.byte	0x4
+ 196 000b 01       		.uleb128 0x1
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\cci369Lb.s 			page 7
+
+
+ 197 000c 7A000000 		.4byte	.LASF31
+ 198 0010 0C       		.byte	0xc
+ 199 0011 F2010000 		.4byte	.LASF32
+ 200 0015 54020000 		.4byte	.LASF33
+ 201 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 202 001d 00000000 		.4byte	0
+ 203 0021 00000000 		.4byte	.Ldebug_line0
+ 204 0025 02       		.uleb128 0x2
+ 205 0026 01       		.byte	0x1
+ 206 0027 06       		.byte	0x6
+ 207 0028 DE020000 		.4byte	.LASF0
+ 208 002c 02       		.uleb128 0x2
+ 209 002d 01       		.byte	0x1
+ 210 002e 08       		.byte	0x8
+ 211 002f 6C000000 		.4byte	.LASF1
+ 212 0033 02       		.uleb128 0x2
+ 213 0034 02       		.byte	0x2
+ 214 0035 05       		.byte	0x5
+ 215 0036 3B020000 		.4byte	.LASF2
+ 216 003a 02       		.uleb128 0x2
+ 217 003b 02       		.byte	0x2
+ 218 003c 07       		.byte	0x7
+ 219 003d 19000000 		.4byte	.LASF3
+ 220 0041 02       		.uleb128 0x2
+ 221 0042 04       		.byte	0x4
+ 222 0043 05       		.byte	0x5
+ 223 0044 AE020000 		.4byte	.LASF4
+ 224 0048 02       		.uleb128 0x2
+ 225 0049 04       		.byte	0x4
+ 226 004a 07       		.byte	0x7
+ 227 004b 22010000 		.4byte	.LASF5
+ 228 004f 02       		.uleb128 0x2
+ 229 0050 08       		.byte	0x8
+ 230 0051 05       		.byte	0x5
+ 231 0052 1E020000 		.4byte	.LASF6
+ 232 0056 02       		.uleb128 0x2
+ 233 0057 08       		.byte	0x8
+ 234 0058 07       		.byte	0x7
+ 235 0059 B7010000 		.4byte	.LASF7
+ 236 005d 03       		.uleb128 0x3
+ 237 005e 04       		.byte	0x4
+ 238 005f 05       		.byte	0x5
+ 239 0060 696E7400 		.ascii	"int\000"
+ 240 0064 02       		.uleb128 0x2
+ 241 0065 04       		.byte	0x4
+ 242 0066 07       		.byte	0x7
+ 243 0067 AA010000 		.4byte	.LASF8
+ 244 006b 04       		.uleb128 0x4
+ 245 006c 34010000 		.4byte	.LASF9
+ 246 0070 02       		.byte	0x2
+ 247 0071 B4       		.byte	0xb4
+ 248 0072 2C000000 		.4byte	0x2c
+ 249 0076 04       		.uleb128 0x4
+ 250 0077 A3010000 		.4byte	.LASF10
+ 251 007b 02       		.byte	0x2
+ 252 007c B5       		.byte	0xb5
+ 253 007d 3A000000 		.4byte	0x3a
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\cci369Lb.s 			page 8
+
+
+ 254 0081 02       		.uleb128 0x2
+ 255 0082 04       		.byte	0x4
+ 256 0083 04       		.byte	0x4
+ 257 0084 66000000 		.4byte	.LASF11
+ 258 0088 02       		.uleb128 0x2
+ 259 0089 08       		.byte	0x8
+ 260 008a 04       		.byte	0x4
+ 261 008b 70010000 		.4byte	.LASF12
+ 262 008f 02       		.uleb128 0x2
+ 263 0090 01       		.byte	0x1
+ 264 0091 08       		.byte	0x8
+ 265 0092 B7020000 		.4byte	.LASF13
+ 266 0096 05       		.uleb128 0x5
+ 267 0097 6B000000 		.4byte	0x6b
+ 268 009b 02       		.uleb128 0x2
+ 269 009c 08       		.byte	0x8
+ 270 009d 04       		.byte	0x4
+ 271 009e BC020000 		.4byte	.LASF14
+ 272 00a2 02       		.uleb128 0x2
+ 273 00a3 04       		.byte	0x4
+ 274 00a4 07       		.byte	0x7
+ 275 00a5 15020000 		.4byte	.LASF15
+ 276 00a9 06       		.uleb128 0x6
+ 277 00aa 04       		.byte	0x4
+ 278 00ab 03       		.byte	0x3
+ 279 00ac A9       		.byte	0xa9
+ 280 00ad CA000000 		.4byte	0xca
+ 281 00b1 07       		.uleb128 0x7
+ 282 00b2 2C000000 		.4byte	.LASF16
+ 283 00b6 03       		.byte	0x3
+ 284 00b7 AB       		.byte	0xab
+ 285 00b8 6B000000 		.4byte	0x6b
+ 286 00bc 00       		.byte	0
+ 287 00bd 07       		.uleb128 0x7
+ 288 00be EA020000 		.4byte	.LASF17
+ 289 00c2 03       		.byte	0x3
+ 290 00c3 AC       		.byte	0xac
+ 291 00c4 76000000 		.4byte	0x76
+ 292 00c8 02       		.byte	0x2
+ 293 00c9 00       		.byte	0
+ 294 00ca 04       		.uleb128 0x4
+ 295 00cb 08010000 		.4byte	.LASF18
+ 296 00cf 03       		.byte	0x3
+ 297 00d0 AD       		.byte	0xad
+ 298 00d1 A9000000 		.4byte	0xa9
+ 299 00d5 06       		.uleb128 0x6
+ 300 00d6 0C       		.byte	0xc
+ 301 00d7 03       		.byte	0x3
+ 302 00d8 AF       		.byte	0xaf
+ 303 00d9 02010000 		.4byte	0x102
+ 304 00dd 07       		.uleb128 0x7
+ 305 00de 13000000 		.4byte	.LASF19
+ 306 00e2 03       		.byte	0x3
+ 307 00e3 B1       		.byte	0xb1
+ 308 00e4 76000000 		.4byte	0x76
+ 309 00e8 00       		.byte	0
+ 310 00e9 07       		.uleb128 0x7
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\cci369Lb.s 			page 9
+
+
+ 311 00ea 4E000000 		.4byte	.LASF20
+ 312 00ee 03       		.byte	0x3
+ 313 00ef B2       		.byte	0xb2
+ 314 00f0 02010000 		.4byte	0x102
+ 315 00f4 04       		.byte	0x4
+ 316 00f5 07       		.uleb128 0x7
+ 317 00f6 00000000 		.4byte	.LASF21
+ 318 00fa 03       		.byte	0x3
+ 319 00fb B3       		.byte	0xb3
+ 320 00fc 08010000 		.4byte	0x108
+ 321 0100 08       		.byte	0x8
+ 322 0101 00       		.byte	0
+ 323 0102 08       		.uleb128 0x8
+ 324 0103 04       		.byte	0x4
+ 325 0104 96000000 		.4byte	0x96
+ 326 0108 08       		.uleb128 0x8
+ 327 0109 04       		.byte	0x4
+ 328 010a CA000000 		.4byte	0xca
+ 329 010e 04       		.uleb128 0x4
+ 330 010f 5B000000 		.4byte	.LASF22
+ 331 0113 03       		.byte	0x3
+ 332 0114 B4       		.byte	0xb4
+ 333 0115 D5000000 		.4byte	0xd5
+ 334 0119 06       		.uleb128 0x6
+ 335 011a 08       		.byte	0x8
+ 336 011b 03       		.byte	0x3
+ 337 011c CA       		.byte	0xca
+ 338 011d 2E010000 		.4byte	0x12e
+ 339 0121 07       		.uleb128 0x7
+ 340 0122 54000000 		.4byte	.LASF23
+ 341 0126 03       		.byte	0x3
+ 342 0127 CC       		.byte	0xcc
+ 343 0128 2E010000 		.4byte	0x12e
+ 344 012c 00       		.byte	0
+ 345 012d 00       		.byte	0
+ 346 012e 09       		.uleb128 0x9
+ 347 012f 6B000000 		.4byte	0x6b
+ 348 0133 3E010000 		.4byte	0x13e
+ 349 0137 0A       		.uleb128 0xa
+ 350 0138 A2000000 		.4byte	0xa2
+ 351 013c 07       		.byte	0x7
+ 352 013d 00       		.byte	0
+ 353 013e 04       		.uleb128 0x4
+ 354 013f 5A010000 		.4byte	.LASF24
+ 355 0143 03       		.byte	0x3
+ 356 0144 CD       		.byte	0xcd
+ 357 0145 19010000 		.4byte	0x119
+ 358 0149 0B       		.uleb128 0xb
+ 359 014a 33000000 		.4byte	.LASF34
+ 360 014e 01       		.byte	0x1
+ 361 014f 32       		.byte	0x32
+ 362 0150 6B000000 		.4byte	0x6b
+ 363 0154 00000000 		.4byte	.LFB0
+ 364 0158 78000000 		.4byte	.LFE0-.LFB0
+ 365 015c 01       		.uleb128 0x1
+ 366 015d 9C       		.byte	0x9c
+ 367 015e A2010000 		.4byte	0x1a2
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\cci369Lb.s 			page 10
+
+
+ 368 0162 0C       		.uleb128 0xc
+ 369 0163 45020000 		.4byte	.LASF25
+ 370 0167 01       		.byte	0x1
+ 371 0168 34       		.byte	0x34
+ 372 0169 6B000000 		.4byte	0x6b
+ 373 016d 00000000 		.4byte	.LLST0
+ 374 0171 0C       		.uleb128 0xc
+ 375 0172 0D000000 		.4byte	.LASF26
+ 376 0176 01       		.byte	0x1
+ 377 0177 37       		.byte	0x37
+ 378 0178 76000000 		.4byte	0x76
+ 379 017c 4D000000 		.4byte	.LLST1
+ 380 0180 0C       		.uleb128 0xc
+ 381 0181 D7010000 		.4byte	.LASF27
+ 382 0185 01       		.byte	0x1
+ 383 0186 38       		.byte	0x38
+ 384 0187 76000000 		.4byte	0x76
+ 385 018b 76000000 		.4byte	.LLST2
+ 386 018f 0D       		.uleb128 0xd
+ 387 0190 3A000000 		.4byte	.LVL4
+ 388 0194 FD010000 		.4byte	0x1fd
+ 389 0198 0D       		.uleb128 0xd
+ 390 0199 52000000 		.4byte	.LVL6
+ 391 019d 08020000 		.4byte	0x208
+ 392 01a1 00       		.byte	0
+ 393 01a2 0E       		.uleb128 0xe
+ 394 01a3 C8020000 		.4byte	.LASF35
+ 395 01a7 01       		.byte	0x1
+ 396 01a8 78       		.byte	0x78
+ 397 01a9 00000000 		.4byte	.LFB1
+ 398 01ad 0C000000 		.4byte	.LFE1-.LFB1
+ 399 01b1 01       		.uleb128 0x1
+ 400 01b2 9C       		.byte	0x9c
+ 401 01b3 C7010000 		.4byte	0x1c7
+ 402 01b7 0F       		.uleb128 0xf
+ 403 01b8 CE010000 		.4byte	.LASF36
+ 404 01bc 01       		.byte	0x1
+ 405 01bd 78       		.byte	0x78
+ 406 01be 6B000000 		.4byte	0x6b
+ 407 01c2 9F000000 		.4byte	.LLST3
+ 408 01c6 00       		.byte	0
+ 409 01c7 10       		.uleb128 0x10
+ 410 01c8 8D010000 		.4byte	.LASF37
+ 411 01cc 01       		.byte	0x1
+ 412 01cd 8E       		.byte	0x8e
+ 413 01ce 6B000000 		.4byte	0x6b
+ 414 01d2 00000000 		.4byte	.LFB2
+ 415 01d6 10000000 		.4byte	.LFE2-.LFB2
+ 416 01da 01       		.uleb128 0x1
+ 417 01db 9C       		.byte	0x9c
+ 418 01dc 11       		.uleb128 0x11
+ 419 01dd 2C020000 		.4byte	.LASF28
+ 420 01e1 01       		.byte	0x1
+ 421 01e2 1E       		.byte	0x1e
+ 422 01e3 6B000000 		.4byte	0x6b
+ 423 01e7 05       		.uleb128 0x5
+ 424 01e8 03       		.byte	0x3
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\cci369Lb.s 			page 11
+
+
+ 425 01e9 00000000 		.4byte	USBFS_lunCount
+ 426 01ed 12       		.uleb128 0x12
+ 427 01ee E2010000 		.4byte	.LASF38
+ 428 01f2 04       		.byte	0x4
+ 429 01f3 84       		.byte	0x84
+ 430 01f4 F8010000 		.4byte	0x1f8
+ 431 01f8 05       		.uleb128 0x5
+ 432 01f9 0E010000 		.4byte	0x10e
+ 433 01fd 13       		.uleb128 0x13
+ 434 01fe 77010000 		.4byte	.LASF29
+ 435 0202 77010000 		.4byte	.LASF29
+ 436 0206 04       		.byte	0x4
+ 437 0207 B3       		.byte	0xb3
+ 438 0208 13       		.uleb128 0x13
+ 439 0209 3A010000 		.4byte	.LASF30
+ 440 020d 3A010000 		.4byte	.LASF30
+ 441 0211 04       		.byte	0x4
+ 442 0212 BD       		.byte	0xbd
+ 443 0213 00       		.byte	0
+ 444              		.section	.debug_abbrev,"",%progbits
+ 445              	.Ldebug_abbrev0:
+ 446 0000 01       		.uleb128 0x1
+ 447 0001 11       		.uleb128 0x11
+ 448 0002 01       		.byte	0x1
+ 449 0003 25       		.uleb128 0x25
+ 450 0004 0E       		.uleb128 0xe
+ 451 0005 13       		.uleb128 0x13
+ 452 0006 0B       		.uleb128 0xb
+ 453 0007 03       		.uleb128 0x3
+ 454 0008 0E       		.uleb128 0xe
+ 455 0009 1B       		.uleb128 0x1b
+ 456 000a 0E       		.uleb128 0xe
+ 457 000b 55       		.uleb128 0x55
+ 458 000c 17       		.uleb128 0x17
+ 459 000d 11       		.uleb128 0x11
+ 460 000e 01       		.uleb128 0x1
+ 461 000f 10       		.uleb128 0x10
+ 462 0010 17       		.uleb128 0x17
+ 463 0011 00       		.byte	0
+ 464 0012 00       		.byte	0
+ 465 0013 02       		.uleb128 0x2
+ 466 0014 24       		.uleb128 0x24
+ 467 0015 00       		.byte	0
+ 468 0016 0B       		.uleb128 0xb
+ 469 0017 0B       		.uleb128 0xb
+ 470 0018 3E       		.uleb128 0x3e
+ 471 0019 0B       		.uleb128 0xb
+ 472 001a 03       		.uleb128 0x3
+ 473 001b 0E       		.uleb128 0xe
+ 474 001c 00       		.byte	0
+ 475 001d 00       		.byte	0
+ 476 001e 03       		.uleb128 0x3
+ 477 001f 24       		.uleb128 0x24
+ 478 0020 00       		.byte	0
+ 479 0021 0B       		.uleb128 0xb
+ 480 0022 0B       		.uleb128 0xb
+ 481 0023 3E       		.uleb128 0x3e
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\cci369Lb.s 			page 12
+
+
+ 482 0024 0B       		.uleb128 0xb
+ 483 0025 03       		.uleb128 0x3
+ 484 0026 08       		.uleb128 0x8
+ 485 0027 00       		.byte	0
+ 486 0028 00       		.byte	0
+ 487 0029 04       		.uleb128 0x4
+ 488 002a 16       		.uleb128 0x16
+ 489 002b 00       		.byte	0
+ 490 002c 03       		.uleb128 0x3
+ 491 002d 0E       		.uleb128 0xe
+ 492 002e 3A       		.uleb128 0x3a
+ 493 002f 0B       		.uleb128 0xb
+ 494 0030 3B       		.uleb128 0x3b
+ 495 0031 0B       		.uleb128 0xb
+ 496 0032 49       		.uleb128 0x49
+ 497 0033 13       		.uleb128 0x13
+ 498 0034 00       		.byte	0
+ 499 0035 00       		.byte	0
+ 500 0036 05       		.uleb128 0x5
+ 501 0037 35       		.uleb128 0x35
+ 502 0038 00       		.byte	0
+ 503 0039 49       		.uleb128 0x49
+ 504 003a 13       		.uleb128 0x13
+ 505 003b 00       		.byte	0
+ 506 003c 00       		.byte	0
+ 507 003d 06       		.uleb128 0x6
+ 508 003e 13       		.uleb128 0x13
+ 509 003f 01       		.byte	0x1
+ 510 0040 0B       		.uleb128 0xb
+ 511 0041 0B       		.uleb128 0xb
+ 512 0042 3A       		.uleb128 0x3a
+ 513 0043 0B       		.uleb128 0xb
+ 514 0044 3B       		.uleb128 0x3b
+ 515 0045 0B       		.uleb128 0xb
+ 516 0046 01       		.uleb128 0x1
+ 517 0047 13       		.uleb128 0x13
+ 518 0048 00       		.byte	0
+ 519 0049 00       		.byte	0
+ 520 004a 07       		.uleb128 0x7
+ 521 004b 0D       		.uleb128 0xd
+ 522 004c 00       		.byte	0
+ 523 004d 03       		.uleb128 0x3
+ 524 004e 0E       		.uleb128 0xe
+ 525 004f 3A       		.uleb128 0x3a
+ 526 0050 0B       		.uleb128 0xb
+ 527 0051 3B       		.uleb128 0x3b
+ 528 0052 0B       		.uleb128 0xb
+ 529 0053 49       		.uleb128 0x49
+ 530 0054 13       		.uleb128 0x13
+ 531 0055 38       		.uleb128 0x38
+ 532 0056 0B       		.uleb128 0xb
+ 533 0057 00       		.byte	0
+ 534 0058 00       		.byte	0
+ 535 0059 08       		.uleb128 0x8
+ 536 005a 0F       		.uleb128 0xf
+ 537 005b 00       		.byte	0
+ 538 005c 0B       		.uleb128 0xb
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\cci369Lb.s 			page 13
+
+
+ 539 005d 0B       		.uleb128 0xb
+ 540 005e 49       		.uleb128 0x49
+ 541 005f 13       		.uleb128 0x13
+ 542 0060 00       		.byte	0
+ 543 0061 00       		.byte	0
+ 544 0062 09       		.uleb128 0x9
+ 545 0063 01       		.uleb128 0x1
+ 546 0064 01       		.byte	0x1
+ 547 0065 49       		.uleb128 0x49
+ 548 0066 13       		.uleb128 0x13
+ 549 0067 01       		.uleb128 0x1
+ 550 0068 13       		.uleb128 0x13
+ 551 0069 00       		.byte	0
+ 552 006a 00       		.byte	0
+ 553 006b 0A       		.uleb128 0xa
+ 554 006c 21       		.uleb128 0x21
+ 555 006d 00       		.byte	0
+ 556 006e 49       		.uleb128 0x49
+ 557 006f 13       		.uleb128 0x13
+ 558 0070 2F       		.uleb128 0x2f
+ 559 0071 0B       		.uleb128 0xb
+ 560 0072 00       		.byte	0
+ 561 0073 00       		.byte	0
+ 562 0074 0B       		.uleb128 0xb
+ 563 0075 2E       		.uleb128 0x2e
+ 564 0076 01       		.byte	0x1
+ 565 0077 3F       		.uleb128 0x3f
+ 566 0078 19       		.uleb128 0x19
+ 567 0079 03       		.uleb128 0x3
+ 568 007a 0E       		.uleb128 0xe
+ 569 007b 3A       		.uleb128 0x3a
+ 570 007c 0B       		.uleb128 0xb
+ 571 007d 3B       		.uleb128 0x3b
+ 572 007e 0B       		.uleb128 0xb
+ 573 007f 27       		.uleb128 0x27
+ 574 0080 19       		.uleb128 0x19
+ 575 0081 49       		.uleb128 0x49
+ 576 0082 13       		.uleb128 0x13
+ 577 0083 11       		.uleb128 0x11
+ 578 0084 01       		.uleb128 0x1
+ 579 0085 12       		.uleb128 0x12
+ 580 0086 06       		.uleb128 0x6
+ 581 0087 40       		.uleb128 0x40
+ 582 0088 18       		.uleb128 0x18
+ 583 0089 9742     		.uleb128 0x2117
+ 584 008b 19       		.uleb128 0x19
+ 585 008c 01       		.uleb128 0x1
+ 586 008d 13       		.uleb128 0x13
+ 587 008e 00       		.byte	0
+ 588 008f 00       		.byte	0
+ 589 0090 0C       		.uleb128 0xc
+ 590 0091 34       		.uleb128 0x34
+ 591 0092 00       		.byte	0
+ 592 0093 03       		.uleb128 0x3
+ 593 0094 0E       		.uleb128 0xe
+ 594 0095 3A       		.uleb128 0x3a
+ 595 0096 0B       		.uleb128 0xb
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\cci369Lb.s 			page 14
+
+
+ 596 0097 3B       		.uleb128 0x3b
+ 597 0098 0B       		.uleb128 0xb
+ 598 0099 49       		.uleb128 0x49
+ 599 009a 13       		.uleb128 0x13
+ 600 009b 02       		.uleb128 0x2
+ 601 009c 17       		.uleb128 0x17
+ 602 009d 00       		.byte	0
+ 603 009e 00       		.byte	0
+ 604 009f 0D       		.uleb128 0xd
+ 605 00a0 898201   		.uleb128 0x4109
+ 606 00a3 00       		.byte	0
+ 607 00a4 11       		.uleb128 0x11
+ 608 00a5 01       		.uleb128 0x1
+ 609 00a6 31       		.uleb128 0x31
+ 610 00a7 13       		.uleb128 0x13
+ 611 00a8 00       		.byte	0
+ 612 00a9 00       		.byte	0
+ 613 00aa 0E       		.uleb128 0xe
+ 614 00ab 2E       		.uleb128 0x2e
+ 615 00ac 01       		.byte	0x1
+ 616 00ad 3F       		.uleb128 0x3f
+ 617 00ae 19       		.uleb128 0x19
+ 618 00af 03       		.uleb128 0x3
+ 619 00b0 0E       		.uleb128 0xe
+ 620 00b1 3A       		.uleb128 0x3a
+ 621 00b2 0B       		.uleb128 0xb
+ 622 00b3 3B       		.uleb128 0x3b
+ 623 00b4 0B       		.uleb128 0xb
+ 624 00b5 27       		.uleb128 0x27
+ 625 00b6 19       		.uleb128 0x19
+ 626 00b7 11       		.uleb128 0x11
+ 627 00b8 01       		.uleb128 0x1
+ 628 00b9 12       		.uleb128 0x12
+ 629 00ba 06       		.uleb128 0x6
+ 630 00bb 40       		.uleb128 0x40
+ 631 00bc 18       		.uleb128 0x18
+ 632 00bd 9742     		.uleb128 0x2117
+ 633 00bf 19       		.uleb128 0x19
+ 634 00c0 01       		.uleb128 0x1
+ 635 00c1 13       		.uleb128 0x13
+ 636 00c2 00       		.byte	0
+ 637 00c3 00       		.byte	0
+ 638 00c4 0F       		.uleb128 0xf
+ 639 00c5 05       		.uleb128 0x5
+ 640 00c6 00       		.byte	0
+ 641 00c7 03       		.uleb128 0x3
+ 642 00c8 0E       		.uleb128 0xe
+ 643 00c9 3A       		.uleb128 0x3a
+ 644 00ca 0B       		.uleb128 0xb
+ 645 00cb 3B       		.uleb128 0x3b
+ 646 00cc 0B       		.uleb128 0xb
+ 647 00cd 49       		.uleb128 0x49
+ 648 00ce 13       		.uleb128 0x13
+ 649 00cf 02       		.uleb128 0x2
+ 650 00d0 17       		.uleb128 0x17
+ 651 00d1 00       		.byte	0
+ 652 00d2 00       		.byte	0
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\cci369Lb.s 			page 15
+
+
+ 653 00d3 10       		.uleb128 0x10
+ 654 00d4 2E       		.uleb128 0x2e
+ 655 00d5 00       		.byte	0
+ 656 00d6 3F       		.uleb128 0x3f
+ 657 00d7 19       		.uleb128 0x19
+ 658 00d8 03       		.uleb128 0x3
+ 659 00d9 0E       		.uleb128 0xe
+ 660 00da 3A       		.uleb128 0x3a
+ 661 00db 0B       		.uleb128 0xb
+ 662 00dc 3B       		.uleb128 0x3b
+ 663 00dd 0B       		.uleb128 0xb
+ 664 00de 27       		.uleb128 0x27
+ 665 00df 19       		.uleb128 0x19
+ 666 00e0 49       		.uleb128 0x49
+ 667 00e1 13       		.uleb128 0x13
+ 668 00e2 11       		.uleb128 0x11
+ 669 00e3 01       		.uleb128 0x1
+ 670 00e4 12       		.uleb128 0x12
+ 671 00e5 06       		.uleb128 0x6
+ 672 00e6 40       		.uleb128 0x40
+ 673 00e7 18       		.uleb128 0x18
+ 674 00e8 9742     		.uleb128 0x2117
+ 675 00ea 19       		.uleb128 0x19
+ 676 00eb 00       		.byte	0
+ 677 00ec 00       		.byte	0
+ 678 00ed 11       		.uleb128 0x11
+ 679 00ee 34       		.uleb128 0x34
+ 680 00ef 00       		.byte	0
+ 681 00f0 03       		.uleb128 0x3
+ 682 00f1 0E       		.uleb128 0xe
+ 683 00f2 3A       		.uleb128 0x3a
+ 684 00f3 0B       		.uleb128 0xb
+ 685 00f4 3B       		.uleb128 0x3b
+ 686 00f5 0B       		.uleb128 0xb
+ 687 00f6 49       		.uleb128 0x49
+ 688 00f7 13       		.uleb128 0x13
+ 689 00f8 02       		.uleb128 0x2
+ 690 00f9 18       		.uleb128 0x18
+ 691 00fa 00       		.byte	0
+ 692 00fb 00       		.byte	0
+ 693 00fc 12       		.uleb128 0x12
+ 694 00fd 34       		.uleb128 0x34
+ 695 00fe 00       		.byte	0
+ 696 00ff 03       		.uleb128 0x3
+ 697 0100 0E       		.uleb128 0xe
+ 698 0101 3A       		.uleb128 0x3a
+ 699 0102 0B       		.uleb128 0xb
+ 700 0103 3B       		.uleb128 0x3b
+ 701 0104 0B       		.uleb128 0xb
+ 702 0105 49       		.uleb128 0x49
+ 703 0106 13       		.uleb128 0x13
+ 704 0107 3F       		.uleb128 0x3f
+ 705 0108 19       		.uleb128 0x19
+ 706 0109 3C       		.uleb128 0x3c
+ 707 010a 19       		.uleb128 0x19
+ 708 010b 00       		.byte	0
+ 709 010c 00       		.byte	0
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\cci369Lb.s 			page 16
+
+
+ 710 010d 13       		.uleb128 0x13
+ 711 010e 2E       		.uleb128 0x2e
+ 712 010f 00       		.byte	0
+ 713 0110 3F       		.uleb128 0x3f
+ 714 0111 19       		.uleb128 0x19
+ 715 0112 3C       		.uleb128 0x3c
+ 716 0113 19       		.uleb128 0x19
+ 717 0114 6E       		.uleb128 0x6e
+ 718 0115 0E       		.uleb128 0xe
+ 719 0116 03       		.uleb128 0x3
+ 720 0117 0E       		.uleb128 0xe
+ 721 0118 3A       		.uleb128 0x3a
+ 722 0119 0B       		.uleb128 0xb
+ 723 011a 3B       		.uleb128 0x3b
+ 724 011b 0B       		.uleb128 0xb
+ 725 011c 00       		.byte	0
+ 726 011d 00       		.byte	0
+ 727 011e 00       		.byte	0
+ 728              		.section	.debug_loc,"",%progbits
+ 729              	.Ldebug_loc0:
+ 730              	.LLST0:
+ 731 0000 02000000 		.4byte	.LVL0
+ 732 0004 3A000000 		.4byte	.LVL4
+ 733 0008 0200     		.2byte	0x2
+ 734 000a 30       		.byte	0x30
+ 735 000b 9F       		.byte	0x9f
+ 736 000c 3A000000 		.4byte	.LVL4
+ 737 0010 3C000000 		.4byte	.LVL5
+ 738 0014 0100     		.2byte	0x1
+ 739 0016 50       		.byte	0x50
+ 740 0017 3C000000 		.4byte	.LVL5
+ 741 001b 52000000 		.4byte	.LVL6
+ 742 001f 0200     		.2byte	0x2
+ 743 0021 30       		.byte	0x30
+ 744 0022 9F       		.byte	0x9f
+ 745 0023 52000000 		.4byte	.LVL6
+ 746 0027 54000000 		.4byte	.LVL7
+ 747 002b 0100     		.2byte	0x1
+ 748 002d 50       		.byte	0x50
+ 749 002e 54000000 		.4byte	.LVL7
+ 750 0032 6A000000 		.4byte	.LVL8
+ 751 0036 0200     		.2byte	0x2
+ 752 0038 30       		.byte	0x30
+ 753 0039 9F       		.byte	0x9f
+ 754 003a 6A000000 		.4byte	.LVL8
+ 755 003e 78000000 		.4byte	.LFE0
+ 756 0042 0100     		.2byte	0x1
+ 757 0044 50       		.byte	0x50
+ 758 0045 00000000 		.4byte	0
+ 759 0049 00000000 		.4byte	0
+ 760              	.LLST1:
+ 761 004d 0C000000 		.4byte	.LVL1
+ 762 0051 30000000 		.4byte	.LVL3
+ 763 0055 0100     		.2byte	0x1
+ 764 0057 52       		.byte	0x52
+ 765 0058 3C000000 		.4byte	.LVL5
+ 766 005c 51000000 		.4byte	.LVL6-1
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\cci369Lb.s 			page 17
+
+
+ 767 0060 0100     		.2byte	0x1
+ 768 0062 52       		.byte	0x52
+ 769 0063 54000000 		.4byte	.LVL7
+ 770 0067 78000000 		.4byte	.LFE0
+ 771 006b 0100     		.2byte	0x1
+ 772 006d 52       		.byte	0x52
+ 773 006e 00000000 		.4byte	0
+ 774 0072 00000000 		.4byte	0
+ 775              	.LLST2:
+ 776 0076 14000000 		.4byte	.LVL2
+ 777 007a 39000000 		.4byte	.LVL4-1
+ 778 007e 0100     		.2byte	0x1
+ 779 0080 51       		.byte	0x51
+ 780 0081 3C000000 		.4byte	.LVL5
+ 781 0085 51000000 		.4byte	.LVL6-1
+ 782 0089 0100     		.2byte	0x1
+ 783 008b 51       		.byte	0x51
+ 784 008c 54000000 		.4byte	.LVL7
+ 785 0090 78000000 		.4byte	.LFE0
+ 786 0094 0100     		.2byte	0x1
+ 787 0096 51       		.byte	0x51
+ 788 0097 00000000 		.4byte	0
+ 789 009b 00000000 		.4byte	0
+ 790              	.LLST3:
+ 791 009f 00000000 		.4byte	.LVL9
+ 792 00a3 02000000 		.4byte	.LVL10
+ 793 00a7 0100     		.2byte	0x1
+ 794 00a9 50       		.byte	0x50
+ 795 00aa 02000000 		.4byte	.LVL10
+ 796 00ae 0C000000 		.4byte	.LFE1
+ 797 00b2 0400     		.2byte	0x4
+ 798 00b4 F3       		.byte	0xf3
+ 799 00b5 01       		.uleb128 0x1
+ 800 00b6 50       		.byte	0x50
+ 801 00b7 9F       		.byte	0x9f
+ 802 00b8 00000000 		.4byte	0
+ 803 00bc 00000000 		.4byte	0
+ 804              		.section	.debug_aranges,"",%progbits
+ 805 0000 2C000000 		.4byte	0x2c
+ 806 0004 0200     		.2byte	0x2
+ 807 0006 00000000 		.4byte	.Ldebug_info0
+ 808 000a 04       		.byte	0x4
+ 809 000b 00       		.byte	0
+ 810 000c 0000     		.2byte	0
+ 811 000e 0000     		.2byte	0
+ 812 0010 00000000 		.4byte	.LFB0
+ 813 0014 78000000 		.4byte	.LFE0-.LFB0
+ 814 0018 00000000 		.4byte	.LFB1
+ 815 001c 0C000000 		.4byte	.LFE1-.LFB1
+ 816 0020 00000000 		.4byte	.LFB2
+ 817 0024 10000000 		.4byte	.LFE2-.LFB2
+ 818 0028 00000000 		.4byte	0
+ 819 002c 00000000 		.4byte	0
+ 820              		.section	.debug_ranges,"",%progbits
+ 821              	.Ldebug_ranges0:
+ 822 0000 00000000 		.4byte	.LFB0
+ 823 0004 78000000 		.4byte	.LFE0
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\cci369Lb.s 			page 18
+
+
+ 824 0008 00000000 		.4byte	.LFB1
+ 825 000c 0C000000 		.4byte	.LFE1
+ 826 0010 00000000 		.4byte	.LFB2
+ 827 0014 10000000 		.4byte	.LFE2
+ 828 0018 00000000 		.4byte	0
+ 829 001c 00000000 		.4byte	0
+ 830              		.section	.debug_line,"",%progbits
+ 831              	.Ldebug_line0:
+ 832 0000 B8000000 		.section	.debug_str,"MS",%progbits,1
+ 832      02006000 
+ 832      00000201 
+ 832      FB0E0D00 
+ 832      01010101 
+ 833              	.LASF21:
+ 834 0000 70537461 		.ascii	"pStatusBlock\000"
+ 834      74757342 
+ 834      6C6F636B 
+ 834      00
+ 835              	.LASF26:
+ 836 000d 76616C75 		.ascii	"value\000"
+ 836      6500
+ 837              	.LASF19:
+ 838 0013 636F756E 		.ascii	"count\000"
+ 838      7400
+ 839              	.LASF3:
+ 840 0019 73686F72 		.ascii	"short unsigned int\000"
+ 840      7420756E 
+ 840      7369676E 
+ 840      65642069 
+ 840      6E7400
+ 841              	.LASF16:
+ 842 002c 73746174 		.ascii	"status\000"
+ 842      757300
+ 843              	.LASF34:
+ 844 0033 55534246 		.ascii	"USBFS_DispatchMSCClassRqst\000"
+ 844      535F4469 
+ 844      73706174 
+ 844      63684D53 
+ 844      43436C61 
+ 845              	.LASF20:
+ 846 004e 70446174 		.ascii	"pData\000"
+ 846      6100
+ 847              	.LASF23:
+ 848 0054 65704461 		.ascii	"epData\000"
+ 848      746100
+ 849              	.LASF22:
+ 850 005b 545F5553 		.ascii	"T_USBFS_TD\000"
+ 850      4246535F 
+ 850      544400
+ 851              	.LASF11:
+ 852 0066 666C6F61 		.ascii	"float\000"
+ 852      7400
+ 853              	.LASF1:
+ 854 006c 756E7369 		.ascii	"unsigned char\000"
+ 854      676E6564 
+ 854      20636861 
+ 854      7200
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\cci369Lb.s 			page 19
+
+
+ 855              	.LASF31:
+ 856 007a 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 856      43313120 
+ 856      352E342E 
+ 856      31203230 
+ 856      31363036 
+ 857 00ad 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 857      20726576 
+ 857      6973696F 
+ 857      6E203233 
+ 857      37373135 
+ 858 00e0 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 858      66756E63 
+ 858      74696F6E 
+ 858      2D736563 
+ 858      74696F6E 
+ 859              	.LASF18:
+ 860 0108 545F5553 		.ascii	"T_USBFS_XFER_STATUS_BLOCK\000"
+ 860      4246535F 
+ 860      58464552 
+ 860      5F535441 
+ 860      5455535F 
+ 861              	.LASF5:
+ 862 0122 6C6F6E67 		.ascii	"long unsigned int\000"
+ 862      20756E73 
+ 862      69676E65 
+ 862      6420696E 
+ 862      7400
+ 863              	.LASF9:
+ 864 0134 75696E74 		.ascii	"uint8\000"
+ 864      3800
+ 865              	.LASF30:
+ 866 013a 55534246 		.ascii	"USBFS_InitNoDataControlTransfer\000"
+ 866      535F496E 
+ 866      69744E6F 
+ 866      44617461 
+ 866      436F6E74 
+ 867              	.LASF24:
+ 868 015a 55534246 		.ascii	"USBFS_ep0_data_struct\000"
+ 868      535F6570 
+ 868      305F6461 
+ 868      74615F73 
+ 868      74727563 
+ 869              	.LASF12:
+ 870 0170 646F7562 		.ascii	"double\000"
+ 870      6C6500
+ 871              	.LASF29:
+ 872 0177 55534246 		.ascii	"USBFS_InitControlRead\000"
+ 872      535F496E 
+ 872      6974436F 
+ 872      6E74726F 
+ 872      6C526561 
+ 873              	.LASF37:
+ 874 018d 55534246 		.ascii	"USBFS_MSC_GetLunCount\000"
+ 874      535F4D53 
+ 874      435F4765 
+ 874      744C756E 
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\cci369Lb.s 			page 20
+
+
+ 874      436F756E 
+ 875              	.LASF10:
+ 876 01a3 75696E74 		.ascii	"uint16\000"
+ 876      313600
+ 877              	.LASF8:
+ 878 01aa 756E7369 		.ascii	"unsigned int\000"
+ 878      676E6564 
+ 878      20696E74 
+ 878      00
+ 879              	.LASF7:
+ 880 01b7 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 880      206C6F6E 
+ 880      6720756E 
+ 880      7369676E 
+ 880      65642069 
+ 881              	.LASF36:
+ 882 01ce 6C756E43 		.ascii	"lunCount\000"
+ 882      6F756E74 
+ 882      00
+ 883              	.LASF27:
+ 884 01d7 64617461 		.ascii	"dataLength\000"
+ 884      4C656E67 
+ 884      746800
+ 885              	.LASF38:
+ 886 01e2 55534246 		.ascii	"USBFS_currentTD\000"
+ 886      535F6375 
+ 886      7272656E 
+ 886      74544400 
+ 887              	.LASF32:
+ 888 01f2 47656E65 		.ascii	"Generated_Source\\PSoC5\\USBFS_msc.c\000"
+ 888      72617465 
+ 888      645F536F 
+ 888      75726365 
+ 888      5C50536F 
+ 889              	.LASF15:
+ 890 0215 73697A65 		.ascii	"sizetype\000"
+ 890      74797065 
+ 890      00
+ 891              	.LASF6:
+ 892 021e 6C6F6E67 		.ascii	"long long int\000"
+ 892      206C6F6E 
+ 892      6720696E 
+ 892      7400
+ 893              	.LASF28:
+ 894 022c 55534246 		.ascii	"USBFS_lunCount\000"
+ 894      535F6C75 
+ 894      6E436F75 
+ 894      6E7400
+ 895              	.LASF2:
+ 896 023b 73686F72 		.ascii	"short int\000"
+ 896      7420696E 
+ 896      7400
+ 897              	.LASF25:
+ 898 0245 72657175 		.ascii	"requestHandled\000"
+ 898      65737448 
+ 898      616E646C 
+ 898      656400
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\cci369Lb.s 			page 21
+
+
+ 899              	.LASF33:
+ 900 0254 433A5C5F 		.ascii	"C:\\_User\\GitHub Projects\\PulseGen\\PulseGen.cywr"
+ 900      55736572 
+ 900      5C476974 
+ 900      48756220 
+ 900      50726F6A 
+ 901 0283 6B5F2E41 		.ascii	"k_.Archive01\\Design93\\PulseGenerator.cydsn\000"
+ 901      72636869 
+ 901      76653031 
+ 901      5C446573 
+ 901      69676E39 
+ 902              	.LASF4:
+ 903 02ae 6C6F6E67 		.ascii	"long int\000"
+ 903      20696E74 
+ 903      00
+ 904              	.LASF13:
+ 905 02b7 63686172 		.ascii	"char\000"
+ 905      00
+ 906              	.LASF14:
+ 907 02bc 6C6F6E67 		.ascii	"long double\000"
+ 907      20646F75 
+ 907      626C6500 
+ 908              	.LASF35:
+ 909 02c8 55534246 		.ascii	"USBFS_MSC_SetLunCount\000"
+ 909      535F4D53 
+ 909      435F5365 
+ 909      744C756E 
+ 909      436F756E 
+ 910              	.LASF0:
+ 911 02de 7369676E 		.ascii	"signed char\000"
+ 911      65642063 
+ 911      68617200 
+ 912              	.LASF17:
+ 913 02ea 6C656E67 		.ascii	"length\000"
+ 913      746800
+ 914              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

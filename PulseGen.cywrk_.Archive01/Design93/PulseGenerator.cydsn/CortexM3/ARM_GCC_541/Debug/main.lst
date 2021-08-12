@@ -1,0 +1,2117 @@
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccYu8MZD.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"main.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.set_usbByteArray,"ax",%progbits
+  20              		.align	2
+  21              		.global	set_usbByteArray
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	set_usbByteArray, %function
+  25              	set_usbByteArray:
+  26              	.LFB65:
+  27              		.file 1 "main.c"
+   1:main.c        **** /* ========================================
+   2:main.c        ****  *
+   3:main.c        ****  * Copyright YOUR COMPANY, THE YEAR
+   4:main.c        ****  * All Rights Reserved
+   5:main.c        ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   6:main.c        ****  *
+   7:main.c        ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   8:main.c        ****  * WHICH IS THE PROPERTY OF your company.
+   9:main.c        ****  *
+  10:main.c        ****  * ========================================
+  11:main.c        **** */
+  12:main.c        **** #include <math.h>
+  13:main.c        **** #include <stdio.h>
+  14:main.c        **** #include <stdlib.h>
+  15:main.c        **** #include "AMC.h"
+  16:main.c        **** #include "usb.h"
+  17:main.c        **** #include "eeprom_amc.h"
+  18:main.c        **** #include <string.h>
+  19:main.c        **** 
+  20:main.c        **** void set_usbByteArray( float usbValue, uint8 usbStartByte );
+  21:main.c        **** void Enable_Set( CYBIT OnOff );
+  22:main.c        **** void Direction_Set( CYBIT OnOff );
+  23:main.c        **** 
+  24:main.c        **** //usb
+  25:main.c        **** static uint8 IN_Data_Buffer[MAX_USB_BYTES];
+  26:main.c        **** static uint8 OUT_Data_Buffer[MAX_USB_BYTES];
+  27:main.c        **** 
+  28:main.c        **** /* USB */
+  29:main.c        **** enum usbCommands {	
+  30:main.c        ****     usbSetEnable = 0u,
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccYu8MZD.s 			page 2
+
+
+  31:main.c        ****     usbSetDirection,
+  32:main.c        ****     usbSetCounts,
+  33:main.c        ****     usbSetClock,
+  34:main.c        ****     usbStartMotion,
+  35:main.c        **** };
+  36:main.c        **** 
+  37:main.c        **** uint32 pulses = 0;
+  38:main.c        **** CYBIT direction = TRUE;
+  39:main.c        **** CYBIT enable = TRUE;
+  40:main.c        **** 
+  41:main.c        **** int main()
+  42:main.c        **** {
+  43:main.c        ****     CyGlobalIntEnable; /* Enable global interrupts. */
+  44:main.c        ****     
+  45:main.c        ****     usb_Init( usbHidOutEpHandler, IN_Data_Buffer, OUT_Data_Buffer);
+  46:main.c        ****     
+  47:main.c        ****     Timer1_Start( );
+  48:main.c        ****     
+  49:main.c        ****     Enable_Set( TRUE );
+  50:main.c        ****     
+  51:main.c        ****     for(;;)
+  52:main.c        ****     {        
+  53:main.c        ****         usb_Tick();
+  54:main.c        ****     }
+  55:main.c        **** }
+  56:main.c        **** void set_usbByteArray( float usbValue, uint8 usbStartByte )
+  57:main.c        **** {	
+  28              		.loc 1 57 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33              	.LVL0:
+  34 0000 10B4     		push	{r4}
+  35              		.cfi_def_cfa_offset 4
+  36              		.cfi_offset 4, -4
+  37              	.LVL1:
+  58:main.c        **** 	uint32 usbValue_UINT32 = *(uint32 *)&usbValue;	
+  59:main.c        **** 		
+  60:main.c        **** 	/* Load Byte 1 of usbCmdResponse into the Input Buffer */
+  61:main.c        **** 	IN_Data_Buffer[usbStartByte + 3] = (int8) 0x000000FF & usbValue_UINT32;
+  38              		.loc 1 61 0
+  39 0002 CA1C     		adds	r2, r1, #3
+  40 0004 054B     		ldr	r3, .L3
+  41 0006 9854     		strb	r0, [r3, r2]
+  62:main.c        **** 	
+  63:main.c        **** 	/* Load Byte 2 of usbCmdResponse into the Input Buffer */
+  64:main.c        **** 	IN_Data_Buffer[usbStartByte + 2] = (int8) 0x000000FF & (usbValue_UINT32 >>  8);
+  42              		.loc 1 64 0
+  43 0008 8A1C     		adds	r2, r1, #2
+  44 000a 040A     		lsrs	r4, r0, #8
+  45 000c 9C54     		strb	r4, [r3, r2]
+  65:main.c        **** 	
+  66:main.c        **** 	/* Load Byte 3 of usbCmdResponse into the Input Buffer */
+  67:main.c        **** 	IN_Data_Buffer[usbStartByte + 1] = (int8) 0x000000FF & (usbValue_UINT32 >>  16);
+  46              		.loc 1 67 0
+  47 000e 4A1C     		adds	r2, r1, #1
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccYu8MZD.s 			page 3
+
+
+  48 0010 040C     		lsrs	r4, r0, #16
+  49 0012 9C54     		strb	r4, [r3, r2]
+  68:main.c        **** 	
+  69:main.c        **** 	/* Load Byte 4 of usbCmdResponse into the Input Buffer */
+  70:main.c        **** 	IN_Data_Buffer[usbStartByte] = (int8) 0x000000FF & (usbValue_UINT32 >> 24);
+  50              		.loc 1 70 0
+  51 0014 000E     		lsrs	r0, r0, #24
+  52              	.LVL2:
+  53 0016 5854     		strb	r0, [r3, r1]
+  71:main.c        **** }
+  54              		.loc 1 71 0
+  55 0018 10BC     		pop	{r4}
+  56              		.cfi_restore 4
+  57              		.cfi_def_cfa_offset 0
+  58 001a 7047     		bx	lr
+  59              	.L4:
+  60              		.align	2
+  61              	.L3:
+  62 001c 00000000 		.word	.LANCHOR0
+  63              		.cfi_endproc
+  64              	.LFE65:
+  65              		.size	set_usbByteArray, .-set_usbByteArray
+  66              		.section	.text.USBFS_EP_2_ISR_ExitCallback,"ax",%progbits
+  67              		.align	2
+  68              		.global	USBFS_EP_2_ISR_ExitCallback
+  69              		.thumb
+  70              		.thumb_func
+  71              		.type	USBFS_EP_2_ISR_ExitCallback, %function
+  72              	USBFS_EP_2_ISR_ExitCallback:
+  73              	.LFB67:
+  72:main.c        **** void usbHidOutEpHandler( void )
+  73:main.c        **** {
+  74:main.c        **** 	float floatVal1 = 0.0f;
+  75:main.c        **** 	float floatValOut = 0.0f;
+  76:main.c        **** 	
+  77:main.c        **** 	switch(OUT_Data_Buffer[0])
+  78:main.c        **** 	{        
+  79:main.c        **** 		case usbSetEnable:
+  80:main.c        ****         {            
+  81:main.c        ****             floatVal1 = *((float*)(&OUT_Data_Buffer[1]));
+  82:main.c        ****             enable = (CYBIT)floatVal1;      
+  83:main.c        ****             if(!enable)
+  84:main.c        ****             {
+  85:main.c        ****                 Enable_Set( TRUE );
+  86:main.c        ****             }
+  87:main.c        ****             else
+  88:main.c        ****             {
+  89:main.c        ****                 Enable_Set( FALSE );
+  90:main.c        ****             }     
+  91:main.c        ****             
+  92:main.c        **** 			break;
+  93:main.c        ****         }
+  94:main.c        **** 		case usbSetDirection:
+  95:main.c        ****         {            
+  96:main.c        ****             floatVal1 = *((float*)(&OUT_Data_Buffer[1]));
+  97:main.c        ****             direction = (CYBIT)floatVal1;      
+  98:main.c        ****             if(!direction)
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccYu8MZD.s 			page 4
+
+
+  99:main.c        ****             {
+ 100:main.c        ****                 Direction_Set( FALSE );
+ 101:main.c        ****             }
+ 102:main.c        ****             else
+ 103:main.c        ****             {
+ 104:main.c        ****                 Direction_Set( TRUE );
+ 105:main.c        ****             }     
+ 106:main.c        ****             
+ 107:main.c        **** 			break;
+ 108:main.c        ****         }
+ 109:main.c        **** 		case usbSetCounts:
+ 110:main.c        ****         {
+ 111:main.c        **** 			floatVal1 = *((float*)(&OUT_Data_Buffer[1]));
+ 112:main.c        ****             if(floatVal1 > 2.0f)
+ 113:main.c        ****             {
+ 114:main.c        ****                 pulses = (uint32)floatVal1 - 2;
+ 115:main.c        ****             }
+ 116:main.c        ****             else
+ 117:main.c        ****             {
+ 118:main.c        ****                 pulses = 5u;
+ 119:main.c        ****             }
+ 120:main.c        ****     		Timer1_WritePeriod(pulses);
+ 121:main.c        **** 			break;
+ 122:main.c        ****         }
+ 123:main.c        **** 		case usbSetClock:
+ 124:main.c        ****         {            
+ 125:main.c        ****             uint16 divider = 0u;
+ 126:main.c        ****             floatVal1 = *((float*)(&OUT_Data_Buffer[1]));
+ 127:main.c        ****             divider = 100000.0f / floatVal1;
+ 128:main.c        ****             Clock_1_SetDivider((uint16)((100000.0f/(floatVal1))));
+ 129:main.c        ****             
+ 130:main.c        **** 			break;
+ 131:main.c        ****         }
+ 132:main.c        **** 		case usbStartMotion:
+ 133:main.c        ****         {            
+ 134:main.c        ****              TrigPulseTrain_Write( 1 );
+ 135:main.c        ****     		
+ 136:main.c        **** 			break;
+ 137:main.c        ****         }
+ 138:main.c        **** 
+ 139:main.c        **** 		default:
+ 140:main.c        **** 			break;
+ 141:main.c        **** 	}
+ 142:main.c        **** 		
+ 143:main.c        **** 	
+ 144:main.c        **** 	// Send data back to PC over USB
+ 145:main.c        **** 	memset(&IN_Data_Buffer[0], (uint8)0, MAX_USB_BYTES);
+ 146:main.c        **** 	set_usbByteArray( floatValOut, 0u );
+ 147:main.c        **** 	usb_Load_EP1_Bulk_EP();
+ 148:main.c        **** 
+ 149:main.c        **** }
+ 150:main.c        **** void USBFS_EP_2_ISR_ExitCallback( void )
+ 151:main.c        **** {
+  74              		.loc 1 151 0
+  75              		.cfi_startproc
+  76              		@ args = 0, pretend = 0, frame = 0
+  77              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccYu8MZD.s 			page 5
+
+
+  78 0000 08B5     		push	{r3, lr}
+  79              		.cfi_def_cfa_offset 8
+  80              		.cfi_offset 3, -8
+  81              		.cfi_offset 14, -4
+ 152:main.c        ****     usb_Load_EP2();   
+  82              		.loc 1 152 0
+  83 0002 FFF7FEFF 		bl	usb_Load_EP2
+  84              	.LVL3:
+  85 0006 08BD     		pop	{r3, pc}
+  86              		.cfi_endproc
+  87              	.LFE67:
+  88              		.size	USBFS_EP_2_ISR_ExitCallback, .-USBFS_EP_2_ISR_ExitCallback
+  89              		.section	.text.Enable_Set,"ax",%progbits
+  90              		.align	2
+  91              		.global	Enable_Set
+  92              		.thumb
+  93              		.thumb_func
+  94              		.type	Enable_Set, %function
+  95              	Enable_Set:
+  96              	.LFB68:
+ 153:main.c        **** }
+ 154:main.c        **** 
+ 155:main.c        **** void Enable_Set( CYBIT OnOff )
+ 156:main.c        **** {
+  97              		.loc 1 156 0
+  98              		.cfi_startproc
+  99              		@ args = 0, pretend = 0, frame = 0
+ 100              		@ frame_needed = 0, uses_anonymous_args = 0
+ 101              	.LVL4:
+ 102 0000 10B5     		push	{r4, lr}
+ 103              		.cfi_def_cfa_offset 8
+ 104              		.cfi_offset 4, -8
+ 105              		.cfi_offset 14, -4
+ 106 0002 0446     		mov	r4, r0
+ 157:main.c        ****     uint8   CurrentVal;
+ 158:main.c        ****     CurrentVal = EnableAndDirection_Read();                                 // Read current LED set
+ 107              		.loc 1 158 0
+ 108 0004 FFF7FEFF 		bl	EnableAndDirection_Read
+ 109              	.LVL5:
+ 159:main.c        ****     if(OnOff)
+ 110              		.loc 1 159 0
+ 111 0008 1CB1     		cbz	r4, .L8
+ 160:main.c        ****     {
+ 161:main.c        ****         CurrentVal |= 0b00000001;
+ 112              		.loc 1 161 0
+ 113 000a 40F00100 		orr	r0, r0, #1
+ 114              	.LVL6:
+ 115 000e C0B2     		uxtb	r0, r0
+ 116              	.LVL7:
+ 117 0010 01E0     		b	.L9
+ 118              	.L8:
+ 162:main.c        ****     }
+ 163:main.c        ****     else
+ 164:main.c        ****     {
+ 165:main.c        ****         CurrentVal &= ~0b00000001;
+ 119              		.loc 1 165 0
+ 120 0012 00F0FE00 		and	r0, r0, #254
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccYu8MZD.s 			page 6
+
+
+ 121              	.LVL8:
+ 122              	.L9:
+ 166:main.c        ****     }
+ 167:main.c        ****     EnableAndDirection_Write( CurrentVal );
+ 123              		.loc 1 167 0
+ 124 0016 FFF7FEFF 		bl	EnableAndDirection_Write
+ 125              	.LVL9:
+ 126 001a 10BD     		pop	{r4, pc}
+ 127              		.cfi_endproc
+ 128              	.LFE68:
+ 129              		.size	Enable_Set, .-Enable_Set
+ 130              		.section	.text.main,"ax",%progbits
+ 131              		.align	2
+ 132              		.global	main
+ 133              		.thumb
+ 134              		.thumb_func
+ 135              		.type	main, %function
+ 136              	main:
+ 137              	.LFB64:
+  42:main.c        ****     CyGlobalIntEnable; /* Enable global interrupts. */
+ 138              		.loc 1 42 0
+ 139              		.cfi_startproc
+ 140              		@ Volatile: function does not return.
+ 141              		@ args = 0, pretend = 0, frame = 0
+ 142              		@ frame_needed = 0, uses_anonymous_args = 0
+ 143 0000 08B5     		push	{r3, lr}
+ 144              		.cfi_def_cfa_offset 8
+ 145              		.cfi_offset 3, -8
+ 146              		.cfi_offset 14, -4
+  43:main.c        ****     
+ 147              		.loc 1 43 0
+ 148              		.syntax unified
+ 149              	@ 43 "main.c" 1
+ 150 0002 62B6     		CPSIE   i
+ 151              	@ 0 "" 2
+  45:main.c        ****     
+ 152              		.loc 1 45 0
+ 153              		.thumb
+ 154              		.syntax unified
+ 155 0004 0649     		ldr	r1, .L14
+ 156 0006 01F14002 		add	r2, r1, #64
+ 157 000a 0648     		ldr	r0, .L14+4
+ 158 000c FFF7FEFF 		bl	usb_Init
+ 159              	.LVL10:
+  47:main.c        ****     
+ 160              		.loc 1 47 0
+ 161 0010 FFF7FEFF 		bl	Timer1_Start
+ 162              	.LVL11:
+  49:main.c        ****     
+ 163              		.loc 1 49 0
+ 164 0014 0120     		movs	r0, #1
+ 165 0016 FFF7FEFF 		bl	Enable_Set
+ 166              	.LVL12:
+ 167              	.L12:
+  53:main.c        ****     }
+ 168              		.loc 1 53 0 discriminator 1
+ 169 001a FFF7FEFF 		bl	usb_Tick
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccYu8MZD.s 			page 7
+
+
+ 170              	.LVL13:
+ 171 001e FCE7     		b	.L12
+ 172              	.L15:
+ 173              		.align	2
+ 174              	.L14:
+ 175 0020 00000000 		.word	.LANCHOR0
+ 176 0024 00000000 		.word	usbHidOutEpHandler
+ 177              		.cfi_endproc
+ 178              	.LFE64:
+ 179              		.size	main, .-main
+ 180              		.section	.text.Direction_Set,"ax",%progbits
+ 181              		.align	2
+ 182              		.global	Direction_Set
+ 183              		.thumb
+ 184              		.thumb_func
+ 185              		.type	Direction_Set, %function
+ 186              	Direction_Set:
+ 187              	.LFB69:
+ 168:main.c        **** }
+ 169:main.c        **** void Direction_Set( CYBIT OnOff )
+ 170:main.c        **** {
+ 188              		.loc 1 170 0
+ 189              		.cfi_startproc
+ 190              		@ args = 0, pretend = 0, frame = 0
+ 191              		@ frame_needed = 0, uses_anonymous_args = 0
+ 192              	.LVL14:
+ 193 0000 10B5     		push	{r4, lr}
+ 194              		.cfi_def_cfa_offset 8
+ 195              		.cfi_offset 4, -8
+ 196              		.cfi_offset 14, -4
+ 197 0002 0446     		mov	r4, r0
+ 171:main.c        ****     uint8   CurrentVal;
+ 172:main.c        ****     CurrentVal = EnableAndDirection_Read();                                 // Read current LED set
+ 198              		.loc 1 172 0
+ 199 0004 FFF7FEFF 		bl	EnableAndDirection_Read
+ 200              	.LVL15:
+ 173:main.c        ****     if(OnOff)
+ 201              		.loc 1 173 0
+ 202 0008 1CB1     		cbz	r4, .L17
+ 174:main.c        ****     {
+ 175:main.c        ****         CurrentVal |= 0b00000010;
+ 203              		.loc 1 175 0
+ 204 000a 40F00200 		orr	r0, r0, #2
+ 205              	.LVL16:
+ 206 000e C0B2     		uxtb	r0, r0
+ 207              	.LVL17:
+ 208 0010 01E0     		b	.L18
+ 209              	.L17:
+ 176:main.c        ****     }
+ 177:main.c        ****     else
+ 178:main.c        ****     {
+ 179:main.c        ****         CurrentVal &= ~0b00000010;
+ 210              		.loc 1 179 0
+ 211 0012 00F0FD00 		and	r0, r0, #253
+ 212              	.LVL18:
+ 213              	.L18:
+ 180:main.c        ****     }
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccYu8MZD.s 			page 8
+
+
+ 181:main.c        ****     EnableAndDirection_Write( CurrentVal );
+ 214              		.loc 1 181 0
+ 215 0016 FFF7FEFF 		bl	EnableAndDirection_Write
+ 216              	.LVL19:
+ 217 001a 10BD     		pop	{r4, pc}
+ 218              		.cfi_endproc
+ 219              	.LFE69:
+ 220              		.size	Direction_Set, .-Direction_Set
+ 221              		.global	__aeabi_f2uiz
+ 222              		.global	__aeabi_fcmpgt
+ 223              		.global	__aeabi_fdiv
+ 224              		.section	.text.usbHidOutEpHandler,"ax",%progbits
+ 225              		.align	2
+ 226              		.global	usbHidOutEpHandler
+ 227              		.thumb
+ 228              		.thumb_func
+ 229              		.type	usbHidOutEpHandler, %function
+ 230              	usbHidOutEpHandler:
+ 231              	.LFB66:
+  73:main.c        **** 	float floatVal1 = 0.0f;
+ 232              		.loc 1 73 0
+ 233              		.cfi_startproc
+ 234              		@ args = 0, pretend = 0, frame = 0
+ 235              		@ frame_needed = 0, uses_anonymous_args = 0
+ 236 0000 10B5     		push	{r4, lr}
+ 237              		.cfi_def_cfa_offset 8
+ 238              		.cfi_offset 4, -8
+ 239              		.cfi_offset 14, -4
+ 240              	.LVL20:
+  77:main.c        **** 	{        
+ 241              		.loc 1 77 0
+ 242 0002 314B     		ldr	r3, .L36
+ 243 0004 93F84030 		ldrb	r3, [r3, #64]	@ zero_extendqisi2
+ 244 0008 042B     		cmp	r3, #4
+ 245 000a 50D8     		bhi	.L21
+ 246 000c DFE803F0 		tbb	[pc, r3]
+ 247              	.L23:
+ 248 0010 03       		.byte	(.L22-.L23)/2
+ 249 0011 14       		.byte	(.L24-.L23)/2
+ 250 0012 24       		.byte	(.L25-.L23)/2
+ 251 0013 3F       		.byte	(.L26-.L23)/2
+ 252 0014 4C       		.byte	(.L27-.L23)/2
+ 253 0015 00       		.p2align 1
+ 254              	.L22:
+  81:main.c        ****             enable = (CYBIT)floatVal1;      
+ 255              		.loc 1 81 0
+ 256 0016 2C4B     		ldr	r3, .L36
+ 257 0018 D3F84100 		ldr	r0, [r3, #65]	@ unaligned
+ 258              	.LVL21:
+  82:main.c        ****             if(!enable)
+ 259              		.loc 1 82 0
+ 260 001c FFF7FEFF 		bl	__aeabi_f2uiz
+ 261              	.LVL22:
+ 262 0020 C0B2     		uxtb	r0, r0
+ 263 0022 2A4B     		ldr	r3, .L36+4
+ 264 0024 1870     		strb	r0, [r3]
+  83:main.c        ****             {
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccYu8MZD.s 			page 9
+
+
+ 265              		.loc 1 83 0
+ 266 0026 18B9     		cbnz	r0, .L28
+  85:main.c        ****             }
+ 267              		.loc 1 85 0
+ 268 0028 0120     		movs	r0, #1
+ 269 002a FFF7FEFF 		bl	Enable_Set
+ 270              	.LVL23:
+ 271 002e 3EE0     		b	.L21
+ 272              	.L28:
+  89:main.c        ****             }     
+ 273              		.loc 1 89 0
+ 274 0030 0020     		movs	r0, #0
+ 275 0032 FFF7FEFF 		bl	Enable_Set
+ 276              	.LVL24:
+ 277 0036 3AE0     		b	.L21
+ 278              	.LVL25:
+ 279              	.L24:
+  96:main.c        ****             direction = (CYBIT)floatVal1;      
+ 280              		.loc 1 96 0
+ 281 0038 234B     		ldr	r3, .L36
+ 282 003a D3F84100 		ldr	r0, [r3, #65]	@ unaligned
+ 283              	.LVL26:
+  97:main.c        ****             if(!direction)
+ 284              		.loc 1 97 0
+ 285 003e FFF7FEFF 		bl	__aeabi_f2uiz
+ 286              	.LVL27:
+ 287 0042 C0B2     		uxtb	r0, r0
+ 288 0044 214B     		ldr	r3, .L36+4
+ 289 0046 5870     		strb	r0, [r3, #1]
+  98:main.c        ****             {
+ 290              		.loc 1 98 0
+ 291 0048 10B9     		cbnz	r0, .L29
+ 100:main.c        ****             }
+ 292              		.loc 1 100 0
+ 293 004a FFF7FEFF 		bl	Direction_Set
+ 294              	.LVL28:
+ 295 004e 2EE0     		b	.L21
+ 296              	.L29:
+ 104:main.c        ****             }     
+ 297              		.loc 1 104 0
+ 298 0050 0120     		movs	r0, #1
+ 299 0052 FFF7FEFF 		bl	Direction_Set
+ 300              	.LVL29:
+ 301 0056 2AE0     		b	.L21
+ 302              	.LVL30:
+ 303              	.L25:
+ 111:main.c        ****             if(floatVal1 > 2.0f)
+ 304              		.loc 1 111 0
+ 305 0058 1B4B     		ldr	r3, .L36
+ 306 005a D3F84140 		ldr	r4, [r3, #65]	@ unaligned
+ 307              	.LVL31:
+ 112:main.c        ****             {
+ 308              		.loc 1 112 0
+ 309 005e 4FF08041 		mov	r1, #1073741824
+ 310 0062 2046     		mov	r0, r4
+ 311 0064 FFF7FEFF 		bl	__aeabi_fcmpgt
+ 312              	.LVL32:
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccYu8MZD.s 			page 10
+
+
+ 313 0068 38B1     		cbz	r0, .L34
+ 114:main.c        ****             }
+ 314              		.loc 1 114 0
+ 315 006a 2046     		mov	r0, r4
+ 316 006c FFF7FEFF 		bl	__aeabi_f2uiz
+ 317              	.LVL33:
+ 318 0070 0238     		subs	r0, r0, #2
+ 319 0072 154B     		ldr	r3, .L36
+ 320 0074 C3F88000 		str	r0, [r3, #128]
+ 321 0078 03E0     		b	.L32
+ 322              	.L34:
+ 118:main.c        ****             }
+ 323              		.loc 1 118 0
+ 324 007a 0522     		movs	r2, #5
+ 325 007c 124B     		ldr	r3, .L36
+ 326 007e C3F88020 		str	r2, [r3, #128]
+ 327              	.L32:
+ 120:main.c        **** 			break;
+ 328              		.loc 1 120 0
+ 329 0082 114B     		ldr	r3, .L36
+ 330 0084 D3F88000 		ldr	r0, [r3, #128]
+ 331 0088 FFF7FEFF 		bl	Timer1_WritePeriod
+ 332              	.LVL34:
+ 121:main.c        ****         }
+ 333              		.loc 1 121 0
+ 334 008c 0FE0     		b	.L21
+ 335              	.LVL35:
+ 336              	.L26:
+ 337              	.LBB2:
+ 126:main.c        ****             divider = 100000.0f / floatVal1;
+ 338              		.loc 1 126 0
+ 339 008e 0E4B     		ldr	r3, .L36
+ 340 0090 D3F84110 		ldr	r1, [r3, #65]	@ unaligned
+ 341              	.LVL36:
+ 127:main.c        ****             Clock_1_SetDivider((uint16)((100000.0f/(floatVal1))));
+ 342              		.loc 1 127 0
+ 343 0094 0E48     		ldr	r0, .L36+8
+ 344 0096 FFF7FEFF 		bl	__aeabi_fdiv
+ 345              	.LVL37:
+ 128:main.c        ****             
+ 346              		.loc 1 128 0
+ 347 009a FFF7FEFF 		bl	__aeabi_f2uiz
+ 348              	.LVL38:
+ 349 009e 0121     		movs	r1, #1
+ 350 00a0 80B2     		uxth	r0, r0
+ 351 00a2 FFF7FEFF 		bl	Clock_1_SetDividerRegister
+ 352              	.LVL39:
+ 130:main.c        ****         }
+ 353              		.loc 1 130 0
+ 354 00a6 02E0     		b	.L21
+ 355              	.LVL40:
+ 356              	.L27:
+ 357              	.LBE2:
+ 134:main.c        ****     		
+ 358              		.loc 1 134 0
+ 359 00a8 0120     		movs	r0, #1
+ 360 00aa FFF7FEFF 		bl	TrigPulseTrain_Write
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccYu8MZD.s 			page 11
+
+
+ 361              	.LVL41:
+ 362              	.L21:
+ 145:main.c        **** 	set_usbByteArray( floatValOut, 0u );
+ 363              		.loc 1 145 0
+ 364 00ae 4022     		movs	r2, #64
+ 365 00b0 0021     		movs	r1, #0
+ 366 00b2 0548     		ldr	r0, .L36
+ 367 00b4 FFF7FEFF 		bl	memset
+ 368              	.LVL42:
+ 146:main.c        **** 	usb_Load_EP1_Bulk_EP();
+ 369              		.loc 1 146 0
+ 370 00b8 0021     		movs	r1, #0
+ 371 00ba 0020     		movs	r0, #0
+ 372 00bc FFF7FEFF 		bl	set_usbByteArray
+ 373              	.LVL43:
+ 147:main.c        **** 
+ 374              		.loc 1 147 0
+ 375 00c0 FFF7FEFF 		bl	usb_Load_EP1_Bulk_EP
+ 376              	.LVL44:
+ 377 00c4 10BD     		pop	{r4, pc}
+ 378              	.L37:
+ 379 00c6 00BF     		.align	2
+ 380              	.L36:
+ 381 00c8 00000000 		.word	.LANCHOR0
+ 382 00cc 00000000 		.word	.LANCHOR1
+ 383 00d0 0050C347 		.word	1203982336
+ 384              		.cfi_endproc
+ 385              	.LFE66:
+ 386              		.size	usbHidOutEpHandler, .-usbHidOutEpHandler
+ 387              		.global	enable
+ 388              		.global	direction
+ 389              		.global	pulses
+ 390              		.data
+ 391              		.set	.LANCHOR1,. + 0
+ 392              		.type	enable, %object
+ 393              		.size	enable, 1
+ 394              	enable:
+ 395 0000 01       		.byte	1
+ 396              		.type	direction, %object
+ 397              		.size	direction, 1
+ 398              	direction:
+ 399 0001 01       		.byte	1
+ 400              		.bss
+ 401              		.align	2
+ 402              		.set	.LANCHOR0,. + 0
+ 403              		.type	IN_Data_Buffer, %object
+ 404              		.size	IN_Data_Buffer, 64
+ 405              	IN_Data_Buffer:
+ 406 0000 00000000 		.space	64
+ 406      00000000 
+ 406      00000000 
+ 406      00000000 
+ 406      00000000 
+ 407              		.type	OUT_Data_Buffer, %object
+ 408              		.size	OUT_Data_Buffer, 64
+ 409              	OUT_Data_Buffer:
+ 410 0040 00000000 		.space	64
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccYu8MZD.s 			page 12
+
+
+ 410      00000000 
+ 410      00000000 
+ 410      00000000 
+ 410      00000000 
+ 411              		.type	pulses, %object
+ 412              		.size	pulses, 4
+ 413              	pulses:
+ 414 0080 00000000 		.space	4
+ 415              		.text
+ 416              	.Letext0:
+ 417              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.1\\psoc creator\\import\\gnu\\arm\\5.4.
+ 418              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.1\\psoc creator\\import\\gnu\\arm\\5.4.
+ 419              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 420              		.file 5 "Generated_Source\\PSoC5/core_cm3.h"
+ 421              		.file 6 "..\\AMC_Lib\\include/usb.h"
+ 422              		.file 7 "Generated_Source\\PSoC5/EnableAndDirection.h"
+ 423              		.file 8 "Generated_Source\\PSoC5/Timer1.h"
+ 424              		.file 9 "Generated_Source\\PSoC5/Clock_1.h"
+ 425              		.file 10 "Generated_Source\\PSoC5/TrigPulseTrain.h"
+ 426              		.section	.debug_info,"",%progbits
+ 427              	.Ldebug_info0:
+ 428 0000 3A040000 		.4byte	0x43a
+ 429 0004 0400     		.2byte	0x4
+ 430 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 431 000a 04       		.byte	0x4
+ 432 000b 01       		.uleb128 0x1
+ 433 000c DA000000 		.4byte	.LASF54
+ 434 0010 0C       		.byte	0xc
+ 435 0011 CD020000 		.4byte	.LASF55
+ 436 0015 16030000 		.4byte	.LASF56
+ 437 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 438 001d 00000000 		.4byte	0
+ 439 0021 00000000 		.4byte	.Ldebug_line0
+ 440 0025 02       		.uleb128 0x2
+ 441 0026 04       		.byte	0x4
+ 442 0027 04       		.byte	0x4
+ 443 0028 91000000 		.4byte	.LASF0
+ 444 002c 02       		.uleb128 0x2
+ 445 002d 04       		.byte	0x4
+ 446 002e 07       		.byte	0x7
+ 447 002f 27020000 		.4byte	.LASF1
+ 448 0033 02       		.uleb128 0x2
+ 449 0034 02       		.byte	0x2
+ 450 0035 07       		.byte	0x7
+ 451 0036 38000000 		.4byte	.LASF2
+ 452 003a 03       		.uleb128 0x3
+ 453 003b 04       		.byte	0x4
+ 454 003c 05       		.byte	0x5
+ 455 003d 696E7400 		.ascii	"int\000"
+ 456 0041 02       		.uleb128 0x2
+ 457 0042 08       		.byte	0x8
+ 458 0043 05       		.byte	0x5
+ 459 0044 BF020000 		.4byte	.LASF3
+ 460 0048 02       		.uleb128 0x2
+ 461 0049 08       		.byte	0x8
+ 462 004a 04       		.byte	0x4
+ 463 004b 79030000 		.4byte	.LASF4
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccYu8MZD.s 			page 13
+
+
+ 464 004f 02       		.uleb128 0x2
+ 465 0050 01       		.byte	0x1
+ 466 0051 06       		.byte	0x6
+ 467 0052 A4000000 		.4byte	.LASF5
+ 468 0056 02       		.uleb128 0x2
+ 469 0057 01       		.byte	0x1
+ 470 0058 08       		.byte	0x8
+ 471 0059 CC000000 		.4byte	.LASF6
+ 472 005d 02       		.uleb128 0x2
+ 473 005e 02       		.byte	0x2
+ 474 005f 05       		.byte	0x5
+ 475 0060 D9020000 		.4byte	.LASF7
+ 476 0064 04       		.uleb128 0x4
+ 477 0065 19000000 		.4byte	.LASF14
+ 478 0069 02       		.byte	0x2
+ 479 006a 3F       		.byte	0x3f
+ 480 006b 6F000000 		.4byte	0x6f
+ 481 006f 02       		.uleb128 0x2
+ 482 0070 04       		.byte	0x4
+ 483 0071 05       		.byte	0x5
+ 484 0072 70030000 		.4byte	.LASF8
+ 485 0076 02       		.uleb128 0x2
+ 486 0077 04       		.byte	0x4
+ 487 0078 07       		.byte	0x7
+ 488 0079 68010000 		.4byte	.LASF9
+ 489 007d 02       		.uleb128 0x2
+ 490 007e 08       		.byte	0x8
+ 491 007f 07       		.byte	0x7
+ 492 0080 54020000 		.4byte	.LASF10
+ 493 0084 02       		.uleb128 0x2
+ 494 0085 04       		.byte	0x4
+ 495 0086 07       		.byte	0x7
+ 496 0087 9C020000 		.4byte	.LASF11
+ 497 008b 02       		.uleb128 0x2
+ 498 008c 01       		.byte	0x1
+ 499 008d 08       		.byte	0x8
+ 500 008e D4020000 		.4byte	.LASF12
+ 501 0092 02       		.uleb128 0x2
+ 502 0093 08       		.byte	0x8
+ 503 0094 04       		.byte	0x4
+ 504 0095 9A030000 		.4byte	.LASF13
+ 505 0099 04       		.uleb128 0x4
+ 506 009a 94020000 		.4byte	.LASF15
+ 507 009e 03       		.byte	0x3
+ 508 009f 2C       		.byte	0x2c
+ 509 00a0 64000000 		.4byte	0x64
+ 510 00a4 04       		.uleb128 0x4
+ 511 00a5 72000000 		.4byte	.LASF16
+ 512 00a9 04       		.byte	0x4
+ 513 00aa B4       		.byte	0xb4
+ 514 00ab 56000000 		.4byte	0x56
+ 515 00af 04       		.uleb128 0x4
+ 516 00b0 02020000 		.4byte	.LASF17
+ 517 00b4 04       		.byte	0x4
+ 518 00b5 B5       		.byte	0xb5
+ 519 00b6 33000000 		.4byte	0x33
+ 520 00ba 04       		.uleb128 0x4
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccYu8MZD.s 			page 14
+
+
+ 521 00bb 0F020000 		.4byte	.LASF18
+ 522 00bf 04       		.byte	0x4
+ 523 00c0 B6       		.byte	0xb6
+ 524 00c1 76000000 		.4byte	0x76
+ 525 00c5 04       		.uleb128 0x4
+ 526 00c6 F0010000 		.4byte	.LASF19
+ 527 00ca 04       		.byte	0x4
+ 528 00cb B7       		.byte	0xb7
+ 529 00cc 4F000000 		.4byte	0x4f
+ 530 00d0 05       		.uleb128 0x5
+ 531 00d1 A5020000 		.4byte	.LASF57
+ 532 00d5 01       		.byte	0x1
+ 533 00d6 56000000 		.4byte	0x56
+ 534 00da 01       		.byte	0x1
+ 535 00db 1D       		.byte	0x1d
+ 536 00dc FF000000 		.4byte	0xff
+ 537 00e0 06       		.uleb128 0x6
+ 538 00e1 97000000 		.4byte	.LASF20
+ 539 00e5 00       		.byte	0
+ 540 00e6 06       		.uleb128 0x6
+ 541 00e7 06030000 		.4byte	.LASF21
+ 542 00eb 01       		.byte	0x1
+ 543 00ec 06       		.uleb128 0x6
+ 544 00ed C9010000 		.4byte	.LASF22
+ 545 00f1 02       		.byte	0x2
+ 546 00f2 06       		.uleb128 0x6
+ 547 00f3 A1030000 		.4byte	.LASF23
+ 548 00f7 03       		.byte	0x3
+ 549 00f8 06       		.uleb128 0x6
+ 550 00f9 AD030000 		.4byte	.LASF24
+ 551 00fd 04       		.byte	0x4
+ 552 00fe 00       		.byte	0
+ 553 00ff 07       		.uleb128 0x7
+ 554 0100 B8010000 		.4byte	.LASF27
+ 555 0104 01       		.byte	0x1
+ 556 0105 38       		.byte	0x38
+ 557 0106 00000000 		.4byte	.LFB65
+ 558 010a 20000000 		.4byte	.LFE65-.LFB65
+ 559 010e 01       		.uleb128 0x1
+ 560 010f 9C       		.byte	0x9c
+ 561 0110 40010000 		.4byte	0x140
+ 562 0114 08       		.uleb128 0x8
+ 563 0115 10000000 		.4byte	.LASF25
+ 564 0119 01       		.byte	0x1
+ 565 011a 38       		.byte	0x38
+ 566 011b 25000000 		.4byte	0x25
+ 567 011f 00000000 		.4byte	.LLST0
+ 568 0123 09       		.uleb128 0x9
+ 569 0124 23000000 		.4byte	.LASF26
+ 570 0128 01       		.byte	0x1
+ 571 0129 38       		.byte	0x38
+ 572 012a A4000000 		.4byte	0xa4
+ 573 012e 01       		.uleb128 0x1
+ 574 012f 51       		.byte	0x51
+ 575 0130 0A       		.uleb128 0xa
+ 576 0131 34020000 		.4byte	.LASF31
+ 577 0135 01       		.byte	0x1
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccYu8MZD.s 			page 15
+
+
+ 578 0136 3A       		.byte	0x3a
+ 579 0137 BA000000 		.4byte	0xba
+ 580 013b 23000000 		.4byte	.LLST1
+ 581 013f 00       		.byte	0
+ 582 0140 07       		.uleb128 0x7
+ 583 0141 B0000000 		.4byte	.LASF28
+ 584 0145 01       		.byte	0x1
+ 585 0146 96       		.byte	0x96
+ 586 0147 00000000 		.4byte	.LFB67
+ 587 014b 08000000 		.4byte	.LFE67-.LFB67
+ 588 014f 01       		.uleb128 0x1
+ 589 0150 9C       		.byte	0x9c
+ 590 0151 5F010000 		.4byte	0x15f
+ 591 0155 0B       		.uleb128 0xb
+ 592 0156 06000000 		.4byte	.LVL3
+ 593 015a C6030000 		.4byte	0x3c6
+ 594 015e 00       		.byte	0
+ 595 015f 07       		.uleb128 0x7
+ 596 0160 7A010000 		.4byte	.LASF29
+ 597 0164 01       		.byte	0x1
+ 598 0165 9B       		.byte	0x9b
+ 599 0166 00000000 		.4byte	.LFB68
+ 600 016a 1C000000 		.4byte	.LFE68-.LFB68
+ 601 016e 01       		.uleb128 0x1
+ 602 016f 9C       		.byte	0x9c
+ 603 0170 A5010000 		.4byte	0x1a5
+ 604 0174 08       		.uleb128 0x8
+ 605 0175 09020000 		.4byte	.LASF30
+ 606 0179 01       		.byte	0x1
+ 607 017a 9B       		.byte	0x9b
+ 608 017b A4000000 		.4byte	0xa4
+ 609 017f 48000000 		.4byte	.LLST2
+ 610 0183 0A       		.uleb128 0xa
+ 611 0184 60000000 		.4byte	.LASF32
+ 612 0188 01       		.byte	0x1
+ 613 0189 9D       		.byte	0x9d
+ 614 018a A4000000 		.4byte	0xa4
+ 615 018e 69000000 		.4byte	.LLST3
+ 616 0192 0B       		.uleb128 0xb
+ 617 0193 08000000 		.4byte	.LVL5
+ 618 0197 D1030000 		.4byte	0x3d1
+ 619 019b 0B       		.uleb128 0xb
+ 620 019c 1A000000 		.4byte	.LVL9
+ 621 01a0 DC030000 		.4byte	0x3dc
+ 622 01a4 00       		.byte	0
+ 623 01a5 0C       		.uleb128 0xc
+ 624 01a6 16020000 		.4byte	.LASF58
+ 625 01aa 01       		.byte	0x1
+ 626 01ab 29       		.byte	0x29
+ 627 01ac 3A000000 		.4byte	0x3a
+ 628 01b0 00000000 		.4byte	.LFB64
+ 629 01b4 28000000 		.4byte	.LFE64-.LFB64
+ 630 01b8 01       		.uleb128 0x1
+ 631 01b9 9C       		.byte	0x9c
+ 632 01ba 0D020000 		.4byte	0x20d
+ 633 01be 0D       		.uleb128 0xd
+ 634 01bf 10000000 		.4byte	.LVL10
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccYu8MZD.s 			page 16
+
+
+ 635 01c3 E7030000 		.4byte	0x3e7
+ 636 01c7 E7010000 		.4byte	0x1e7
+ 637 01cb 0E       		.uleb128 0xe
+ 638 01cc 01       		.uleb128 0x1
+ 639 01cd 50       		.byte	0x50
+ 640 01ce 05       		.uleb128 0x5
+ 641 01cf 03       		.byte	0x3
+ 642 01d0 00000000 		.4byte	usbHidOutEpHandler
+ 643 01d4 0E       		.uleb128 0xe
+ 644 01d5 01       		.uleb128 0x1
+ 645 01d6 51       		.byte	0x51
+ 646 01d7 05       		.uleb128 0x5
+ 647 01d8 03       		.byte	0x3
+ 648 01d9 00000000 		.4byte	.LANCHOR0
+ 649 01dd 0E       		.uleb128 0xe
+ 650 01de 01       		.uleb128 0x1
+ 651 01df 52       		.byte	0x52
+ 652 01e0 05       		.uleb128 0x5
+ 653 01e1 03       		.byte	0x3
+ 654 01e2 40000000 		.4byte	.LANCHOR0+64
+ 655 01e6 00       		.byte	0
+ 656 01e7 0B       		.uleb128 0xb
+ 657 01e8 14000000 		.4byte	.LVL11
+ 658 01ec F2030000 		.4byte	0x3f2
+ 659 01f0 0D       		.uleb128 0xd
+ 660 01f1 1A000000 		.4byte	.LVL12
+ 661 01f5 5F010000 		.4byte	0x15f
+ 662 01f9 03020000 		.4byte	0x203
+ 663 01fd 0E       		.uleb128 0xe
+ 664 01fe 01       		.uleb128 0x1
+ 665 01ff 50       		.byte	0x50
+ 666 0200 01       		.uleb128 0x1
+ 667 0201 31       		.byte	0x31
+ 668 0202 00       		.byte	0
+ 669 0203 0B       		.uleb128 0xb
+ 670 0204 1E000000 		.4byte	.LVL13
+ 671 0208 FD030000 		.4byte	0x3fd
+ 672 020c 00       		.byte	0
+ 673 020d 07       		.uleb128 0x7
+ 674 020e B1020000 		.4byte	.LASF33
+ 675 0212 01       		.byte	0x1
+ 676 0213 A9       		.byte	0xa9
+ 677 0214 00000000 		.4byte	.LFB69
+ 678 0218 1C000000 		.4byte	.LFE69-.LFB69
+ 679 021c 01       		.uleb128 0x1
+ 680 021d 9C       		.byte	0x9c
+ 681 021e 53020000 		.4byte	0x253
+ 682 0222 08       		.uleb128 0x8
+ 683 0223 09020000 		.4byte	.LASF30
+ 684 0227 01       		.byte	0x1
+ 685 0228 A9       		.byte	0xa9
+ 686 0229 A4000000 		.4byte	0xa4
+ 687 022d 87000000 		.4byte	.LLST4
+ 688 0231 0A       		.uleb128 0xa
+ 689 0232 60000000 		.4byte	.LASF32
+ 690 0236 01       		.byte	0x1
+ 691 0237 AB       		.byte	0xab
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccYu8MZD.s 			page 17
+
+
+ 692 0238 A4000000 		.4byte	0xa4
+ 693 023c A8000000 		.4byte	.LLST5
+ 694 0240 0B       		.uleb128 0xb
+ 695 0241 08000000 		.4byte	.LVL15
+ 696 0245 D1030000 		.4byte	0x3d1
+ 697 0249 0B       		.uleb128 0xb
+ 698 024a 1A000000 		.4byte	.LVL19
+ 699 024e DC030000 		.4byte	0x3dc
+ 700 0252 00       		.byte	0
+ 701 0253 0F       		.uleb128 0xf
+ 702 0254 DD010000 		.4byte	.LASF34
+ 703 0258 01       		.byte	0x1
+ 704 0259 48       		.byte	0x48
+ 705 025a 00000000 		.4byte	.LFB66
+ 706 025e D4000000 		.4byte	.LFE66-.LFB66
+ 707 0262 01       		.uleb128 0x1
+ 708 0263 9C       		.byte	0x9c
+ 709 0264 50030000 		.4byte	0x350
+ 710 0268 0A       		.uleb128 0xa
+ 711 0269 E3020000 		.4byte	.LASF35
+ 712 026d 01       		.byte	0x1
+ 713 026e 4A       		.byte	0x4a
+ 714 026f 25000000 		.4byte	0x25
+ 715 0273 C6000000 		.4byte	.LLST6
+ 716 0277 10       		.uleb128 0x10
+ 717 0278 1B020000 		.4byte	.LASF36
+ 718 027c 01       		.byte	0x1
+ 719 027d 4B       		.byte	0x4b
+ 720 027e 25000000 		.4byte	0x25
+ 721 0282 04       		.byte	0x4
+ 722 0283 00000000 		.4byte	0
+ 723 0287 11       		.uleb128 0x11
+ 724 0288 8E000000 		.4byte	.LBB2
+ 725 028c 1A000000 		.4byte	.LBE2-.LBB2
+ 726 0290 B3020000 		.4byte	0x2b3
+ 727 0294 0A       		.uleb128 0xa
+ 728 0295 30000000 		.4byte	.LASF37
+ 729 0299 01       		.byte	0x1
+ 730 029a 7D       		.byte	0x7d
+ 731 029b AF000000 		.4byte	0xaf
+ 732 029f 4A010000 		.4byte	.LLST7
+ 733 02a3 12       		.uleb128 0x12
+ 734 02a4 A6000000 		.4byte	.LVL39
+ 735 02a8 08040000 		.4byte	0x408
+ 736 02ac 0E       		.uleb128 0xe
+ 737 02ad 01       		.uleb128 0x1
+ 738 02ae 51       		.byte	0x51
+ 739 02af 01       		.uleb128 0x1
+ 740 02b0 31       		.byte	0x31
+ 741 02b1 00       		.byte	0
+ 742 02b2 00       		.byte	0
+ 743 02b3 0D       		.uleb128 0xd
+ 744 02b4 2E000000 		.4byte	.LVL23
+ 745 02b8 5F010000 		.4byte	0x15f
+ 746 02bc C6020000 		.4byte	0x2c6
+ 747 02c0 0E       		.uleb128 0xe
+ 748 02c1 01       		.uleb128 0x1
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccYu8MZD.s 			page 18
+
+
+ 749 02c2 50       		.byte	0x50
+ 750 02c3 01       		.uleb128 0x1
+ 751 02c4 31       		.byte	0x31
+ 752 02c5 00       		.byte	0
+ 753 02c6 0D       		.uleb128 0xd
+ 754 02c7 36000000 		.4byte	.LVL24
+ 755 02cb 5F010000 		.4byte	0x15f
+ 756 02cf D9020000 		.4byte	0x2d9
+ 757 02d3 0E       		.uleb128 0xe
+ 758 02d4 01       		.uleb128 0x1
+ 759 02d5 50       		.byte	0x50
+ 760 02d6 01       		.uleb128 0x1
+ 761 02d7 30       		.byte	0x30
+ 762 02d8 00       		.byte	0
+ 763 02d9 0B       		.uleb128 0xb
+ 764 02da 4E000000 		.4byte	.LVL28
+ 765 02de 0D020000 		.4byte	0x20d
+ 766 02e2 0D       		.uleb128 0xd
+ 767 02e3 56000000 		.4byte	.LVL29
+ 768 02e7 0D020000 		.4byte	0x20d
+ 769 02eb F5020000 		.4byte	0x2f5
+ 770 02ef 0E       		.uleb128 0xe
+ 771 02f0 01       		.uleb128 0x1
+ 772 02f1 50       		.byte	0x50
+ 773 02f2 01       		.uleb128 0x1
+ 774 02f3 31       		.byte	0x31
+ 775 02f4 00       		.byte	0
+ 776 02f5 0B       		.uleb128 0xb
+ 777 02f6 8C000000 		.4byte	.LVL34
+ 778 02fa 13040000 		.4byte	0x413
+ 779 02fe 0D       		.uleb128 0xd
+ 780 02ff AE000000 		.4byte	.LVL41
+ 781 0303 1E040000 		.4byte	0x41e
+ 782 0307 11030000 		.4byte	0x311
+ 783 030b 0E       		.uleb128 0xe
+ 784 030c 01       		.uleb128 0x1
+ 785 030d 50       		.byte	0x50
+ 786 030e 01       		.uleb128 0x1
+ 787 030f 31       		.byte	0x31
+ 788 0310 00       		.byte	0
+ 789 0311 0D       		.uleb128 0xd
+ 790 0312 B8000000 		.4byte	.LVL42
+ 791 0316 29040000 		.4byte	0x429
+ 792 031a 33030000 		.4byte	0x333
+ 793 031e 0E       		.uleb128 0xe
+ 794 031f 01       		.uleb128 0x1
+ 795 0320 50       		.byte	0x50
+ 796 0321 05       		.uleb128 0x5
+ 797 0322 03       		.byte	0x3
+ 798 0323 00000000 		.4byte	.LANCHOR0
+ 799 0327 0E       		.uleb128 0xe
+ 800 0328 01       		.uleb128 0x1
+ 801 0329 51       		.byte	0x51
+ 802 032a 01       		.uleb128 0x1
+ 803 032b 30       		.byte	0x30
+ 804 032c 0E       		.uleb128 0xe
+ 805 032d 01       		.uleb128 0x1
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccYu8MZD.s 			page 19
+
+
+ 806 032e 52       		.byte	0x52
+ 807 032f 02       		.uleb128 0x2
+ 808 0330 08       		.byte	0x8
+ 809 0331 40       		.byte	0x40
+ 810 0332 00       		.byte	0
+ 811 0333 0D       		.uleb128 0xd
+ 812 0334 C0000000 		.4byte	.LVL43
+ 813 0338 FF000000 		.4byte	0xff
+ 814 033c 46030000 		.4byte	0x346
+ 815 0340 0E       		.uleb128 0xe
+ 816 0341 01       		.uleb128 0x1
+ 817 0342 51       		.byte	0x51
+ 818 0343 01       		.uleb128 0x1
+ 819 0344 30       		.byte	0x30
+ 820 0345 00       		.byte	0
+ 821 0346 0B       		.uleb128 0xb
+ 822 0347 C4000000 		.4byte	.LVL44
+ 823 034b 32040000 		.4byte	0x432
+ 824 034f 00       		.byte	0
+ 825 0350 13       		.uleb128 0x13
+ 826 0351 A4000000 		.4byte	0xa4
+ 827 0355 60030000 		.4byte	0x360
+ 828 0359 14       		.uleb128 0x14
+ 829 035a 84000000 		.4byte	0x84
+ 830 035e 3F       		.byte	0x3f
+ 831 035f 00       		.byte	0
+ 832 0360 15       		.uleb128 0x15
+ 833 0361 82000000 		.4byte	.LASF38
+ 834 0365 01       		.byte	0x1
+ 835 0366 19       		.byte	0x19
+ 836 0367 50030000 		.4byte	0x350
+ 837 036b 05       		.uleb128 0x5
+ 838 036c 03       		.byte	0x3
+ 839 036d 00000000 		.4byte	IN_Data_Buffer
+ 840 0371 15       		.uleb128 0x15
+ 841 0372 44020000 		.4byte	.LASF39
+ 842 0376 01       		.byte	0x1
+ 843 0377 1A       		.byte	0x1a
+ 844 0378 50030000 		.4byte	0x350
+ 845 037c 05       		.uleb128 0x5
+ 846 037d 03       		.byte	0x3
+ 847 037e 40000000 		.4byte	OUT_Data_Buffer
+ 848 0382 16       		.uleb128 0x16
+ 849 0383 7E020000 		.4byte	.LASF40
+ 850 0387 05       		.byte	0x5
+ 851 0388 2A06     		.2byte	0x62a
+ 852 038a 8E030000 		.4byte	0x38e
+ 853 038e 17       		.uleb128 0x17
+ 854 038f 99000000 		.4byte	0x99
+ 855 0393 18       		.uleb128 0x18
+ 856 0394 09000000 		.4byte	.LASF41
+ 857 0398 01       		.byte	0x1
+ 858 0399 25       		.byte	0x25
+ 859 039a BA000000 		.4byte	0xba
+ 860 039e 05       		.uleb128 0x5
+ 861 039f 03       		.byte	0x3
+ 862 03a0 00000000 		.4byte	pulses
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccYu8MZD.s 			page 20
+
+
+ 863 03a4 18       		.uleb128 0x18
+ 864 03a5 78000000 		.4byte	.LASF42
+ 865 03a9 01       		.byte	0x1
+ 866 03aa 26       		.byte	0x26
+ 867 03ab A4000000 		.4byte	0xa4
+ 868 03af 05       		.uleb128 0x5
+ 869 03b0 03       		.byte	0x3
+ 870 03b1 00000000 		.4byte	direction
+ 871 03b5 18       		.uleb128 0x18
+ 872 03b6 6B000000 		.4byte	.LASF43
+ 873 03ba 01       		.byte	0x1
+ 874 03bb 27       		.byte	0x27
+ 875 03bc A4000000 		.4byte	0xa4
+ 876 03c0 05       		.uleb128 0x5
+ 877 03c1 03       		.byte	0x3
+ 878 03c2 00000000 		.4byte	enable
+ 879 03c6 19       		.uleb128 0x19
+ 880 03c7 BC030000 		.4byte	.LASF44
+ 881 03cb BC030000 		.4byte	.LASF44
+ 882 03cf 06       		.byte	0x6
+ 883 03d0 30       		.byte	0x30
+ 884 03d1 19       		.uleb128 0x19
+ 885 03d2 A0010000 		.4byte	.LASF45
+ 886 03d6 A0010000 		.4byte	.LASF45
+ 887 03da 07       		.byte	0x7
+ 888 03db 30       		.byte	0x30
+ 889 03dc 19       		.uleb128 0x19
+ 890 03dd ED020000 		.4byte	.LASF46
+ 891 03e1 ED020000 		.4byte	.LASF46
+ 892 03e5 07       		.byte	0x7
+ 893 03e6 2F       		.byte	0x2f
+ 894 03e7 19       		.uleb128 0x19
+ 895 03e8 8B020000 		.4byte	.LASF47
+ 896 03ec 8B020000 		.4byte	.LASF47
+ 897 03f0 06       		.byte	0x6
+ 898 03f1 2E       		.byte	0x2e
+ 899 03f2 19       		.uleb128 0x19
+ 900 03f3 F5010000 		.4byte	.LASF48
+ 901 03f7 F5010000 		.4byte	.LASF48
+ 902 03fb 08       		.byte	0x8
+ 903 03fc 5A       		.byte	0x5a
+ 904 03fd 19       		.uleb128 0x19
+ 905 03fe 00000000 		.4byte	.LASF49
+ 906 0402 00000000 		.4byte	.LASF49
+ 907 0406 06       		.byte	0x6
+ 908 0407 2F       		.byte	0x2f
+ 909 0408 19       		.uleb128 0x19
+ 910 0409 85010000 		.4byte	.LASF50
+ 911 040d 85010000 		.4byte	.LASF50
+ 912 0411 09       		.byte	0x9
+ 913 0412 2F       		.byte	0x2f
+ 914 0413 19       		.uleb128 0x19
+ 915 0414 6B020000 		.4byte	.LASF51
+ 916 0418 6B020000 		.4byte	.LASF51
+ 917 041c 08       		.byte	0x8
+ 918 041d 68       		.byte	0x68
+ 919 041e 19       		.uleb128 0x19
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccYu8MZD.s 			page 21
+
+
+ 920 041f 85030000 		.4byte	.LASF52
+ 921 0423 85030000 		.4byte	.LASF52
+ 922 0427 0A       		.byte	0xa
+ 923 0428 2F       		.byte	0x2f
+ 924 0429 1A       		.uleb128 0x1a
+ 925 042a D6010000 		.4byte	.LASF59
+ 926 042e D6010000 		.4byte	.LASF59
+ 927 0432 19       		.uleb128 0x19
+ 928 0433 4B000000 		.4byte	.LASF53
+ 929 0437 4B000000 		.4byte	.LASF53
+ 930 043b 06       		.byte	0x6
+ 931 043c 32       		.byte	0x32
+ 932 043d 00       		.byte	0
+ 933              		.section	.debug_abbrev,"",%progbits
+ 934              	.Ldebug_abbrev0:
+ 935 0000 01       		.uleb128 0x1
+ 936 0001 11       		.uleb128 0x11
+ 937 0002 01       		.byte	0x1
+ 938 0003 25       		.uleb128 0x25
+ 939 0004 0E       		.uleb128 0xe
+ 940 0005 13       		.uleb128 0x13
+ 941 0006 0B       		.uleb128 0xb
+ 942 0007 03       		.uleb128 0x3
+ 943 0008 0E       		.uleb128 0xe
+ 944 0009 1B       		.uleb128 0x1b
+ 945 000a 0E       		.uleb128 0xe
+ 946 000b 55       		.uleb128 0x55
+ 947 000c 17       		.uleb128 0x17
+ 948 000d 11       		.uleb128 0x11
+ 949 000e 01       		.uleb128 0x1
+ 950 000f 10       		.uleb128 0x10
+ 951 0010 17       		.uleb128 0x17
+ 952 0011 00       		.byte	0
+ 953 0012 00       		.byte	0
+ 954 0013 02       		.uleb128 0x2
+ 955 0014 24       		.uleb128 0x24
+ 956 0015 00       		.byte	0
+ 957 0016 0B       		.uleb128 0xb
+ 958 0017 0B       		.uleb128 0xb
+ 959 0018 3E       		.uleb128 0x3e
+ 960 0019 0B       		.uleb128 0xb
+ 961 001a 03       		.uleb128 0x3
+ 962 001b 0E       		.uleb128 0xe
+ 963 001c 00       		.byte	0
+ 964 001d 00       		.byte	0
+ 965 001e 03       		.uleb128 0x3
+ 966 001f 24       		.uleb128 0x24
+ 967 0020 00       		.byte	0
+ 968 0021 0B       		.uleb128 0xb
+ 969 0022 0B       		.uleb128 0xb
+ 970 0023 3E       		.uleb128 0x3e
+ 971 0024 0B       		.uleb128 0xb
+ 972 0025 03       		.uleb128 0x3
+ 973 0026 08       		.uleb128 0x8
+ 974 0027 00       		.byte	0
+ 975 0028 00       		.byte	0
+ 976 0029 04       		.uleb128 0x4
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccYu8MZD.s 			page 22
+
+
+ 977 002a 16       		.uleb128 0x16
+ 978 002b 00       		.byte	0
+ 979 002c 03       		.uleb128 0x3
+ 980 002d 0E       		.uleb128 0xe
+ 981 002e 3A       		.uleb128 0x3a
+ 982 002f 0B       		.uleb128 0xb
+ 983 0030 3B       		.uleb128 0x3b
+ 984 0031 0B       		.uleb128 0xb
+ 985 0032 49       		.uleb128 0x49
+ 986 0033 13       		.uleb128 0x13
+ 987 0034 00       		.byte	0
+ 988 0035 00       		.byte	0
+ 989 0036 05       		.uleb128 0x5
+ 990 0037 04       		.uleb128 0x4
+ 991 0038 01       		.byte	0x1
+ 992 0039 03       		.uleb128 0x3
+ 993 003a 0E       		.uleb128 0xe
+ 994 003b 0B       		.uleb128 0xb
+ 995 003c 0B       		.uleb128 0xb
+ 996 003d 49       		.uleb128 0x49
+ 997 003e 13       		.uleb128 0x13
+ 998 003f 3A       		.uleb128 0x3a
+ 999 0040 0B       		.uleb128 0xb
+ 1000 0041 3B       		.uleb128 0x3b
+ 1001 0042 0B       		.uleb128 0xb
+ 1002 0043 01       		.uleb128 0x1
+ 1003 0044 13       		.uleb128 0x13
+ 1004 0045 00       		.byte	0
+ 1005 0046 00       		.byte	0
+ 1006 0047 06       		.uleb128 0x6
+ 1007 0048 28       		.uleb128 0x28
+ 1008 0049 00       		.byte	0
+ 1009 004a 03       		.uleb128 0x3
+ 1010 004b 0E       		.uleb128 0xe
+ 1011 004c 1C       		.uleb128 0x1c
+ 1012 004d 0B       		.uleb128 0xb
+ 1013 004e 00       		.byte	0
+ 1014 004f 00       		.byte	0
+ 1015 0050 07       		.uleb128 0x7
+ 1016 0051 2E       		.uleb128 0x2e
+ 1017 0052 01       		.byte	0x1
+ 1018 0053 3F       		.uleb128 0x3f
+ 1019 0054 19       		.uleb128 0x19
+ 1020 0055 03       		.uleb128 0x3
+ 1021 0056 0E       		.uleb128 0xe
+ 1022 0057 3A       		.uleb128 0x3a
+ 1023 0058 0B       		.uleb128 0xb
+ 1024 0059 3B       		.uleb128 0x3b
+ 1025 005a 0B       		.uleb128 0xb
+ 1026 005b 27       		.uleb128 0x27
+ 1027 005c 19       		.uleb128 0x19
+ 1028 005d 11       		.uleb128 0x11
+ 1029 005e 01       		.uleb128 0x1
+ 1030 005f 12       		.uleb128 0x12
+ 1031 0060 06       		.uleb128 0x6
+ 1032 0061 40       		.uleb128 0x40
+ 1033 0062 18       		.uleb128 0x18
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccYu8MZD.s 			page 23
+
+
+ 1034 0063 9742     		.uleb128 0x2117
+ 1035 0065 19       		.uleb128 0x19
+ 1036 0066 01       		.uleb128 0x1
+ 1037 0067 13       		.uleb128 0x13
+ 1038 0068 00       		.byte	0
+ 1039 0069 00       		.byte	0
+ 1040 006a 08       		.uleb128 0x8
+ 1041 006b 05       		.uleb128 0x5
+ 1042 006c 00       		.byte	0
+ 1043 006d 03       		.uleb128 0x3
+ 1044 006e 0E       		.uleb128 0xe
+ 1045 006f 3A       		.uleb128 0x3a
+ 1046 0070 0B       		.uleb128 0xb
+ 1047 0071 3B       		.uleb128 0x3b
+ 1048 0072 0B       		.uleb128 0xb
+ 1049 0073 49       		.uleb128 0x49
+ 1050 0074 13       		.uleb128 0x13
+ 1051 0075 02       		.uleb128 0x2
+ 1052 0076 17       		.uleb128 0x17
+ 1053 0077 00       		.byte	0
+ 1054 0078 00       		.byte	0
+ 1055 0079 09       		.uleb128 0x9
+ 1056 007a 05       		.uleb128 0x5
+ 1057 007b 00       		.byte	0
+ 1058 007c 03       		.uleb128 0x3
+ 1059 007d 0E       		.uleb128 0xe
+ 1060 007e 3A       		.uleb128 0x3a
+ 1061 007f 0B       		.uleb128 0xb
+ 1062 0080 3B       		.uleb128 0x3b
+ 1063 0081 0B       		.uleb128 0xb
+ 1064 0082 49       		.uleb128 0x49
+ 1065 0083 13       		.uleb128 0x13
+ 1066 0084 02       		.uleb128 0x2
+ 1067 0085 18       		.uleb128 0x18
+ 1068 0086 00       		.byte	0
+ 1069 0087 00       		.byte	0
+ 1070 0088 0A       		.uleb128 0xa
+ 1071 0089 34       		.uleb128 0x34
+ 1072 008a 00       		.byte	0
+ 1073 008b 03       		.uleb128 0x3
+ 1074 008c 0E       		.uleb128 0xe
+ 1075 008d 3A       		.uleb128 0x3a
+ 1076 008e 0B       		.uleb128 0xb
+ 1077 008f 3B       		.uleb128 0x3b
+ 1078 0090 0B       		.uleb128 0xb
+ 1079 0091 49       		.uleb128 0x49
+ 1080 0092 13       		.uleb128 0x13
+ 1081 0093 02       		.uleb128 0x2
+ 1082 0094 17       		.uleb128 0x17
+ 1083 0095 00       		.byte	0
+ 1084 0096 00       		.byte	0
+ 1085 0097 0B       		.uleb128 0xb
+ 1086 0098 898201   		.uleb128 0x4109
+ 1087 009b 00       		.byte	0
+ 1088 009c 11       		.uleb128 0x11
+ 1089 009d 01       		.uleb128 0x1
+ 1090 009e 31       		.uleb128 0x31
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccYu8MZD.s 			page 24
+
+
+ 1091 009f 13       		.uleb128 0x13
+ 1092 00a0 00       		.byte	0
+ 1093 00a1 00       		.byte	0
+ 1094 00a2 0C       		.uleb128 0xc
+ 1095 00a3 2E       		.uleb128 0x2e
+ 1096 00a4 01       		.byte	0x1
+ 1097 00a5 3F       		.uleb128 0x3f
+ 1098 00a6 19       		.uleb128 0x19
+ 1099 00a7 03       		.uleb128 0x3
+ 1100 00a8 0E       		.uleb128 0xe
+ 1101 00a9 3A       		.uleb128 0x3a
+ 1102 00aa 0B       		.uleb128 0xb
+ 1103 00ab 3B       		.uleb128 0x3b
+ 1104 00ac 0B       		.uleb128 0xb
+ 1105 00ad 49       		.uleb128 0x49
+ 1106 00ae 13       		.uleb128 0x13
+ 1107 00af 8701     		.uleb128 0x87
+ 1108 00b1 19       		.uleb128 0x19
+ 1109 00b2 11       		.uleb128 0x11
+ 1110 00b3 01       		.uleb128 0x1
+ 1111 00b4 12       		.uleb128 0x12
+ 1112 00b5 06       		.uleb128 0x6
+ 1113 00b6 40       		.uleb128 0x40
+ 1114 00b7 18       		.uleb128 0x18
+ 1115 00b8 9742     		.uleb128 0x2117
+ 1116 00ba 19       		.uleb128 0x19
+ 1117 00bb 01       		.uleb128 0x1
+ 1118 00bc 13       		.uleb128 0x13
+ 1119 00bd 00       		.byte	0
+ 1120 00be 00       		.byte	0
+ 1121 00bf 0D       		.uleb128 0xd
+ 1122 00c0 898201   		.uleb128 0x4109
+ 1123 00c3 01       		.byte	0x1
+ 1124 00c4 11       		.uleb128 0x11
+ 1125 00c5 01       		.uleb128 0x1
+ 1126 00c6 31       		.uleb128 0x31
+ 1127 00c7 13       		.uleb128 0x13
+ 1128 00c8 01       		.uleb128 0x1
+ 1129 00c9 13       		.uleb128 0x13
+ 1130 00ca 00       		.byte	0
+ 1131 00cb 00       		.byte	0
+ 1132 00cc 0E       		.uleb128 0xe
+ 1133 00cd 8A8201   		.uleb128 0x410a
+ 1134 00d0 00       		.byte	0
+ 1135 00d1 02       		.uleb128 0x2
+ 1136 00d2 18       		.uleb128 0x18
+ 1137 00d3 9142     		.uleb128 0x2111
+ 1138 00d5 18       		.uleb128 0x18
+ 1139 00d6 00       		.byte	0
+ 1140 00d7 00       		.byte	0
+ 1141 00d8 0F       		.uleb128 0xf
+ 1142 00d9 2E       		.uleb128 0x2e
+ 1143 00da 01       		.byte	0x1
+ 1144 00db 3F       		.uleb128 0x3f
+ 1145 00dc 19       		.uleb128 0x19
+ 1146 00dd 03       		.uleb128 0x3
+ 1147 00de 0E       		.uleb128 0xe
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccYu8MZD.s 			page 25
+
+
+ 1148 00df 3A       		.uleb128 0x3a
+ 1149 00e0 0B       		.uleb128 0xb
+ 1150 00e1 3B       		.uleb128 0x3b
+ 1151 00e2 0B       		.uleb128 0xb
+ 1152 00e3 27       		.uleb128 0x27
+ 1153 00e4 19       		.uleb128 0x19
+ 1154 00e5 11       		.uleb128 0x11
+ 1155 00e6 01       		.uleb128 0x1
+ 1156 00e7 12       		.uleb128 0x12
+ 1157 00e8 06       		.uleb128 0x6
+ 1158 00e9 40       		.uleb128 0x40
+ 1159 00ea 18       		.uleb128 0x18
+ 1160 00eb 9642     		.uleb128 0x2116
+ 1161 00ed 19       		.uleb128 0x19
+ 1162 00ee 01       		.uleb128 0x1
+ 1163 00ef 13       		.uleb128 0x13
+ 1164 00f0 00       		.byte	0
+ 1165 00f1 00       		.byte	0
+ 1166 00f2 10       		.uleb128 0x10
+ 1167 00f3 34       		.uleb128 0x34
+ 1168 00f4 00       		.byte	0
+ 1169 00f5 03       		.uleb128 0x3
+ 1170 00f6 0E       		.uleb128 0xe
+ 1171 00f7 3A       		.uleb128 0x3a
+ 1172 00f8 0B       		.uleb128 0xb
+ 1173 00f9 3B       		.uleb128 0x3b
+ 1174 00fa 0B       		.uleb128 0xb
+ 1175 00fb 49       		.uleb128 0x49
+ 1176 00fc 13       		.uleb128 0x13
+ 1177 00fd 1C       		.uleb128 0x1c
+ 1178 00fe 0A       		.uleb128 0xa
+ 1179 00ff 00       		.byte	0
+ 1180 0100 00       		.byte	0
+ 1181 0101 11       		.uleb128 0x11
+ 1182 0102 0B       		.uleb128 0xb
+ 1183 0103 01       		.byte	0x1
+ 1184 0104 11       		.uleb128 0x11
+ 1185 0105 01       		.uleb128 0x1
+ 1186 0106 12       		.uleb128 0x12
+ 1187 0107 06       		.uleb128 0x6
+ 1188 0108 01       		.uleb128 0x1
+ 1189 0109 13       		.uleb128 0x13
+ 1190 010a 00       		.byte	0
+ 1191 010b 00       		.byte	0
+ 1192 010c 12       		.uleb128 0x12
+ 1193 010d 898201   		.uleb128 0x4109
+ 1194 0110 01       		.byte	0x1
+ 1195 0111 11       		.uleb128 0x11
+ 1196 0112 01       		.uleb128 0x1
+ 1197 0113 31       		.uleb128 0x31
+ 1198 0114 13       		.uleb128 0x13
+ 1199 0115 00       		.byte	0
+ 1200 0116 00       		.byte	0
+ 1201 0117 13       		.uleb128 0x13
+ 1202 0118 01       		.uleb128 0x1
+ 1203 0119 01       		.byte	0x1
+ 1204 011a 49       		.uleb128 0x49
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccYu8MZD.s 			page 26
+
+
+ 1205 011b 13       		.uleb128 0x13
+ 1206 011c 01       		.uleb128 0x1
+ 1207 011d 13       		.uleb128 0x13
+ 1208 011e 00       		.byte	0
+ 1209 011f 00       		.byte	0
+ 1210 0120 14       		.uleb128 0x14
+ 1211 0121 21       		.uleb128 0x21
+ 1212 0122 00       		.byte	0
+ 1213 0123 49       		.uleb128 0x49
+ 1214 0124 13       		.uleb128 0x13
+ 1215 0125 2F       		.uleb128 0x2f
+ 1216 0126 0B       		.uleb128 0xb
+ 1217 0127 00       		.byte	0
+ 1218 0128 00       		.byte	0
+ 1219 0129 15       		.uleb128 0x15
+ 1220 012a 34       		.uleb128 0x34
+ 1221 012b 00       		.byte	0
+ 1222 012c 03       		.uleb128 0x3
+ 1223 012d 0E       		.uleb128 0xe
+ 1224 012e 3A       		.uleb128 0x3a
+ 1225 012f 0B       		.uleb128 0xb
+ 1226 0130 3B       		.uleb128 0x3b
+ 1227 0131 0B       		.uleb128 0xb
+ 1228 0132 49       		.uleb128 0x49
+ 1229 0133 13       		.uleb128 0x13
+ 1230 0134 02       		.uleb128 0x2
+ 1231 0135 18       		.uleb128 0x18
+ 1232 0136 00       		.byte	0
+ 1233 0137 00       		.byte	0
+ 1234 0138 16       		.uleb128 0x16
+ 1235 0139 34       		.uleb128 0x34
+ 1236 013a 00       		.byte	0
+ 1237 013b 03       		.uleb128 0x3
+ 1238 013c 0E       		.uleb128 0xe
+ 1239 013d 3A       		.uleb128 0x3a
+ 1240 013e 0B       		.uleb128 0xb
+ 1241 013f 3B       		.uleb128 0x3b
+ 1242 0140 05       		.uleb128 0x5
+ 1243 0141 49       		.uleb128 0x49
+ 1244 0142 13       		.uleb128 0x13
+ 1245 0143 3F       		.uleb128 0x3f
+ 1246 0144 19       		.uleb128 0x19
+ 1247 0145 3C       		.uleb128 0x3c
+ 1248 0146 19       		.uleb128 0x19
+ 1249 0147 00       		.byte	0
+ 1250 0148 00       		.byte	0
+ 1251 0149 17       		.uleb128 0x17
+ 1252 014a 35       		.uleb128 0x35
+ 1253 014b 00       		.byte	0
+ 1254 014c 49       		.uleb128 0x49
+ 1255 014d 13       		.uleb128 0x13
+ 1256 014e 00       		.byte	0
+ 1257 014f 00       		.byte	0
+ 1258 0150 18       		.uleb128 0x18
+ 1259 0151 34       		.uleb128 0x34
+ 1260 0152 00       		.byte	0
+ 1261 0153 03       		.uleb128 0x3
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccYu8MZD.s 			page 27
+
+
+ 1262 0154 0E       		.uleb128 0xe
+ 1263 0155 3A       		.uleb128 0x3a
+ 1264 0156 0B       		.uleb128 0xb
+ 1265 0157 3B       		.uleb128 0x3b
+ 1266 0158 0B       		.uleb128 0xb
+ 1267 0159 49       		.uleb128 0x49
+ 1268 015a 13       		.uleb128 0x13
+ 1269 015b 3F       		.uleb128 0x3f
+ 1270 015c 19       		.uleb128 0x19
+ 1271 015d 02       		.uleb128 0x2
+ 1272 015e 18       		.uleb128 0x18
+ 1273 015f 00       		.byte	0
+ 1274 0160 00       		.byte	0
+ 1275 0161 19       		.uleb128 0x19
+ 1276 0162 2E       		.uleb128 0x2e
+ 1277 0163 00       		.byte	0
+ 1278 0164 3F       		.uleb128 0x3f
+ 1279 0165 19       		.uleb128 0x19
+ 1280 0166 3C       		.uleb128 0x3c
+ 1281 0167 19       		.uleb128 0x19
+ 1282 0168 6E       		.uleb128 0x6e
+ 1283 0169 0E       		.uleb128 0xe
+ 1284 016a 03       		.uleb128 0x3
+ 1285 016b 0E       		.uleb128 0xe
+ 1286 016c 3A       		.uleb128 0x3a
+ 1287 016d 0B       		.uleb128 0xb
+ 1288 016e 3B       		.uleb128 0x3b
+ 1289 016f 0B       		.uleb128 0xb
+ 1290 0170 00       		.byte	0
+ 1291 0171 00       		.byte	0
+ 1292 0172 1A       		.uleb128 0x1a
+ 1293 0173 2E       		.uleb128 0x2e
+ 1294 0174 00       		.byte	0
+ 1295 0175 3F       		.uleb128 0x3f
+ 1296 0176 19       		.uleb128 0x19
+ 1297 0177 3C       		.uleb128 0x3c
+ 1298 0178 19       		.uleb128 0x19
+ 1299 0179 6E       		.uleb128 0x6e
+ 1300 017a 0E       		.uleb128 0xe
+ 1301 017b 03       		.uleb128 0x3
+ 1302 017c 0E       		.uleb128 0xe
+ 1303 017d 00       		.byte	0
+ 1304 017e 00       		.byte	0
+ 1305 017f 00       		.byte	0
+ 1306              		.section	.debug_loc,"",%progbits
+ 1307              	.Ldebug_loc0:
+ 1308              	.LLST0:
+ 1309 0000 00000000 		.4byte	.LVL0
+ 1310 0004 16000000 		.4byte	.LVL2
+ 1311 0008 0100     		.2byte	0x1
+ 1312 000a 50       		.byte	0x50
+ 1313 000b 16000000 		.4byte	.LVL2
+ 1314 000f 20000000 		.4byte	.LFE65
+ 1315 0013 0600     		.2byte	0x6
+ 1316 0015 F3       		.byte	0xf3
+ 1317 0016 03       		.uleb128 0x3
+ 1318 0017 F5       		.byte	0xf5
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccYu8MZD.s 			page 28
+
+
+ 1319 0018 00       		.uleb128 0
+ 1320 0019 25       		.uleb128 0x25
+ 1321 001a 9F       		.byte	0x9f
+ 1322 001b 00000000 		.4byte	0
+ 1323 001f 00000000 		.4byte	0
+ 1324              	.LLST1:
+ 1325 0023 02000000 		.4byte	.LVL1
+ 1326 0027 16000000 		.4byte	.LVL2
+ 1327 002b 0100     		.2byte	0x1
+ 1328 002d 50       		.byte	0x50
+ 1329 002e 16000000 		.4byte	.LVL2
+ 1330 0032 20000000 		.4byte	.LFE65
+ 1331 0036 0800     		.2byte	0x8
+ 1332 0038 F3       		.byte	0xf3
+ 1333 0039 03       		.uleb128 0x3
+ 1334 003a F5       		.byte	0xf5
+ 1335 003b 00       		.uleb128 0
+ 1336 003c 25       		.uleb128 0x25
+ 1337 003d F9       		.byte	0xf9
+ 1338 003e 2C       		.uleb128 0x2c
+ 1339 003f 9F       		.byte	0x9f
+ 1340 0040 00000000 		.4byte	0
+ 1341 0044 00000000 		.4byte	0
+ 1342              	.LLST2:
+ 1343 0048 00000000 		.4byte	.LVL4
+ 1344 004c 07000000 		.4byte	.LVL5-1
+ 1345 0050 0100     		.2byte	0x1
+ 1346 0052 50       		.byte	0x50
+ 1347 0053 07000000 		.4byte	.LVL5-1
+ 1348 0057 1C000000 		.4byte	.LFE68
+ 1349 005b 0400     		.2byte	0x4
+ 1350 005d F3       		.byte	0xf3
+ 1351 005e 01       		.uleb128 0x1
+ 1352 005f 50       		.byte	0x50
+ 1353 0060 9F       		.byte	0x9f
+ 1354 0061 00000000 		.4byte	0
+ 1355 0065 00000000 		.4byte	0
+ 1356              	.LLST3:
+ 1357 0069 08000000 		.4byte	.LVL5
+ 1358 006d 0E000000 		.4byte	.LVL6
+ 1359 0071 0100     		.2byte	0x1
+ 1360 0073 50       		.byte	0x50
+ 1361 0074 10000000 		.4byte	.LVL7
+ 1362 0078 19000000 		.4byte	.LVL9-1
+ 1363 007c 0100     		.2byte	0x1
+ 1364 007e 50       		.byte	0x50
+ 1365 007f 00000000 		.4byte	0
+ 1366 0083 00000000 		.4byte	0
+ 1367              	.LLST4:
+ 1368 0087 00000000 		.4byte	.LVL14
+ 1369 008b 07000000 		.4byte	.LVL15-1
+ 1370 008f 0100     		.2byte	0x1
+ 1371 0091 50       		.byte	0x50
+ 1372 0092 07000000 		.4byte	.LVL15-1
+ 1373 0096 1C000000 		.4byte	.LFE69
+ 1374 009a 0400     		.2byte	0x4
+ 1375 009c F3       		.byte	0xf3
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccYu8MZD.s 			page 29
+
+
+ 1376 009d 01       		.uleb128 0x1
+ 1377 009e 50       		.byte	0x50
+ 1378 009f 9F       		.byte	0x9f
+ 1379 00a0 00000000 		.4byte	0
+ 1380 00a4 00000000 		.4byte	0
+ 1381              	.LLST5:
+ 1382 00a8 08000000 		.4byte	.LVL15
+ 1383 00ac 0E000000 		.4byte	.LVL16
+ 1384 00b0 0100     		.2byte	0x1
+ 1385 00b2 50       		.byte	0x50
+ 1386 00b3 10000000 		.4byte	.LVL17
+ 1387 00b7 19000000 		.4byte	.LVL19-1
+ 1388 00bb 0100     		.2byte	0x1
+ 1389 00bd 50       		.byte	0x50
+ 1390 00be 00000000 		.4byte	0
+ 1391 00c2 00000000 		.4byte	0
+ 1392              	.LLST6:
+ 1393 00c6 02000000 		.4byte	.LVL20
+ 1394 00ca 1C000000 		.4byte	.LVL21
+ 1395 00ce 0600     		.2byte	0x6
+ 1396 00d0 9E       		.byte	0x9e
+ 1397 00d1 04       		.uleb128 0x4
+ 1398 00d2 00000000 		.4byte	0
+ 1399 00d6 1C000000 		.4byte	.LVL21
+ 1400 00da 1F000000 		.4byte	.LVL22-1
+ 1401 00de 0100     		.2byte	0x1
+ 1402 00e0 50       		.byte	0x50
+ 1403 00e1 38000000 		.4byte	.LVL25
+ 1404 00e5 3E000000 		.4byte	.LVL26
+ 1405 00e9 0600     		.2byte	0x6
+ 1406 00eb 9E       		.byte	0x9e
+ 1407 00ec 04       		.uleb128 0x4
+ 1408 00ed 00000000 		.4byte	0
+ 1409 00f1 3E000000 		.4byte	.LVL26
+ 1410 00f5 41000000 		.4byte	.LVL27-1
+ 1411 00f9 0100     		.2byte	0x1
+ 1412 00fb 50       		.byte	0x50
+ 1413 00fc 58000000 		.4byte	.LVL30
+ 1414 0100 5E000000 		.4byte	.LVL31
+ 1415 0104 0600     		.2byte	0x6
+ 1416 0106 9E       		.byte	0x9e
+ 1417 0107 04       		.uleb128 0x4
+ 1418 0108 00000000 		.4byte	0
+ 1419 010c 5E000000 		.4byte	.LVL31
+ 1420 0110 8E000000 		.4byte	.LVL35
+ 1421 0114 0100     		.2byte	0x1
+ 1422 0116 54       		.byte	0x54
+ 1423 0117 8E000000 		.4byte	.LVL35
+ 1424 011b 94000000 		.4byte	.LVL36
+ 1425 011f 0600     		.2byte	0x6
+ 1426 0121 9E       		.byte	0x9e
+ 1427 0122 04       		.uleb128 0x4
+ 1428 0123 00000000 		.4byte	0
+ 1429 0127 94000000 		.4byte	.LVL36
+ 1430 012b 99000000 		.4byte	.LVL37-1
+ 1431 012f 0100     		.2byte	0x1
+ 1432 0131 51       		.byte	0x51
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccYu8MZD.s 			page 30
+
+
+ 1433 0132 A8000000 		.4byte	.LVL40
+ 1434 0136 AE000000 		.4byte	.LVL41
+ 1435 013a 0600     		.2byte	0x6
+ 1436 013c 9E       		.byte	0x9e
+ 1437 013d 04       		.uleb128 0x4
+ 1438 013e 00000000 		.4byte	0
+ 1439 0142 00000000 		.4byte	0
+ 1440 0146 00000000 		.4byte	0
+ 1441              	.LLST7:
+ 1442 014a 8E000000 		.4byte	.LVL35
+ 1443 014e 9A000000 		.4byte	.LVL37
+ 1444 0152 0200     		.2byte	0x2
+ 1445 0154 30       		.byte	0x30
+ 1446 0155 9F       		.byte	0x9f
+ 1447 0156 9A000000 		.4byte	.LVL37
+ 1448 015a 9D000000 		.4byte	.LVL38-1
+ 1449 015e 0800     		.2byte	0x8
+ 1450 0160 F5       		.byte	0xf5
+ 1451 0161 00       		.uleb128 0
+ 1452 0162 25       		.uleb128 0x25
+ 1453 0163 F7       		.byte	0xf7
+ 1454 0164 33       		.uleb128 0x33
+ 1455 0165 F7       		.byte	0xf7
+ 1456 0166 00       		.uleb128 0
+ 1457 0167 9F       		.byte	0x9f
+ 1458 0168 00000000 		.4byte	0
+ 1459 016c 00000000 		.4byte	0
+ 1460              		.section	.debug_aranges,"",%progbits
+ 1461 0000 44000000 		.4byte	0x44
+ 1462 0004 0200     		.2byte	0x2
+ 1463 0006 00000000 		.4byte	.Ldebug_info0
+ 1464 000a 04       		.byte	0x4
+ 1465 000b 00       		.byte	0
+ 1466 000c 0000     		.2byte	0
+ 1467 000e 0000     		.2byte	0
+ 1468 0010 00000000 		.4byte	.LFB65
+ 1469 0014 20000000 		.4byte	.LFE65-.LFB65
+ 1470 0018 00000000 		.4byte	.LFB67
+ 1471 001c 08000000 		.4byte	.LFE67-.LFB67
+ 1472 0020 00000000 		.4byte	.LFB68
+ 1473 0024 1C000000 		.4byte	.LFE68-.LFB68
+ 1474 0028 00000000 		.4byte	.LFB64
+ 1475 002c 28000000 		.4byte	.LFE64-.LFB64
+ 1476 0030 00000000 		.4byte	.LFB69
+ 1477 0034 1C000000 		.4byte	.LFE69-.LFB69
+ 1478 0038 00000000 		.4byte	.LFB66
+ 1479 003c D4000000 		.4byte	.LFE66-.LFB66
+ 1480 0040 00000000 		.4byte	0
+ 1481 0044 00000000 		.4byte	0
+ 1482              		.section	.debug_ranges,"",%progbits
+ 1483              	.Ldebug_ranges0:
+ 1484 0000 00000000 		.4byte	.LFB65
+ 1485 0004 20000000 		.4byte	.LFE65
+ 1486 0008 00000000 		.4byte	.LFB67
+ 1487 000c 08000000 		.4byte	.LFE67
+ 1488 0010 00000000 		.4byte	.LFB68
+ 1489 0014 1C000000 		.4byte	.LFE68
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccYu8MZD.s 			page 31
+
+
+ 1490 0018 00000000 		.4byte	.LFB64
+ 1491 001c 28000000 		.4byte	.LFE64
+ 1492 0020 00000000 		.4byte	.LFB69
+ 1493 0024 1C000000 		.4byte	.LFE69
+ 1494 0028 00000000 		.4byte	.LFB66
+ 1495 002c D4000000 		.4byte	.LFE66
+ 1496 0030 00000000 		.4byte	0
+ 1497 0034 00000000 		.4byte	0
+ 1498              		.section	.debug_line,"",%progbits
+ 1499              	.Ldebug_line0:
+ 1500 0000 45020000 		.section	.debug_str,"MS",%progbits,1
+ 1500      0200AD01 
+ 1500      00000201 
+ 1500      FB0E0D00 
+ 1500      01010101 
+ 1501              	.LASF49:
+ 1502 0000 7573625F 		.ascii	"usb_Tick\000"
+ 1502      5469636B 
+ 1502      00
+ 1503              	.LASF41:
+ 1504 0009 70756C73 		.ascii	"pulses\000"
+ 1504      657300
+ 1505              	.LASF25:
+ 1506 0010 75736256 		.ascii	"usbValue\000"
+ 1506      616C7565 
+ 1506      00
+ 1507              	.LASF14:
+ 1508 0019 5F5F696E 		.ascii	"__int32_t\000"
+ 1508      7433325F 
+ 1508      7400
+ 1509              	.LASF26:
+ 1510 0023 75736253 		.ascii	"usbStartByte\000"
+ 1510      74617274 
+ 1510      42797465 
+ 1510      00
+ 1511              	.LASF37:
+ 1512 0030 64697669 		.ascii	"divider\000"
+ 1512      64657200 
+ 1513              	.LASF2:
+ 1514 0038 73686F72 		.ascii	"short unsigned int\000"
+ 1514      7420756E 
+ 1514      7369676E 
+ 1514      65642069 
+ 1514      6E7400
+ 1515              	.LASF53:
+ 1516 004b 7573625F 		.ascii	"usb_Load_EP1_Bulk_EP\000"
+ 1516      4C6F6164 
+ 1516      5F455031 
+ 1516      5F42756C 
+ 1516      6B5F4550 
+ 1517              	.LASF32:
+ 1518 0060 43757272 		.ascii	"CurrentVal\000"
+ 1518      656E7456 
+ 1518      616C00
+ 1519              	.LASF43:
+ 1520 006b 656E6162 		.ascii	"enable\000"
+ 1520      6C6500
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccYu8MZD.s 			page 32
+
+
+ 1521              	.LASF16:
+ 1522 0072 75696E74 		.ascii	"uint8\000"
+ 1522      3800
+ 1523              	.LASF42:
+ 1524 0078 64697265 		.ascii	"direction\000"
+ 1524      6374696F 
+ 1524      6E00
+ 1525              	.LASF38:
+ 1526 0082 494E5F44 		.ascii	"IN_Data_Buffer\000"
+ 1526      6174615F 
+ 1526      42756666 
+ 1526      657200
+ 1527              	.LASF0:
+ 1528 0091 666C6F61 		.ascii	"float\000"
+ 1528      7400
+ 1529              	.LASF20:
+ 1530 0097 75736253 		.ascii	"usbSetEnable\000"
+ 1530      6574456E 
+ 1530      61626C65 
+ 1530      00
+ 1531              	.LASF5:
+ 1532 00a4 7369676E 		.ascii	"signed char\000"
+ 1532      65642063 
+ 1532      68617200 
+ 1533              	.LASF28:
+ 1534 00b0 55534246 		.ascii	"USBFS_EP_2_ISR_ExitCallback\000"
+ 1534      535F4550 
+ 1534      5F325F49 
+ 1534      53525F45 
+ 1534      78697443 
+ 1535              	.LASF6:
+ 1536 00cc 756E7369 		.ascii	"unsigned char\000"
+ 1536      676E6564 
+ 1536      20636861 
+ 1536      7200
+ 1537              	.LASF54:
+ 1538 00da 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1538      43313120 
+ 1538      352E342E 
+ 1538      31203230 
+ 1538      31363036 
+ 1539 010d 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 1539      20726576 
+ 1539      6973696F 
+ 1539      6E203233 
+ 1539      37373135 
+ 1540 0140 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1540      66756E63 
+ 1540      74696F6E 
+ 1540      2D736563 
+ 1540      74696F6E 
+ 1541              	.LASF9:
+ 1542 0168 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1542      20756E73 
+ 1542      69676E65 
+ 1542      6420696E 
+ 1542      7400
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccYu8MZD.s 			page 33
+
+
+ 1543              	.LASF29:
+ 1544 017a 456E6162 		.ascii	"Enable_Set\000"
+ 1544      6C655F53 
+ 1544      657400
+ 1545              	.LASF50:
+ 1546 0185 436C6F63 		.ascii	"Clock_1_SetDividerRegister\000"
+ 1546      6B5F315F 
+ 1546      53657444 
+ 1546      69766964 
+ 1546      65725265 
+ 1547              	.LASF45:
+ 1548 01a0 456E6162 		.ascii	"EnableAndDirection_Read\000"
+ 1548      6C65416E 
+ 1548      64446972 
+ 1548      65637469 
+ 1548      6F6E5F52 
+ 1549              	.LASF27:
+ 1550 01b8 7365745F 		.ascii	"set_usbByteArray\000"
+ 1550      75736242 
+ 1550      79746541 
+ 1550      72726179 
+ 1550      00
+ 1551              	.LASF22:
+ 1552 01c9 75736253 		.ascii	"usbSetCounts\000"
+ 1552      6574436F 
+ 1552      756E7473 
+ 1552      00
+ 1553              	.LASF59:
+ 1554 01d6 6D656D73 		.ascii	"memset\000"
+ 1554      657400
+ 1555              	.LASF34:
+ 1556 01dd 75736248 		.ascii	"usbHidOutEpHandler\000"
+ 1556      69644F75 
+ 1556      74457048 
+ 1556      616E646C 
+ 1556      657200
+ 1557              	.LASF19:
+ 1558 01f0 696E7438 		.ascii	"int8\000"
+ 1558      00
+ 1559              	.LASF48:
+ 1560 01f5 54696D65 		.ascii	"Timer1_Start\000"
+ 1560      72315F53 
+ 1560      74617274 
+ 1560      00
+ 1561              	.LASF17:
+ 1562 0202 75696E74 		.ascii	"uint16\000"
+ 1562      313600
+ 1563              	.LASF30:
+ 1564 0209 4F6E4F66 		.ascii	"OnOff\000"
+ 1564      6600
+ 1565              	.LASF18:
+ 1566 020f 75696E74 		.ascii	"uint32\000"
+ 1566      333200
+ 1567              	.LASF58:
+ 1568 0216 6D61696E 		.ascii	"main\000"
+ 1568      00
+ 1569              	.LASF36:
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccYu8MZD.s 			page 34
+
+
+ 1570 021b 666C6F61 		.ascii	"floatValOut\000"
+ 1570      7456616C 
+ 1570      4F757400 
+ 1571              	.LASF1:
+ 1572 0227 756E7369 		.ascii	"unsigned int\000"
+ 1572      676E6564 
+ 1572      20696E74 
+ 1572      00
+ 1573              	.LASF31:
+ 1574 0234 75736256 		.ascii	"usbValue_UINT32\000"
+ 1574      616C7565 
+ 1574      5F55494E 
+ 1574      54333200 
+ 1575              	.LASF39:
+ 1576 0244 4F55545F 		.ascii	"OUT_Data_Buffer\000"
+ 1576      44617461 
+ 1576      5F427566 
+ 1576      66657200 
+ 1577              	.LASF10:
+ 1578 0254 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1578      206C6F6E 
+ 1578      6720756E 
+ 1578      7369676E 
+ 1578      65642069 
+ 1579              	.LASF51:
+ 1580 026b 54696D65 		.ascii	"Timer1_WritePeriod\000"
+ 1580      72315F57 
+ 1580      72697465 
+ 1580      50657269 
+ 1580      6F6400
+ 1581              	.LASF40:
+ 1582 027e 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 1582      52784275 
+ 1582      66666572 
+ 1582      00
+ 1583              	.LASF47:
+ 1584 028b 7573625F 		.ascii	"usb_Init\000"
+ 1584      496E6974 
+ 1584      00
+ 1585              	.LASF15:
+ 1586 0294 696E7433 		.ascii	"int32_t\000"
+ 1586      325F7400 
+ 1587              	.LASF11:
+ 1588 029c 73697A65 		.ascii	"sizetype\000"
+ 1588      74797065 
+ 1588      00
+ 1589              	.LASF57:
+ 1590 02a5 75736243 		.ascii	"usbCommands\000"
+ 1590      6F6D6D61 
+ 1590      6E647300 
+ 1591              	.LASF33:
+ 1592 02b1 44697265 		.ascii	"Direction_Set\000"
+ 1592      6374696F 
+ 1592      6E5F5365 
+ 1592      7400
+ 1593              	.LASF3:
+ 1594 02bf 6C6F6E67 		.ascii	"long long int\000"
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccYu8MZD.s 			page 35
+
+
+ 1594      206C6F6E 
+ 1594      6720696E 
+ 1594      7400
+ 1595              	.LASF55:
+ 1596 02cd 6D61696E 		.ascii	"main.c\000"
+ 1596      2E6300
+ 1597              	.LASF12:
+ 1598 02d4 63686172 		.ascii	"char\000"
+ 1598      00
+ 1599              	.LASF7:
+ 1600 02d9 73686F72 		.ascii	"short int\000"
+ 1600      7420696E 
+ 1600      7400
+ 1601              	.LASF35:
+ 1602 02e3 666C6F61 		.ascii	"floatVal1\000"
+ 1602      7456616C 
+ 1602      3100
+ 1603              	.LASF46:
+ 1604 02ed 456E6162 		.ascii	"EnableAndDirection_Write\000"
+ 1604      6C65416E 
+ 1604      64446972 
+ 1604      65637469 
+ 1604      6F6E5F57 
+ 1605              	.LASF21:
+ 1606 0306 75736253 		.ascii	"usbSetDirection\000"
+ 1606      65744469 
+ 1606      72656374 
+ 1606      696F6E00 
+ 1607              	.LASF56:
+ 1608 0316 433A5C5F 		.ascii	"C:\\_User\\GitHub Projects\\PulseGen\\PulseGen.cywr"
+ 1608      55736572 
+ 1608      5C476974 
+ 1608      48756220 
+ 1608      50726F6A 
+ 1609 0345 6B5F2E41 		.ascii	"k_.Archive01\\Design93\\PulseGenerator.cydsn\000"
+ 1609      72636869 
+ 1609      76653031 
+ 1609      5C446573 
+ 1609      69676E39 
+ 1610              	.LASF8:
+ 1611 0370 6C6F6E67 		.ascii	"long int\000"
+ 1611      20696E74 
+ 1611      00
+ 1612              	.LASF4:
+ 1613 0379 6C6F6E67 		.ascii	"long double\000"
+ 1613      20646F75 
+ 1613      626C6500 
+ 1614              	.LASF52:
+ 1615 0385 54726967 		.ascii	"TrigPulseTrain_Write\000"
+ 1615      50756C73 
+ 1615      65547261 
+ 1615      696E5F57 
+ 1615      72697465 
+ 1616              	.LASF13:
+ 1617 039a 646F7562 		.ascii	"double\000"
+ 1617      6C6500
+ 1618              	.LASF23:
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccYu8MZD.s 			page 36
+
+
+ 1619 03a1 75736253 		.ascii	"usbSetClock\000"
+ 1619      6574436C 
+ 1619      6F636B00 
+ 1620              	.LASF24:
+ 1621 03ad 75736253 		.ascii	"usbStartMotion\000"
+ 1621      74617274 
+ 1621      4D6F7469 
+ 1621      6F6E00
+ 1622              	.LASF44:
+ 1623 03bc 7573625F 		.ascii	"usb_Load_EP2\000"
+ 1623      4C6F6164 
+ 1623      5F455032 
+ 1623      00
+ 1624              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

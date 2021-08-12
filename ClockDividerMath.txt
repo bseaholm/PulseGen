@@ -1,0 +1,13 @@
+100kHz ILO
+
+Divider 100 = 100Hz
+
+Divider 10 = 
+
+enum usbCommands {	
+    usbSetEnable = 0u,
+    usbSetDirection,
+    usbSetCounts,
+    usbSetClock,
+    usbStartMotion,
+};

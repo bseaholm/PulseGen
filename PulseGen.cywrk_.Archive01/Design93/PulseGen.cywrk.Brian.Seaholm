@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CyXmlSerializer>
+<!--This file is machine generated and read. It is not intended to be edited by hand.-->
+<!--Due to this, there is no schema for this file.-->
+<CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21 type_name="CyDesigner.Common.ProjMgmt.Model.CyPrjMgmtWrkspcCustomData" version="4">
+<CyGuid_fdba8dfd-b15b-4469-9bbb-9e40c3e70997 type_name="CyDesigner.Common.Base.CyCustomData" version="2">
+<userData>
+<dataGuid v="1b906a0f-a7b6-4e4d-a428-82f98b53cb35">
+<CyGuid_1b906a0f-a7b6-4e4d-a428-82f98b53cb35 type_name="CyDesigner.Common.ProjMgmt.GUI.CyExplorerWindow+CyExplorerWindowState" version="3" SelectedTab="Source">
+<TreeKeys>
+<v>Source</v>
+<v>Components</v>
+<v>Output</v>
+</TreeKeys>
+<TreeStates>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="PulseGen\PulseGenerator\TopDesign">
+<ExpandedNodeIds>
+<v>PulseGen</v>
+<v>PulseGen\PulseGenerator</v>
+<v>PulseGen\PulseGenerator\TopDesign</v>
+<v>PulseGen\PulseGenerator\PulseGenerator.cydwr</v>
+<v>PulseGen\PulseGenerator\PulseGenerator.cydwr\Pins</v>
+<v>PulseGen\PulseGenerator\PulseGenerator.cydwr\Analog</v>
+<v>PulseGen\PulseGenerator\PulseGenerator.cydwr\Clocks</v>
+<v>PulseGen\PulseGenerator\PulseGenerator.cydwr\Interrupts</v>
+<v>PulseGen\PulseGenerator\PulseGenerator.cydwr\DMA</v>
+<v>PulseGen\PulseGenerator\PulseGenerator.cydwr\System</v>
+<v>PulseGen\PulseGenerator\PulseGenerator.cydwr\Directives</v>
+<v>PulseGen\PulseGenerator\PulseGenerator.cydwr\Flash Security</v>
+<v>PulseGen\PulseGenerator\PulseGenerator.cydwr\EEPROM</v>
+<v>PulseGen\PulseGenerator\AMC_Lib</v>
+<v>PulseGen\PulseGenerator\AMC_Lib\include</v>
+<v>PulseGen\PulseGenerator\AMC_Lib\include\eeprom_amc.h</v>
+<v>PulseGen\PulseGenerator\AMC_Lib\include\usb.h</v>
+<v>PulseGen\PulseGenerator\AMC_Lib\src</v>
+<v>PulseGen\PulseGenerator\AMC_Lib\src\eeprom_amc.c</v>
+<v>PulseGen\PulseGenerator\AMC_Lib\src\usb.c</v>
+<v>PulseGen\PulseGenerator\Header Files</v>
+<v>PulseGen\PulseGenerator\Header Files\AMC.h</v>
+<v>PulseGen\PulseGenerator\Header Files\cyapicallbacks.h</v>
+<v>PulseGen\PulseGenerator\Source Files</v>
+<v>PulseGen\PulseGenerator\Source Files\main.c</v>
+<v>PulseGen\PulseGenerator\Generated_Source\PSoC5</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>PulseGen</v>
+<v>PulseGen\PulseGenerator</v>
+<v>PulseGen\PulseGenerator\TopDesign</v>
+<v>PulseGen\PulseGenerator\PulseGenerator.cydwr</v>
+<v>PulseGen\PulseGenerator\PulseGenerator.cydwr\Pins</v>
+<v>PulseGen\PulseGenerator\PulseGenerator.cydwr\Analog</v>
+<v>PulseGen\PulseGenerator\PulseGenerator.cydwr\Clocks</v>
+<v>PulseGen\PulseGenerator\PulseGenerator.cydwr\Interrupts</v>
+<v>PulseGen\PulseGenerator\PulseGenerator.cydwr\DMA</v>
+<v>PulseGen\PulseGenerator\PulseGenerator.cydwr\System</v>
+<v>PulseGen\PulseGenerator\PulseGenerator.cydwr\Directives</v>
+<v>PulseGen\PulseGenerator\PulseGenerator.cydwr\Flash Security</v>
+<v>PulseGen\PulseGenerator\PulseGenerator.cydwr\EEPROM</v>
+<v>PulseGen\PulseGenerator\AMC_Lib</v>
+<v>PulseGen\PulseGenerator\AMC_Lib\include</v>
+<v>PulseGen\PulseGenerator\AMC_Lib\include\eeprom_amc.h</v>
+<v>PulseGen\PulseGenerator\AMC_Lib\include\usb.h</v>
+<v>PulseGen\PulseGenerator\AMC_Lib\src</v>
+<v>PulseGen\PulseGenerator\AMC_Lib\src\eeprom_amc.c</v>
+<v>PulseGen\PulseGenerator\AMC_Lib\src\usb.c</v>
+<v>PulseGen\PulseGenerator\Header Files</v>
+<v>PulseGen\PulseGenerator\Header Files\AMC.h</v>
+<v>PulseGen\PulseGenerator\Header Files\cyapicallbacks.h</v>
+<v>PulseGen\PulseGenerator\Source Files</v>
+<v>PulseGen\PulseGenerator\Source Files\main.c</v>
+<v>PulseGen\PulseGenerator\Generated_Source</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
+<ExpandedNodeIds>
+<v>PulseGen</v>
+<v>PulseGen\PulseGenerator</v>
+<v>PulseGen\PulseGenerator\TopDesign</v>
+<v>PulseGen\PulseGenerator\TopDesign\TopDesign.cysch</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>PulseGen</v>
+<v>PulseGen\PulseGenerator</v>
+<v>PulseGen\PulseGenerator\TopDesign</v>
+<v>PulseGen\PulseGenerator\TopDesign\TopDesign.cysch</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
+<ExpandedNodeIds>
+<v>PulseGen</v>
+<v>PulseGen\PulseGenerator</v>
+<v>PulseGen\PulseGenerator\CortexM3</v>
+<v>PulseGen\PulseGenerator\CortexM3\ARM_GCC_541</v>
+<v>PulseGen\PulseGenerator\CortexM3\ARM_GCC_541\Debug</v>
+<v>PulseGen\PulseGenerator\CortexM3\ARM_GCC_541\Debug\Listing Files</v>
+<v>PulseGen\PulseGenerator\CortexM3\ARM_GCC_541\Debug\Listing Files\Clock_1.lst</v>
+<v>PulseGen\PulseGenerator\CortexM3\ARM_GCC_541\Debug\Listing Files\Cm3Start.lst</v>
+<v>PulseGen\PulseGenerator\CortexM3\ARM_GCC_541\Debug\Listing Files\CyBootAsmGnu.lst</v>
+<v>PulseGen\PulseGenerator\CortexM3\ARM_GCC_541\Debug\Listing Files\CyDmac.lst</v>
+<v>PulseGen\PulseGenerator\CortexM3\ARM_GCC_541\Debug\Listing Files\cyfitter_cfg.lst</v>
+<v>PulseGen\PulseGenerator\CortexM3\ARM_GCC_541\Debug\Listing Files\CyFlash.lst</v>
+<v>PulseGen\PulseGenerator\CortexM3\ARM_GCC_541\Debug\Listing Files\CyLib.lst</v>
+<v>PulseGen\PulseGenerator\CortexM3\ARM_GCC_541\Debug\Listing Files\cymetadata.lst</v>
+<v>PulseGen\PulseGenerator\CortexM3\ARM_GCC_541\Debug\Listing Files\cyPm.lst</v>
+<v>PulseGen\PulseGenerator\CortexM3\ARM_GCC_541\Debug\Listing Files\CySpc.lst</v>
+<v>PulseGen\PulseGenerator\CortexM3\ARM_GCC_541\Debug\Listing Files\cyutils.lst</v>
+<v>PulseGen\PulseGenerator\CortexM3\ARM_GCC_541\Debug\Listing Files\Direction.lst</v>
+<v>PulseGen\PulseGenerator\CortexM3\ARM_GCC_541\Debug\Listing Files\eeprom_amc.lst</v>
+<v>PulseGen\PulseGenerator\CortexM3\ARM_GCC_541\Debug\Listing Files\Enable.lst</v>
+<v>PulseGen\PulseGenerator\CortexM3\ARM_GCC_541\Debug\Listing Files\EnableAndDirection.lst</v>
+<v>PulseGen\PulseGenerator\CortexM3\ARM_GCC_541\Debug\Listing Files\EnableAndDirection_PM.lst</v>
+<v>PulseGen\PulseGenerator\CortexM3\ARM_GCC_541\Debug\Listing Files\main.lst</v>
+<v>PulseGen\PulseGenerator\CortexM3\ARM_GCC_541\Debug\Listing Files\PulseTrainOut.lst</v>
+<v>PulseGen\PulseGenerator\CortexM3\ARM_GCC_541\Debug\Listing Files\Timer1.lst</v>
+<v>PulseGen\PulseGenerator\CortexM3\ARM_GCC_541\Debug\Listing Files\Timer1_PM.lst</v>
+<v>PulseGen\PulseGenerator\CortexM3\ARM_GCC_541\Debug\Listing Files\TrigPulseTrain.lst</v>
+<v>PulseGen\PulseGenerator\CortexM3\ARM_GCC_541\Debug\Listing Files\TrigPulseTrain_PM.lst</v>
+<v>PulseGen\PulseGenerator\CortexM3\ARM_GCC_541\Debug\Listing Files\usb.lst</v>
+<v>PulseGen\PulseGenerator\CortexM3\ARM_GCC_541\Debug\Listing Files\USBFS.lst</v>
+<v>PulseGen\PulseGenerator\CortexM3\ARM_GCC_541\Debug\Listing Files\USBFS_audio.lst</v>
+<v>PulseGen\PulseGenerator\CortexM3\ARM_GCC_541\Debug\Listing Files\USBFS_boot.lst</v>
+<v>PulseGen\PulseGenerator\CortexM3\ARM_GCC_541\Debug\Listing Files\USBFS_cdc.lst</v>
+<v>PulseGen\PulseGenerator\CortexM3\ARM_GCC_541\Debug\Listing Files\USBFS_cls.lst</v>
+<v>PulseGen\PulseGenerator\CortexM3\ARM_GCC_541\Debug\Listing Files\USBFS_descr.lst</v>
+<v>PulseGen\PulseGenerator\CortexM3\ARM_GCC_541\Debug\Listing Files\USBFS_Dm.lst</v>
+<v>PulseGen\PulseGenerator\CortexM3\ARM_GCC_541\Debug\Listing Files\USBFS_Dp.lst</v>
+<v>PulseGen\PulseGenerator\CortexM3\ARM_GCC_541\Debug\Listing Files\USBFS_drv.lst</v>
+<v>PulseGen\PulseGenerator\CortexM3\ARM_GCC_541\Debug\Listing Files\USBFS_episr.lst</v>
+<v>PulseGen\PulseGenerator\CortexM3\ARM_GCC_541\Debug\Listing Files\USBFS_hid.lst</v>
+<v>PulseGen\PulseGenerator\CortexM3\ARM_GCC_541\Debug\Listing Files\USBFS_midi.lst</v>
+<v>PulseGen\PulseGenerator\CortexM3\ARM_GCC_541\Debug\Listing Files\USBFS_msc.lst</v>
+<v>PulseGen\PulseGenerator\CortexM3\ARM_GCC_541\Debug\Listing Files\USBFS_pm.lst</v>
+<v>PulseGen\PulseGenerator\CortexM3\ARM_GCC_541\Debug\Listing Files\USBFS_std.lst</v>
+<v>PulseGen\PulseGenerator\CortexM3\ARM_GCC_541\Debug\Listing Files\USBFS_vnd.lst</v>
+<v>PulseGen\PulseGenerator\CortexM3\ARM_GCC_541\Debug\PulseGenerator.elf</v>
+<v>PulseGen\PulseGenerator\CortexM3\ARM_GCC_541\Debug\PulseGenerator.hex</v>
+<v>PulseGen\PulseGenerator\CortexM3\ARM_GCC_541\Debug\PulseGenerator.map</v>
+<v>PulseGen\PulseGenerator\PulseGenerator.gpdsc</v>
+<v>PulseGen\PulseGenerator\PulseGenerator.rpt</v>
+<v>PulseGen\PulseGenerator\PulseGenerator_timing.html</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>PulseGen</v>
+<v>PulseGen\PulseGenerator</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+</TreeStates>
+<TreeKeysV2>
+<v>Datasheet</v>
+</TreeKeysV2>
+<TreeStatesV2>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
+<ExpandedNodeIds>
+<v>PulseGen</v>
+<v>PulseGen\PulseGenerator</v>
+<v>PulseGen\PulseGenerator\PSoC 5LP Architecture TRM</v>
+<v>PulseGen\PulseGenerator\CY8C58LP Family Datasheet</v>
+<v>PulseGen\PulseGenerator\System Reference Guides</v>
+<v>PulseGen\PulseGenerator\System Reference Guides\cy_boot_v5_10</v>
+<v>PulseGen\PulseGenerator\and_v1_0.pdf</v>
+<v>PulseGen\PulseGenerator\cy_clock_v2_20</v>
+<v>PulseGen\PulseGenerator\cy_clock_v2_20\cy_clock_v2_20.pdf</v>
+<v>PulseGen\PulseGenerator\cy_constant_v1_0.pdf</v>
+<v>PulseGen\PulseGenerator\cy_pins_v2_10.pdf</v>
+<v>PulseGen\PulseGenerator\cy_pins_v2_20</v>
+<v>PulseGen\PulseGenerator\cy_pins_v2_20\cy_pins_v2_20.pdf</v>
+<v>PulseGen\PulseGenerator\cy_sync_v1_0.pdf</v>
+<v>PulseGen\PulseGenerator\CyControlReg_v1_80</v>
+<v>PulseGen\PulseGenerator\CyControlReg_v1_80\CyControlReg_v1_80.pdf</v>
+<v>PulseGen\PulseGenerator\cydff_v1_30</v>
+<v>PulseGen\PulseGenerator\cydff_v1_30\cydff_v1_30.pdf</v>
+<v>PulseGen\PulseGenerator\not_v1_0.pdf</v>
+<v>PulseGen\PulseGenerator\Timer_v2_70.pdf</v>
+<v>PulseGen\PulseGenerator\USBFS_v3_10.pdf</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>PulseGen</v>
+<v>PulseGen\PulseGenerator</v>
+<v>PulseGen\PulseGenerator\PSoC 5LP Architecture TRM</v>
+<v>PulseGen\PulseGenerator\CY8C58LP Family Datasheet</v>
+<v>PulseGen\PulseGenerator\System Reference Guides</v>
+<v>PulseGen\PulseGenerator\System Reference Guides\cy_boot_v5_10</v>
+<v>PulseGen\PulseGenerator\and_v1_0.pdf</v>
+<v>PulseGen\PulseGenerator\cy_clock_v2_20</v>
+<v>PulseGen\PulseGenerator\cy_clock_v2_20\cy_clock_v2_20.pdf</v>
+<v>PulseGen\PulseGenerator\cy_constant_v1_0.pdf</v>
+<v>PulseGen\PulseGenerator\cy_pins_v2_10.pdf</v>
+<v>PulseGen\PulseGenerator\cy_pins_v2_20</v>
+<v>PulseGen\PulseGenerator\cy_pins_v2_20\cy_pins_v2_20.pdf</v>
+<v>PulseGen\PulseGenerator\cy_sync_v1_0.pdf</v>
+<v>PulseGen\PulseGenerator\CyControlReg_v1_80</v>
+<v>PulseGen\PulseGenerator\CyControlReg_v1_80\CyControlReg_v1_80.pdf</v>
+<v>PulseGen\PulseGenerator\cydff_v1_30</v>
+<v>PulseGen\PulseGenerator\cydff_v1_30\cydff_v1_30.pdf</v>
+<v>PulseGen\PulseGenerator\not_v1_0.pdf</v>
+<v>PulseGen\PulseGenerator\Timer_v2_70.pdf</v>
+<v>PulseGen\PulseGenerator\USBFS_v3_10.pdf</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+</TreeStatesV2>
+</CyGuid_1b906a0f-a7b6-4e4d-a428-82f98b53cb35>
+</dataGuid>
+</userData>
+</CyGuid_fdba8dfd-b15b-4469-9bbb-9e40c3e70997>
+<Unloaded />
+<OpenDocs>
+<name v=".\PulseGenerator.cydsn\TopDesign\TopDesign.cysch" />
+<name v=".\PulseGenerator.cydsn\main.c" />
+</OpenDocs>
+<OpenDocsLayout><![CDATA[<?xml version="1.0"?><!--
+
+  Actipro Docking/MDI for WinForms
+  Copyright (c) 2001-2016 Actipro Software LLC.  All rights reserved.
+  http://www.actiprosoftware.com
+
+--><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Horizontal"><TabbedMdiContainer Size="1276, 711" SelectedTabbedMdiWindow="011d3c9c-2707-49e4-b562-eb926f212399"><DocumentWindow Key="C:\_User\GitHub Projects\PulseGen\PulseGen.cywrk_.Archive01\Design93\PulseGenerator.cydsn\TopDesign\TopDesign.cysch" Guid="e6581469-1586-41b1-b278-bb5ffed82144" /><DocumentWindow Key="C:\_User\GitHub Projects\PulseGen\PulseGen.cywrk_.Archive01\Design93\PulseGenerator.cydsn\main.c" Guid="011d3c9c-2707-49e4-b562-eb926f212399" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
+<config v="" />
+<AutoUpdate v="true" />
+</CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21>
+</CyXmlSerializer>

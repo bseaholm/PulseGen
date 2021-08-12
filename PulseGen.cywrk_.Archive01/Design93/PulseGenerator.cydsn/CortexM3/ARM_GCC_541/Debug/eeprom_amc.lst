@@ -1,0 +1,2319 @@
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccIPL47e.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"eeprom_amc.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.eepromFloatToByteArray,"ax",%progbits
+  20              		.align	2
+  21              		.thumb
+  22              		.thumb_func
+  23              		.type	eepromFloatToByteArray, %function
+  24              	eepromFloatToByteArray:
+  25              	.LFB69:
+  26              		.file 1 "..\\AMC_Lib\\src\\eeprom_amc.c"
+   1:..\AMC_Lib\src/eeprom_amc.c **** /*------------------------------------------------------------------------------
+   2:..\AMC_Lib\src/eeprom_amc.c **** 
+   3:..\AMC_Lib\src/eeprom_amc.c **** 	Filename:	eeprom.c
+   4:..\AMC_Lib\src/eeprom_amc.c **** 
+   5:..\AMC_Lib\src/eeprom_amc.c **** 	Authors:	Brian Seaholm of Resodyn Acoustic Mixers (Copywrite 2013)
+   6:..\AMC_Lib\src/eeprom_amc.c **** 
+   7:..\AMC_Lib\src/eeprom_amc.c **** 	Purpose:	This implementation file manages reading and writing to the EEPROM
+   8:..\AMC_Lib\src/eeprom_amc.c **** 				for infrequently changing non-volatile values
+   9:..\AMC_Lib\src/eeprom_amc.c **** 
+  10:..\AMC_Lib\src/eeprom_amc.c **** 	History:
+  11:..\AMC_Lib\src/eeprom_amc.c **** 
+  12:..\AMC_Lib\src/eeprom_amc.c **** 	$Log: eeprom.c $
+  13:..\AMC_Lib\src/eeprom_amc.c **** 	Revision 1.0  2013/07/08 18:16:32  Brian
+  14:..\AMC_Lib\src/eeprom_amc.c **** 	Initial revision
+  15:..\AMC_Lib\src/eeprom_amc.c **** 
+  16:..\AMC_Lib\src/eeprom_amc.c **** 
+  17:..\AMC_Lib\src/eeprom_amc.c **** ------------------------------------------------------------------------------*/
+  18:..\AMC_Lib\src/eeprom_amc.c **** 
+  19:..\AMC_Lib\src/eeprom_amc.c **** /*------------------------------------------------------------------------------
+  20:..\AMC_Lib\src/eeprom_amc.c **** 	Includes
+  21:..\AMC_Lib\src/eeprom_amc.c **** ------------------------------------------------------------------------------*/
+  22:..\AMC_Lib\src/eeprom_amc.c **** #include <project.h>
+  23:..\AMC_Lib\src/eeprom_amc.c **** #include <stdlib.h>
+  24:..\AMC_Lib\src/eeprom_amc.c **** #include <stdio.h>
+  25:..\AMC_Lib\src/eeprom_amc.c **** #include "eeprom_amc.h"
+  26:..\AMC_Lib\src/eeprom_amc.c **** 
+  27:..\AMC_Lib\src/eeprom_amc.c **** /*------------------------------------------------------------------------------
+  28:..\AMC_Lib\src/eeprom_amc.c **** 	Defines/Enumerations
+  29:..\AMC_Lib\src/eeprom_amc.c **** ------------------------------------------------------------------------------*/
+  30:..\AMC_Lib\src/eeprom_amc.c **** 
+  31:..\AMC_Lib\src/eeprom_amc.c **** /*------------------------------------------------------------------------------
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccIPL47e.s 			page 2
+
+
+  32:..\AMC_Lib\src/eeprom_amc.c **** 	Private Prototypes
+  33:..\AMC_Lib\src/eeprom_amc.c **** ------------------------------------------------------------------------------*/
+  34:..\AMC_Lib\src/eeprom_amc.c **** static void eepromFloatToByteArray( float floatNumber, uint8 returnArray[4] );
+  35:..\AMC_Lib\src/eeprom_amc.c **** static void eepromUINT32ToByteArray( uint32 UINT32Number, uint8 returnArray[4] );
+  36:..\AMC_Lib\src/eeprom_amc.c **** static float eepromReadRow( uint8 eepromRow );
+  37:..\AMC_Lib\src/eeprom_amc.c **** static uint32 eepromReadRowUINT32( uint8 eepromRow );
+  38:..\AMC_Lib\src/eeprom_amc.c **** static void eepromWriteRow( float floatNumber, uint8 eepromRow );
+  39:..\AMC_Lib\src/eeprom_amc.c **** static void eepromWriteRowUint32( uint32 UINT32Number, uint8 eepromRow );
+  40:..\AMC_Lib\src/eeprom_amc.c **** 
+  41:..\AMC_Lib\src/eeprom_amc.c **** /*------------------------------------------------------------------------------
+  42:..\AMC_Lib\src/eeprom_amc.c **** 	Variables
+  43:..\AMC_Lib\src/eeprom_amc.c **** ------------------------------------------------------------------------------*/
+  44:..\AMC_Lib\src/eeprom_amc.c **** 
+  45:..\AMC_Lib\src/eeprom_amc.c **** /*-----------------------------------------------------------------------------
+  46:..\AMC_Lib\src/eeprom_amc.c **** 	Public Functions
+  47:..\AMC_Lib\src/eeprom_amc.c **** -----------------------------------------------------------------------------*/
+  48:..\AMC_Lib\src/eeprom_amc.c **** /*-----------------------------------------------------------------------------
+  49:..\AMC_Lib\src/eeprom_amc.c **** 
+  50:..\AMC_Lib\src/eeprom_amc.c **** 	Function:	eeprom_Init
+  51:..\AMC_Lib\src/eeprom_amc.c **** 
+  52:..\AMC_Lib\src/eeprom_amc.c **** 	Synopsis:	
+  53:..\AMC_Lib\src/eeprom_amc.c **** 
+  54:..\AMC_Lib\src/eeprom_amc.c **** 	Parameters:	
+  55:..\AMC_Lib\src/eeprom_amc.c **** 
+  56:..\AMC_Lib\src/eeprom_amc.c **** 	Returns:	none
+  57:..\AMC_Lib\src/eeprom_amc.c **** 
+  58:..\AMC_Lib\src/eeprom_amc.c **** 	Warnings:	
+  59:..\AMC_Lib\src/eeprom_amc.c **** 
+  60:..\AMC_Lib\src/eeprom_amc.c **** -----------------------------------------------------------------------------*/
+  61:..\AMC_Lib\src/eeprom_amc.c **** void eeprom_Init( void )
+  62:..\AMC_Lib\src/eeprom_amc.c **** {
+  63:..\AMC_Lib\src/eeprom_amc.c **** 	EEPROM_1_Start();
+  64:..\AMC_Lib\src/eeprom_amc.c **** }
+  65:..\AMC_Lib\src/eeprom_amc.c **** 
+  66:..\AMC_Lib\src/eeprom_amc.c **** 
+  67:..\AMC_Lib\src/eeprom_amc.c **** 
+  68:..\AMC_Lib\src/eeprom_amc.c **** /*-----------------------------------------------------------------------------
+  69:..\AMC_Lib\src/eeprom_amc.c **** 
+  70:..\AMC_Lib\src/eeprom_amc.c **** 	Function:	eepromGetUint32
+  71:..\AMC_Lib\src/eeprom_amc.c **** 
+  72:..\AMC_Lib\src/eeprom_amc.c **** 	Synopsis:	
+  73:..\AMC_Lib\src/eeprom_amc.c **** 
+  74:..\AMC_Lib\src/eeprom_amc.c **** 	Parameters:	
+  75:..\AMC_Lib\src/eeprom_amc.c **** 
+  76:..\AMC_Lib\src/eeprom_amc.c **** 	Returns:	none
+  77:..\AMC_Lib\src/eeprom_amc.c **** 
+  78:..\AMC_Lib\src/eeprom_amc.c **** 	Warnings:	
+  79:..\AMC_Lib\src/eeprom_amc.c **** 
+  80:..\AMC_Lib\src/eeprom_amc.c **** -----------------------------------------------------------------------------*/
+  81:..\AMC_Lib\src/eeprom_amc.c **** uint32 eepromGetUint32( uint8 eepromRow )
+  82:..\AMC_Lib\src/eeprom_amc.c **** {
+  83:..\AMC_Lib\src/eeprom_amc.c **** 	return eepromReadRowUINT32( eepromRow );
+  84:..\AMC_Lib\src/eeprom_amc.c **** }
+  85:..\AMC_Lib\src/eeprom_amc.c **** 
+  86:..\AMC_Lib\src/eeprom_amc.c **** 
+  87:..\AMC_Lib\src/eeprom_amc.c **** /*-----------------------------------------------------------------------------
+  88:..\AMC_Lib\src/eeprom_amc.c **** 
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccIPL47e.s 			page 3
+
+
+  89:..\AMC_Lib\src/eeprom_amc.c **** 	Function:	eepromSetUint32
+  90:..\AMC_Lib\src/eeprom_amc.c **** 
+  91:..\AMC_Lib\src/eeprom_amc.c **** 	Synopsis:	
+  92:..\AMC_Lib\src/eeprom_amc.c **** 
+  93:..\AMC_Lib\src/eeprom_amc.c **** 	Parameters:	
+  94:..\AMC_Lib\src/eeprom_amc.c **** 
+  95:..\AMC_Lib\src/eeprom_amc.c **** 	Returns:	none
+  96:..\AMC_Lib\src/eeprom_amc.c **** 
+  97:..\AMC_Lib\src/eeprom_amc.c **** 	Warnings:	
+  98:..\AMC_Lib\src/eeprom_amc.c **** 
+  99:..\AMC_Lib\src/eeprom_amc.c **** -----------------------------------------------------------------------------*/
+ 100:..\AMC_Lib\src/eeprom_amc.c **** void eepromSetUint32( uint32 UINT32Number, uint8 eepromRow )
+ 101:..\AMC_Lib\src/eeprom_amc.c **** {
+ 102:..\AMC_Lib\src/eeprom_amc.c **** 	eepromWriteRowUint32( UINT32Number, eepromRow );
+ 103:..\AMC_Lib\src/eeprom_amc.c **** }
+ 104:..\AMC_Lib\src/eeprom_amc.c **** /*-----------------------------------------------------------------------------
+ 105:..\AMC_Lib\src/eeprom_amc.c **** 
+ 106:..\AMC_Lib\src/eeprom_amc.c **** 	Function:	eepromGetFloat
+ 107:..\AMC_Lib\src/eeprom_amc.c **** 
+ 108:..\AMC_Lib\src/eeprom_amc.c **** 	Synopsis:	
+ 109:..\AMC_Lib\src/eeprom_amc.c **** 
+ 110:..\AMC_Lib\src/eeprom_amc.c **** 	Parameters:	
+ 111:..\AMC_Lib\src/eeprom_amc.c **** 
+ 112:..\AMC_Lib\src/eeprom_amc.c **** 	Returns:	none
+ 113:..\AMC_Lib\src/eeprom_amc.c **** 
+ 114:..\AMC_Lib\src/eeprom_amc.c **** 	Warnings:	
+ 115:..\AMC_Lib\src/eeprom_amc.c **** 
+ 116:..\AMC_Lib\src/eeprom_amc.c **** -----------------------------------------------------------------------------*/
+ 117:..\AMC_Lib\src/eeprom_amc.c **** float eepromGetFloat( uint8 eepromRow )
+ 118:..\AMC_Lib\src/eeprom_amc.c **** {
+ 119:..\AMC_Lib\src/eeprom_amc.c **** 	return eepromReadRow( eepromRow );
+ 120:..\AMC_Lib\src/eeprom_amc.c **** }
+ 121:..\AMC_Lib\src/eeprom_amc.c **** 
+ 122:..\AMC_Lib\src/eeprom_amc.c **** 
+ 123:..\AMC_Lib\src/eeprom_amc.c **** /*-----------------------------------------------------------------------------
+ 124:..\AMC_Lib\src/eeprom_amc.c **** 
+ 125:..\AMC_Lib\src/eeprom_amc.c **** 	Function:	eepromSetFloat
+ 126:..\AMC_Lib\src/eeprom_amc.c **** 
+ 127:..\AMC_Lib\src/eeprom_amc.c **** 	Synopsis:	
+ 128:..\AMC_Lib\src/eeprom_amc.c **** 
+ 129:..\AMC_Lib\src/eeprom_amc.c **** 	Parameters:	
+ 130:..\AMC_Lib\src/eeprom_amc.c **** 
+ 131:..\AMC_Lib\src/eeprom_amc.c **** 	Returns:	none
+ 132:..\AMC_Lib\src/eeprom_amc.c **** 
+ 133:..\AMC_Lib\src/eeprom_amc.c **** 	Warnings:	
+ 134:..\AMC_Lib\src/eeprom_amc.c **** 
+ 135:..\AMC_Lib\src/eeprom_amc.c **** -----------------------------------------------------------------------------*/
+ 136:..\AMC_Lib\src/eeprom_amc.c **** void eepromSetFloat( float floatNumber, uint8 eepromRow )
+ 137:..\AMC_Lib\src/eeprom_amc.c **** {
+ 138:..\AMC_Lib\src/eeprom_amc.c **** 	eepromWriteRow( floatNumber, eepromRow );
+ 139:..\AMC_Lib\src/eeprom_amc.c **** }
+ 140:..\AMC_Lib\src/eeprom_amc.c **** 
+ 141:..\AMC_Lib\src/eeprom_amc.c **** 
+ 142:..\AMC_Lib\src/eeprom_amc.c **** 
+ 143:..\AMC_Lib\src/eeprom_amc.c **** 
+ 144:..\AMC_Lib\src/eeprom_amc.c **** 
+ 145:..\AMC_Lib\src/eeprom_amc.c **** 
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccIPL47e.s 			page 4
+
+
+ 146:..\AMC_Lib\src/eeprom_amc.c **** 
+ 147:..\AMC_Lib\src/eeprom_amc.c **** /*-----------------------------------------------------------------------------
+ 148:..\AMC_Lib\src/eeprom_amc.c **** 	Private Functions
+ 149:..\AMC_Lib\src/eeprom_amc.c **** -----------------------------------------------------------------------------*/
+ 150:..\AMC_Lib\src/eeprom_amc.c **** /*-----------------------------------------------------------------------------
+ 151:..\AMC_Lib\src/eeprom_amc.c **** 
+ 152:..\AMC_Lib\src/eeprom_amc.c **** 	Function:	eepromFloatToByteArray
+ 153:..\AMC_Lib\src/eeprom_amc.c **** 
+ 154:..\AMC_Lib\src/eeprom_amc.c **** 	Synopsis:	This function takes a floating point argument and returns a 
+ 155:..\AMC_Lib\src/eeprom_amc.c **** 				byte array formatted correctly for EEPROM operations
+ 156:..\AMC_Lib\src/eeprom_amc.c **** 
+ 157:..\AMC_Lib\src/eeprom_amc.c **** 	Parameters:	floating point number, byte array organized with correct "endianness"
+ 158:..\AMC_Lib\src/eeprom_amc.c **** 
+ 159:..\AMC_Lib\src/eeprom_amc.c **** 	Returns:	none
+ 160:..\AMC_Lib\src/eeprom_amc.c **** 
+ 161:..\AMC_Lib\src/eeprom_amc.c **** 	Warnings:	
+ 162:..\AMC_Lib\src/eeprom_amc.c **** 
+ 163:..\AMC_Lib\src/eeprom_amc.c **** -----------------------------------------------------------------------------*/
+ 164:..\AMC_Lib\src/eeprom_amc.c **** static void eepromFloatToByteArray( float floatNumber, uint8 returnArray[4] )
+ 165:..\AMC_Lib\src/eeprom_amc.c **** {	
+  27              		.loc 1 165 0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              		@ link register save eliminated.
+  32              	.LVL0:
+ 166:..\AMC_Lib\src/eeprom_amc.c **** 	uint32 floatNumber_UINT32 = *(uint32 *)&floatNumber;
+ 167:..\AMC_Lib\src/eeprom_amc.c **** 
+ 168:..\AMC_Lib\src/eeprom_amc.c **** 	/* break the float up into a uint8 array */
+ 169:..\AMC_Lib\src/eeprom_amc.c **** 	returnArray[0] = (uint8) 0x000000FF & (floatNumber_UINT32 >>  24);	
+  33              		.loc 1 169 0
+  34 0000 030E     		lsrs	r3, r0, #24
+  35 0002 0B70     		strb	r3, [r1]
+ 170:..\AMC_Lib\src/eeprom_amc.c **** 	returnArray[1] = (uint8) 0x000000FF & (floatNumber_UINT32 >>  16);
+  36              		.loc 1 170 0
+  37 0004 030C     		lsrs	r3, r0, #16
+  38 0006 4B70     		strb	r3, [r1, #1]
+ 171:..\AMC_Lib\src/eeprom_amc.c **** 	returnArray[2] = (uint8) 0x000000FF & (floatNumber_UINT32 >>  8);
+  39              		.loc 1 171 0
+  40 0008 030A     		lsrs	r3, r0, #8
+  41 000a 8B70     		strb	r3, [r1, #2]
+ 172:..\AMC_Lib\src/eeprom_amc.c **** 	returnArray[3] = (uint8) 0x000000FF & floatNumber_UINT32;
+  42              		.loc 1 172 0
+  43 000c C870     		strb	r0, [r1, #3]
+  44 000e 7047     		bx	lr
+  45              		.cfi_endproc
+  46              	.LFE69:
+  47              		.size	eepromFloatToByteArray, .-eepromFloatToByteArray
+  48              		.section	.text.eepromUINT32ToByteArray,"ax",%progbits
+  49              		.align	2
+  50              		.thumb
+  51              		.thumb_func
+  52              		.type	eepromUINT32ToByteArray, %function
+  53              	eepromUINT32ToByteArray:
+  54              	.LFB70:
+ 173:..\AMC_Lib\src/eeprom_amc.c **** 		
+ 174:..\AMC_Lib\src/eeprom_amc.c **** }
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccIPL47e.s 			page 5
+
+
+ 175:..\AMC_Lib\src/eeprom_amc.c **** /*-----------------------------------------------------------------------------
+ 176:..\AMC_Lib\src/eeprom_amc.c **** 
+ 177:..\AMC_Lib\src/eeprom_amc.c **** 	Function:	eepromUINT32ToByteArray
+ 178:..\AMC_Lib\src/eeprom_amc.c **** 
+ 179:..\AMC_Lib\src/eeprom_amc.c **** 	Synopsis:	This function takes a uint32 argument and returns a 
+ 180:..\AMC_Lib\src/eeprom_amc.c **** 				byte array formatted correctly for EEPROM operations
+ 181:..\AMC_Lib\src/eeprom_amc.c **** 
+ 182:..\AMC_Lib\src/eeprom_amc.c **** 	Parameters:	uint32 number, byte array organized with correct "endianness"
+ 183:..\AMC_Lib\src/eeprom_amc.c **** 
+ 184:..\AMC_Lib\src/eeprom_amc.c **** 	Returns:	none
+ 185:..\AMC_Lib\src/eeprom_amc.c **** 
+ 186:..\AMC_Lib\src/eeprom_amc.c **** 	Warnings:	
+ 187:..\AMC_Lib\src/eeprom_amc.c **** 
+ 188:..\AMC_Lib\src/eeprom_amc.c **** -----------------------------------------------------------------------------*/
+ 189:..\AMC_Lib\src/eeprom_amc.c **** static void eepromUINT32ToByteArray( uint32 UINT32Number, uint8 returnArray[4] )
+ 190:..\AMC_Lib\src/eeprom_amc.c **** {	
+  55              		.loc 1 190 0
+  56              		.cfi_startproc
+  57              		@ args = 0, pretend = 0, frame = 0
+  58              		@ frame_needed = 0, uses_anonymous_args = 0
+  59              		@ link register save eliminated.
+  60              	.LVL1:
+ 191:..\AMC_Lib\src/eeprom_amc.c **** 	/* break the uint32 up into a uint8 array */
+ 192:..\AMC_Lib\src/eeprom_amc.c **** 	returnArray[0] = (uint8) 0x000000FF & (UINT32Number >>  24);	
+  61              		.loc 1 192 0
+  62 0000 030E     		lsrs	r3, r0, #24
+  63 0002 0B70     		strb	r3, [r1]
+ 193:..\AMC_Lib\src/eeprom_amc.c **** 	returnArray[1] = (uint8) 0x000000FF & (UINT32Number >>  16);
+  64              		.loc 1 193 0
+  65 0004 030C     		lsrs	r3, r0, #16
+  66 0006 4B70     		strb	r3, [r1, #1]
+ 194:..\AMC_Lib\src/eeprom_amc.c **** 	returnArray[2] = (uint8) 0x000000FF & (UINT32Number >>  8);
+  67              		.loc 1 194 0
+  68 0008 030A     		lsrs	r3, r0, #8
+  69 000a 8B70     		strb	r3, [r1, #2]
+ 195:..\AMC_Lib\src/eeprom_amc.c **** 	returnArray[3] = (uint8) 0x000000FF & UINT32Number;
+  70              		.loc 1 195 0
+  71 000c C870     		strb	r0, [r1, #3]
+  72 000e 7047     		bx	lr
+  73              		.cfi_endproc
+  74              	.LFE70:
+  75              		.size	eepromUINT32ToByteArray, .-eepromUINT32ToByteArray
+  76              		.section	.text.eepromReadRow,"ax",%progbits
+  77              		.align	2
+  78              		.thumb
+  79              		.thumb_func
+  80              		.type	eepromReadRow, %function
+  81              	eepromReadRow:
+  82              	.LFB71:
+ 196:..\AMC_Lib\src/eeprom_amc.c **** 		
+ 197:..\AMC_Lib\src/eeprom_amc.c **** }
+ 198:..\AMC_Lib\src/eeprom_amc.c **** /*-----------------------------------------------------------------------------
+ 199:..\AMC_Lib\src/eeprom_amc.c **** 
+ 200:..\AMC_Lib\src/eeprom_amc.c **** 	Function:	eepromReadRow
+ 201:..\AMC_Lib\src/eeprom_amc.c **** 
+ 202:..\AMC_Lib\src/eeprom_amc.c **** 	Synopsis:	This function returns a floating point number from EEPROM registers
+ 203:..\AMC_Lib\src/eeprom_amc.c **** 
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccIPL47e.s 			page 6
+
+
+ 204:..\AMC_Lib\src/eeprom_amc.c **** 	Parameters:	eeprom row of data to return
+ 205:..\AMC_Lib\src/eeprom_amc.c **** 
+ 206:..\AMC_Lib\src/eeprom_amc.c **** 	Returns:	floating point
+ 207:..\AMC_Lib\src/eeprom_amc.c **** 
+ 208:..\AMC_Lib\src/eeprom_amc.c **** 	Warnings:	
+ 209:..\AMC_Lib\src/eeprom_amc.c **** 
+ 210:..\AMC_Lib\src/eeprom_amc.c **** -----------------------------------------------------------------------------*/
+ 211:..\AMC_Lib\src/eeprom_amc.c **** static float eepromReadRow( uint8 eepromRow )
+ 212:..\AMC_Lib\src/eeprom_amc.c **** {	
+  83              		.loc 1 212 0
+  84              		.cfi_startproc
+  85              		@ args = 0, pretend = 0, frame = 8
+  86              		@ frame_needed = 0, uses_anonymous_args = 0
+  87              		@ link register save eliminated.
+  88              	.LVL2:
+  89 0000 82B0     		sub	sp, sp, #8
+  90              		.cfi_def_cfa_offset 8
+  91              	.LVL3:
+ 213:..\AMC_Lib\src/eeprom_amc.c **** 
+ 214:..\AMC_Lib\src/eeprom_amc.c ****     reg8 * EepromPointer;
+ 215:..\AMC_Lib\src/eeprom_amc.c **** 	uint8 eepromArray[4];
+ 216:..\AMC_Lib\src/eeprom_amc.c **** 		
+ 217:..\AMC_Lib\src/eeprom_amc.c **** 	/* setup the pointer for getting the right value in EEPROM */
+ 218:..\AMC_Lib\src/eeprom_amc.c ****     EepromPointer = (reg8 *) CYDEV_EE_BASE;
+ 219:..\AMC_Lib\src/eeprom_amc.c **** 	EepromPointer = EepromPointer + (CYDEV_EEPROM_ROW_SIZE * eepromRow);
+  92              		.loc 1 219 0
+  93 0002 0001     		lsls	r0, r0, #4
+  94              	.LVL4:
+  95 0004 00F18040 		add	r0, r0, #1073741824
+  96 0008 00F50040 		add	r0, r0, #32768
+  97              	.LVL5:
+ 220:..\AMC_Lib\src/eeprom_amc.c **** 		
+ 221:..\AMC_Lib\src/eeprom_amc.c **** 	/* reorder the return for the correct float conversion */
+ 222:..\AMC_Lib\src/eeprom_amc.c **** 	eepromArray[0] = (uint8)(*(EepromPointer + 3));	
+  98              		.loc 1 222 0
+  99 000c C378     		ldrb	r3, [r0, #3]	@ zero_extendqisi2
+ 100 000e 8DF80430 		strb	r3, [sp, #4]
+ 223:..\AMC_Lib\src/eeprom_amc.c **** 	eepromArray[1] = (uint8)(*(EepromPointer + 2));
+ 101              		.loc 1 223 0
+ 102 0012 8378     		ldrb	r3, [r0, #2]	@ zero_extendqisi2
+ 103 0014 8DF80530 		strb	r3, [sp, #5]
+ 224:..\AMC_Lib\src/eeprom_amc.c **** 	eepromArray[2] = (uint8)(*(EepromPointer + 1));
+ 104              		.loc 1 224 0
+ 105 0018 4378     		ldrb	r3, [r0, #1]	@ zero_extendqisi2
+ 106 001a 8DF80630 		strb	r3, [sp, #6]
+ 225:..\AMC_Lib\src/eeprom_amc.c **** 	eepromArray[3] = (uint8)(*(EepromPointer + 0));
+ 107              		.loc 1 225 0
+ 108 001e 0378     		ldrb	r3, [r0]	@ zero_extendqisi2
+ 109 0020 8DF80730 		strb	r3, [sp, #7]
+ 226:..\AMC_Lib\src/eeprom_amc.c **** 	
+ 227:..\AMC_Lib\src/eeprom_amc.c **** 	return *((float*)(eepromArray));
+ 228:..\AMC_Lib\src/eeprom_amc.c **** }
+ 110              		.loc 1 228 0
+ 111 0024 0198     		ldr	r0, [sp, #4]	@ float
+ 112              	.LVL6:
+ 113 0026 02B0     		add	sp, sp, #8
+ 114              		.cfi_def_cfa_offset 0
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccIPL47e.s 			page 7
+
+
+ 115              		@ sp needed
+ 116 0028 7047     		bx	lr
+ 117              		.cfi_endproc
+ 118              	.LFE71:
+ 119              		.size	eepromReadRow, .-eepromReadRow
+ 120 002a 00BF     		.section	.text.eepromReadRowUINT32,"ax",%progbits
+ 121              		.align	2
+ 122              		.thumb
+ 123              		.thumb_func
+ 124              		.type	eepromReadRowUINT32, %function
+ 125              	eepromReadRowUINT32:
+ 126              	.LFB72:
+ 229:..\AMC_Lib\src/eeprom_amc.c **** /*-----------------------------------------------------------------------------
+ 230:..\AMC_Lib\src/eeprom_amc.c **** 
+ 231:..\AMC_Lib\src/eeprom_amc.c **** 	Function:	eepromReadRowUINT32
+ 232:..\AMC_Lib\src/eeprom_amc.c **** 
+ 233:..\AMC_Lib\src/eeprom_amc.c **** 	Synopsis:	This function returns a uint32 number from EEPROM registers
+ 234:..\AMC_Lib\src/eeprom_amc.c **** 
+ 235:..\AMC_Lib\src/eeprom_amc.c **** 	Parameters:	eeprom row of data to return
+ 236:..\AMC_Lib\src/eeprom_amc.c **** 
+ 237:..\AMC_Lib\src/eeprom_amc.c **** 	Returns:	uint32 number value
+ 238:..\AMC_Lib\src/eeprom_amc.c **** 
+ 239:..\AMC_Lib\src/eeprom_amc.c **** 	Warnings:	
+ 240:..\AMC_Lib\src/eeprom_amc.c **** 
+ 241:..\AMC_Lib\src/eeprom_amc.c **** -----------------------------------------------------------------------------*/
+ 242:..\AMC_Lib\src/eeprom_amc.c **** static uint32 eepromReadRowUINT32( uint8 eepromRow )
+ 243:..\AMC_Lib\src/eeprom_amc.c **** {	
+ 127              		.loc 1 243 0
+ 128              		.cfi_startproc
+ 129              		@ args = 0, pretend = 0, frame = 8
+ 130              		@ frame_needed = 0, uses_anonymous_args = 0
+ 131              		@ link register save eliminated.
+ 132              	.LVL7:
+ 133 0000 82B0     		sub	sp, sp, #8
+ 134              		.cfi_def_cfa_offset 8
+ 135              	.LVL8:
+ 244:..\AMC_Lib\src/eeprom_amc.c **** 
+ 245:..\AMC_Lib\src/eeprom_amc.c ****     reg8 * EepromPointer;
+ 246:..\AMC_Lib\src/eeprom_amc.c **** 	uint8 eepromArray[4];
+ 247:..\AMC_Lib\src/eeprom_amc.c **** 		
+ 248:..\AMC_Lib\src/eeprom_amc.c **** 	/* setup the pointer for getting the right value in EEPROM */
+ 249:..\AMC_Lib\src/eeprom_amc.c ****     EepromPointer = (reg8 *) CYDEV_EE_BASE;
+ 250:..\AMC_Lib\src/eeprom_amc.c **** 	EepromPointer = EepromPointer + (CYDEV_EEPROM_ROW_SIZE * eepromRow);
+ 136              		.loc 1 250 0
+ 137 0002 0001     		lsls	r0, r0, #4
+ 138              	.LVL9:
+ 139 0004 00F18040 		add	r0, r0, #1073741824
+ 140 0008 00F50040 		add	r0, r0, #32768
+ 141              	.LVL10:
+ 251:..\AMC_Lib\src/eeprom_amc.c **** 		
+ 252:..\AMC_Lib\src/eeprom_amc.c **** 	/* reorder the return for the correct float conversion */
+ 253:..\AMC_Lib\src/eeprom_amc.c **** 	eepromArray[0] = (uint8)(*(EepromPointer + 3));	
+ 142              		.loc 1 253 0
+ 143 000c C378     		ldrb	r3, [r0, #3]	@ zero_extendqisi2
+ 144 000e 8DF80430 		strb	r3, [sp, #4]
+ 254:..\AMC_Lib\src/eeprom_amc.c **** 	eepromArray[1] = (uint8)(*(EepromPointer + 2));
+ 145              		.loc 1 254 0
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccIPL47e.s 			page 8
+
+
+ 146 0012 8378     		ldrb	r3, [r0, #2]	@ zero_extendqisi2
+ 147 0014 8DF80530 		strb	r3, [sp, #5]
+ 255:..\AMC_Lib\src/eeprom_amc.c **** 	eepromArray[2] = (uint8)(*(EepromPointer + 1));
+ 148              		.loc 1 255 0
+ 149 0018 4378     		ldrb	r3, [r0, #1]	@ zero_extendqisi2
+ 150 001a 8DF80630 		strb	r3, [sp, #6]
+ 256:..\AMC_Lib\src/eeprom_amc.c **** 	eepromArray[3] = (uint8)(*(EepromPointer + 0));
+ 151              		.loc 1 256 0
+ 152 001e 0378     		ldrb	r3, [r0]	@ zero_extendqisi2
+ 153 0020 8DF80730 		strb	r3, [sp, #7]
+ 257:..\AMC_Lib\src/eeprom_amc.c **** 	
+ 258:..\AMC_Lib\src/eeprom_amc.c **** 	return *((uint32*)(eepromArray));
+ 259:..\AMC_Lib\src/eeprom_amc.c **** }
+ 154              		.loc 1 259 0
+ 155 0024 0198     		ldr	r0, [sp, #4]
+ 156              	.LVL11:
+ 157 0026 02B0     		add	sp, sp, #8
+ 158              		.cfi_def_cfa_offset 0
+ 159              		@ sp needed
+ 160 0028 7047     		bx	lr
+ 161              		.cfi_endproc
+ 162              	.LFE72:
+ 163              		.size	eepromReadRowUINT32, .-eepromReadRowUINT32
+ 164 002a 00BF     		.section	.text.eepromWriteRowUint32,"ax",%progbits
+ 165              		.align	2
+ 166              		.thumb
+ 167              		.thumb_func
+ 168              		.type	eepromWriteRowUint32, %function
+ 169              	eepromWriteRowUint32:
+ 170              	.LFB74:
+ 260:..\AMC_Lib\src/eeprom_amc.c **** /*-----------------------------------------------------------------------------
+ 261:..\AMC_Lib\src/eeprom_amc.c **** 
+ 262:..\AMC_Lib\src/eeprom_amc.c **** 	Function:	eepromWriteRow
+ 263:..\AMC_Lib\src/eeprom_amc.c **** 
+ 264:..\AMC_Lib\src/eeprom_amc.c **** 	Synopsis:	This function writes a floating point number to an EEPROM row
+ 265:..\AMC_Lib\src/eeprom_amc.c **** 
+ 266:..\AMC_Lib\src/eeprom_amc.c **** 	Parameters:	floating point number and a row in EEPROM to write to
+ 267:..\AMC_Lib\src/eeprom_amc.c **** 
+ 268:..\AMC_Lib\src/eeprom_amc.c **** 	Returns:	floating point
+ 269:..\AMC_Lib\src/eeprom_amc.c **** 
+ 270:..\AMC_Lib\src/eeprom_amc.c **** 	Warnings:	
+ 271:..\AMC_Lib\src/eeprom_amc.c **** 
+ 272:..\AMC_Lib\src/eeprom_amc.c **** -----------------------------------------------------------------------------*/
+ 273:..\AMC_Lib\src/eeprom_amc.c **** static void eepromWriteRow( float floatNumber, uint8 eepromRow )
+ 274:..\AMC_Lib\src/eeprom_amc.c **** {	
+ 275:..\AMC_Lib\src/eeprom_amc.c **** 	uint8 eepromArray[4];
+ 276:..\AMC_Lib\src/eeprom_amc.c **** 
+ 277:..\AMC_Lib\src/eeprom_amc.c **** 	/* convert the float to a correctly formatted byte array */
+ 278:..\AMC_Lib\src/eeprom_amc.c **** 	eepromFloatToByteArray( floatNumber, eepromArray );
+ 279:..\AMC_Lib\src/eeprom_amc.c **** 
+ 280:..\AMC_Lib\src/eeprom_amc.c ****     /* Get the die temp. */
+ 281:..\AMC_Lib\src/eeprom_amc.c ****     if(CySetTemp() == CYRET_SUCCESS)
+ 282:..\AMC_Lib\src/eeprom_amc.c ****     {
+ 283:..\AMC_Lib\src/eeprom_amc.c ****         /* Write to EEPROM row */
+ 284:..\AMC_Lib\src/eeprom_amc.c ****         EEPROM_1_Write(eepromArray, eepromRow);
+ 285:..\AMC_Lib\src/eeprom_amc.c ****     }	
+ 286:..\AMC_Lib\src/eeprom_amc.c **** }
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccIPL47e.s 			page 9
+
+
+ 287:..\AMC_Lib\src/eeprom_amc.c **** 
+ 288:..\AMC_Lib\src/eeprom_amc.c **** 
+ 289:..\AMC_Lib\src/eeprom_amc.c **** /*-----------------------------------------------------------------------------
+ 290:..\AMC_Lib\src/eeprom_amc.c **** 
+ 291:..\AMC_Lib\src/eeprom_amc.c **** 	Function:	eepromWriteRowUint32
+ 292:..\AMC_Lib\src/eeprom_amc.c **** 
+ 293:..\AMC_Lib\src/eeprom_amc.c **** 	Synopsis:	This function writes a floating point number to an EEPROM row
+ 294:..\AMC_Lib\src/eeprom_amc.c **** 
+ 295:..\AMC_Lib\src/eeprom_amc.c **** 	Parameters:	floating point number and a row in EEPROM to write to
+ 296:..\AMC_Lib\src/eeprom_amc.c **** 
+ 297:..\AMC_Lib\src/eeprom_amc.c **** 	Returns:	floating point
+ 298:..\AMC_Lib\src/eeprom_amc.c **** 
+ 299:..\AMC_Lib\src/eeprom_amc.c **** 	Warnings:	
+ 300:..\AMC_Lib\src/eeprom_amc.c **** 
+ 301:..\AMC_Lib\src/eeprom_amc.c **** -----------------------------------------------------------------------------*/
+ 302:..\AMC_Lib\src/eeprom_amc.c **** static void eepromWriteRowUint32( uint32 UINT32Number, uint8 eepromRow )
+ 303:..\AMC_Lib\src/eeprom_amc.c **** {	
+ 171              		.loc 1 303 0
+ 172              		.cfi_startproc
+ 173              		@ args = 0, pretend = 0, frame = 8
+ 174              		@ frame_needed = 0, uses_anonymous_args = 0
+ 175              	.LVL12:
+ 176 0000 10B5     		push	{r4, lr}
+ 177              		.cfi_def_cfa_offset 8
+ 178              		.cfi_offset 4, -8
+ 179              		.cfi_offset 14, -4
+ 180 0002 82B0     		sub	sp, sp, #8
+ 181              		.cfi_def_cfa_offset 16
+ 182 0004 0C46     		mov	r4, r1
+ 304:..\AMC_Lib\src/eeprom_amc.c **** 	uint8 eepromArray[4];
+ 305:..\AMC_Lib\src/eeprom_amc.c **** 
+ 306:..\AMC_Lib\src/eeprom_amc.c **** 	/* convert the uint32 to a correctly formatted byte array */
+ 307:..\AMC_Lib\src/eeprom_amc.c **** 	eepromUINT32ToByteArray( UINT32Number, eepromArray );
+ 183              		.loc 1 307 0
+ 184 0006 01A9     		add	r1, sp, #4
+ 185              	.LVL13:
+ 186 0008 FFF7FEFF 		bl	eepromUINT32ToByteArray
+ 187              	.LVL14:
+ 308:..\AMC_Lib\src/eeprom_amc.c **** 
+ 309:..\AMC_Lib\src/eeprom_amc.c ****     /* Get the die temp. */
+ 310:..\AMC_Lib\src/eeprom_amc.c ****     if(CySetTemp() == CYRET_SUCCESS)
+ 188              		.loc 1 310 0
+ 189 000c FFF7FEFF 		bl	CySetTemp
+ 190              	.LVL15:
+ 191 0010 18B9     		cbnz	r0, .L7
+ 192              	.LBB2:
+ 311:..\AMC_Lib\src/eeprom_amc.c ****     {
+ 312:..\AMC_Lib\src/eeprom_amc.c ****         /* Write to EEPROM row */
+ 313:..\AMC_Lib\src/eeprom_amc.c ****         EEPROM_1_Write(eepromArray, eepromRow);
+ 193              		.loc 1 313 0
+ 194 0012 2146     		mov	r1, r4
+ 195 0014 01A8     		add	r0, sp, #4
+ 196 0016 FFF7FEFF 		bl	EEPROM_1_Write
+ 197              	.LVL16:
+ 198              	.L7:
+ 199              	.LBE2:
+ 314:..\AMC_Lib\src/eeprom_amc.c ****     }	
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccIPL47e.s 			page 10
+
+
+ 315:..\AMC_Lib\src/eeprom_amc.c **** }
+ 200              		.loc 1 315 0
+ 201 001a 02B0     		add	sp, sp, #8
+ 202              		.cfi_def_cfa_offset 8
+ 203              		@ sp needed
+ 204 001c 10BD     		pop	{r4, pc}
+ 205              		.cfi_endproc
+ 206              	.LFE74:
+ 207              		.size	eepromWriteRowUint32, .-eepromWriteRowUint32
+ 208 001e 00BF     		.section	.text.eepromWriteRow,"ax",%progbits
+ 209              		.align	2
+ 210              		.thumb
+ 211              		.thumb_func
+ 212              		.type	eepromWriteRow, %function
+ 213              	eepromWriteRow:
+ 214              	.LFB73:
+ 274:..\AMC_Lib\src/eeprom_amc.c **** 	uint8 eepromArray[4];
+ 215              		.loc 1 274 0
+ 216              		.cfi_startproc
+ 217              		@ args = 0, pretend = 0, frame = 8
+ 218              		@ frame_needed = 0, uses_anonymous_args = 0
+ 219              	.LVL17:
+ 220 0000 10B5     		push	{r4, lr}
+ 221              		.cfi_def_cfa_offset 8
+ 222              		.cfi_offset 4, -8
+ 223              		.cfi_offset 14, -4
+ 224 0002 82B0     		sub	sp, sp, #8
+ 225              		.cfi_def_cfa_offset 16
+ 226 0004 0C46     		mov	r4, r1
+ 278:..\AMC_Lib\src/eeprom_amc.c **** 
+ 227              		.loc 1 278 0
+ 228 0006 01A9     		add	r1, sp, #4
+ 229              	.LVL18:
+ 230 0008 FFF7FEFF 		bl	eepromFloatToByteArray
+ 231              	.LVL19:
+ 281:..\AMC_Lib\src/eeprom_amc.c ****     {
+ 232              		.loc 1 281 0
+ 233 000c FFF7FEFF 		bl	CySetTemp
+ 234              	.LVL20:
+ 235 0010 18B9     		cbnz	r0, .L10
+ 236              	.LBB3:
+ 284:..\AMC_Lib\src/eeprom_amc.c ****     }	
+ 237              		.loc 1 284 0
+ 238 0012 2146     		mov	r1, r4
+ 239 0014 01A8     		add	r0, sp, #4
+ 240 0016 FFF7FEFF 		bl	EEPROM_1_Write
+ 241              	.LVL21:
+ 242              	.L10:
+ 243              	.LBE3:
+ 286:..\AMC_Lib\src/eeprom_amc.c **** 
+ 244              		.loc 1 286 0
+ 245 001a 02B0     		add	sp, sp, #8
+ 246              		.cfi_def_cfa_offset 8
+ 247              		@ sp needed
+ 248 001c 10BD     		pop	{r4, pc}
+ 249              		.cfi_endproc
+ 250              	.LFE73:
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccIPL47e.s 			page 11
+
+
+ 251              		.size	eepromWriteRow, .-eepromWriteRow
+ 252 001e 00BF     		.section	.text.eeprom_Init,"ax",%progbits
+ 253              		.align	2
+ 254              		.global	eeprom_Init
+ 255              		.thumb
+ 256              		.thumb_func
+ 257              		.type	eeprom_Init, %function
+ 258              	eeprom_Init:
+ 259              	.LFB64:
+  62:..\AMC_Lib\src/eeprom_amc.c **** 	EEPROM_1_Start();
+ 260              		.loc 1 62 0
+ 261              		.cfi_startproc
+ 262              		@ args = 0, pretend = 0, frame = 0
+ 263              		@ frame_needed = 0, uses_anonymous_args = 0
+ 264 0000 08B5     		push	{r3, lr}
+ 265              		.cfi_def_cfa_offset 8
+ 266              		.cfi_offset 3, -8
+ 267              		.cfi_offset 14, -4
+  63:..\AMC_Lib\src/eeprom_amc.c **** }
+ 268              		.loc 1 63 0
+ 269 0002 FFF7FEFF 		bl	EEPROM_1_Start
+ 270              	.LVL22:
+ 271 0006 08BD     		pop	{r3, pc}
+ 272              		.cfi_endproc
+ 273              	.LFE64:
+ 274              		.size	eeprom_Init, .-eeprom_Init
+ 275              		.section	.text.eepromGetUint32,"ax",%progbits
+ 276              		.align	2
+ 277              		.global	eepromGetUint32
+ 278              		.thumb
+ 279              		.thumb_func
+ 280              		.type	eepromGetUint32, %function
+ 281              	eepromGetUint32:
+ 282              	.LFB65:
+  82:..\AMC_Lib\src/eeprom_amc.c **** 	return eepromReadRowUINT32( eepromRow );
+ 283              		.loc 1 82 0
+ 284              		.cfi_startproc
+ 285              		@ args = 0, pretend = 0, frame = 0
+ 286              		@ frame_needed = 0, uses_anonymous_args = 0
+ 287              	.LVL23:
+ 288 0000 08B5     		push	{r3, lr}
+ 289              		.cfi_def_cfa_offset 8
+ 290              		.cfi_offset 3, -8
+ 291              		.cfi_offset 14, -4
+  83:..\AMC_Lib\src/eeprom_amc.c **** }
+ 292              		.loc 1 83 0
+ 293 0002 FFF7FEFF 		bl	eepromReadRowUINT32
+ 294              	.LVL24:
+  84:..\AMC_Lib\src/eeprom_amc.c **** 
+ 295              		.loc 1 84 0
+ 296 0006 08BD     		pop	{r3, pc}
+ 297              		.cfi_endproc
+ 298              	.LFE65:
+ 299              		.size	eepromGetUint32, .-eepromGetUint32
+ 300              		.section	.text.eepromSetUint32,"ax",%progbits
+ 301              		.align	2
+ 302              		.global	eepromSetUint32
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccIPL47e.s 			page 12
+
+
+ 303              		.thumb
+ 304              		.thumb_func
+ 305              		.type	eepromSetUint32, %function
+ 306              	eepromSetUint32:
+ 307              	.LFB66:
+ 101:..\AMC_Lib\src/eeprom_amc.c **** 	eepromWriteRowUint32( UINT32Number, eepromRow );
+ 308              		.loc 1 101 0
+ 309              		.cfi_startproc
+ 310              		@ args = 0, pretend = 0, frame = 0
+ 311              		@ frame_needed = 0, uses_anonymous_args = 0
+ 312              	.LVL25:
+ 313 0000 08B5     		push	{r3, lr}
+ 314              		.cfi_def_cfa_offset 8
+ 315              		.cfi_offset 3, -8
+ 316              		.cfi_offset 14, -4
+ 102:..\AMC_Lib\src/eeprom_amc.c **** }
+ 317              		.loc 1 102 0
+ 318 0002 FFF7FEFF 		bl	eepromWriteRowUint32
+ 319              	.LVL26:
+ 320 0006 08BD     		pop	{r3, pc}
+ 321              		.cfi_endproc
+ 322              	.LFE66:
+ 323              		.size	eepromSetUint32, .-eepromSetUint32
+ 324              		.section	.text.eepromGetFloat,"ax",%progbits
+ 325              		.align	2
+ 326              		.global	eepromGetFloat
+ 327              		.thumb
+ 328              		.thumb_func
+ 329              		.type	eepromGetFloat, %function
+ 330              	eepromGetFloat:
+ 331              	.LFB67:
+ 118:..\AMC_Lib\src/eeprom_amc.c **** 	return eepromReadRow( eepromRow );
+ 332              		.loc 1 118 0
+ 333              		.cfi_startproc
+ 334              		@ args = 0, pretend = 0, frame = 0
+ 335              		@ frame_needed = 0, uses_anonymous_args = 0
+ 336              	.LVL27:
+ 337 0000 08B5     		push	{r3, lr}
+ 338              		.cfi_def_cfa_offset 8
+ 339              		.cfi_offset 3, -8
+ 340              		.cfi_offset 14, -4
+ 119:..\AMC_Lib\src/eeprom_amc.c **** }
+ 341              		.loc 1 119 0
+ 342 0002 FFF7FEFF 		bl	eepromReadRow
+ 343              	.LVL28:
+ 120:..\AMC_Lib\src/eeprom_amc.c **** 
+ 344              		.loc 1 120 0
+ 345 0006 08BD     		pop	{r3, pc}
+ 346              		.cfi_endproc
+ 347              	.LFE67:
+ 348              		.size	eepromGetFloat, .-eepromGetFloat
+ 349              		.section	.text.eepromSetFloat,"ax",%progbits
+ 350              		.align	2
+ 351              		.global	eepromSetFloat
+ 352              		.thumb
+ 353              		.thumb_func
+ 354              		.type	eepromSetFloat, %function
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccIPL47e.s 			page 13
+
+
+ 355              	eepromSetFloat:
+ 356              	.LFB68:
+ 137:..\AMC_Lib\src/eeprom_amc.c **** 	eepromWriteRow( floatNumber, eepromRow );
+ 357              		.loc 1 137 0
+ 358              		.cfi_startproc
+ 359              		@ args = 0, pretend = 0, frame = 0
+ 360              		@ frame_needed = 0, uses_anonymous_args = 0
+ 361              	.LVL29:
+ 362 0000 08B5     		push	{r3, lr}
+ 363              		.cfi_def_cfa_offset 8
+ 364              		.cfi_offset 3, -8
+ 365              		.cfi_offset 14, -4
+ 138:..\AMC_Lib\src/eeprom_amc.c **** }
+ 366              		.loc 1 138 0
+ 367 0002 FFF7FEFF 		bl	eepromWriteRow
+ 368              	.LVL30:
+ 369 0006 08BD     		pop	{r3, pc}
+ 370              		.cfi_endproc
+ 371              	.LFE68:
+ 372              		.size	eepromSetFloat, .-eepromSetFloat
+ 373              		.text
+ 374              	.Letext0:
+ 375              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.1\\psoc creator\\import\\gnu\\arm\\5.4.
+ 376              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.1\\psoc creator\\import\\gnu\\arm\\5.4.
+ 377              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 378              		.file 5 "Generated_Source\\PSoC5/CyFlash.h"
+ 379              		.file 6 "Generated_Source\\PSoC5/core_cm3.h"
+ 380              		.section	.debug_info,"",%progbits
+ 381              	.Ldebug_info0:
+ 382 0000 72040000 		.4byte	0x472
+ 383 0004 0400     		.2byte	0x4
+ 384 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 385 000a 04       		.byte	0x4
+ 386 000b 01       		.uleb128 0x1
+ 387 000c 81010000 		.4byte	.LASF40
+ 388 0010 0C       		.byte	0xc
+ 389 0011 07030000 		.4byte	.LASF41
+ 390 0015 6B020000 		.4byte	.LASF42
+ 391 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 392 001d 00000000 		.4byte	0
+ 393 0021 00000000 		.4byte	.Ldebug_line0
+ 394 0025 02       		.uleb128 0x2
+ 395 0026 04       		.byte	0x4
+ 396 0027 04       		.byte	0x4
+ 397 0028 70000000 		.4byte	.LASF0
+ 398 002c 02       		.uleb128 0x2
+ 399 002d 01       		.byte	0x1
+ 400 002e 06       		.byte	0x6
+ 401 002f E4020000 		.4byte	.LASF1
+ 402 0033 02       		.uleb128 0x2
+ 403 0034 01       		.byte	0x1
+ 404 0035 08       		.byte	0x8
+ 405 0036 8B000000 		.4byte	.LASF2
+ 406 003a 02       		.uleb128 0x2
+ 407 003b 02       		.byte	0x2
+ 408 003c 05       		.byte	0x5
+ 409 003d 5B020000 		.4byte	.LASF3
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccIPL47e.s 			page 14
+
+
+ 410 0041 02       		.uleb128 0x2
+ 411 0042 02       		.byte	0x2
+ 412 0043 07       		.byte	0x7
+ 413 0044 DB000000 		.4byte	.LASF4
+ 414 0048 03       		.uleb128 0x3
+ 415 0049 23000000 		.4byte	.LASF10
+ 416 004d 02       		.byte	0x2
+ 417 004e 3F       		.byte	0x3f
+ 418 004f 53000000 		.4byte	0x53
+ 419 0053 02       		.uleb128 0x2
+ 420 0054 04       		.byte	0x4
+ 421 0055 05       		.byte	0x5
+ 422 0056 2D000000 		.4byte	.LASF5
+ 423 005a 02       		.uleb128 0x2
+ 424 005b 04       		.byte	0x4
+ 425 005c 07       		.byte	0x7
+ 426 005d C9000000 		.4byte	.LASF6
+ 427 0061 02       		.uleb128 0x2
+ 428 0062 08       		.byte	0x8
+ 429 0063 05       		.byte	0x5
+ 430 0064 2E020000 		.4byte	.LASF7
+ 431 0068 02       		.uleb128 0x2
+ 432 0069 08       		.byte	0x8
+ 433 006a 07       		.byte	0x7
+ 434 006b 3B010000 		.4byte	.LASF8
+ 435 006f 04       		.uleb128 0x4
+ 436 0070 04       		.byte	0x4
+ 437 0071 05       		.byte	0x5
+ 438 0072 696E7400 		.ascii	"int\000"
+ 439 0076 02       		.uleb128 0x2
+ 440 0077 04       		.byte	0x4
+ 441 0078 07       		.byte	0x7
+ 442 0079 2E010000 		.4byte	.LASF9
+ 443 007d 03       		.uleb128 0x3
+ 444 007e 68000000 		.4byte	.LASF11
+ 445 0082 03       		.byte	0x3
+ 446 0083 2C       		.byte	0x2c
+ 447 0084 48000000 		.4byte	0x48
+ 448 0088 03       		.uleb128 0x3
+ 449 0089 65020000 		.4byte	.LASF12
+ 450 008d 04       		.byte	0x4
+ 451 008e B4       		.byte	0xb4
+ 452 008f 33000000 		.4byte	0x33
+ 453 0093 03       		.uleb128 0x3
+ 454 0094 27010000 		.4byte	.LASF13
+ 455 0098 04       		.byte	0x4
+ 456 0099 B6       		.byte	0xb6
+ 457 009a 5A000000 		.4byte	0x5a
+ 458 009e 02       		.uleb128 0x2
+ 459 009f 08       		.byte	0x8
+ 460 00a0 04       		.byte	0x4
+ 461 00a1 FC000000 		.4byte	.LASF14
+ 462 00a5 02       		.uleb128 0x2
+ 463 00a6 01       		.byte	0x1
+ 464 00a7 08       		.byte	0x8
+ 465 00a8 CF020000 		.4byte	.LASF15
+ 466 00ac 05       		.uleb128 0x5
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccIPL47e.s 			page 15
+
+
+ 467 00ad B7000000 		.4byte	.LASF16
+ 468 00b1 04       		.byte	0x4
+ 469 00b2 5E01     		.2byte	0x15e
+ 470 00b4 B8000000 		.4byte	0xb8
+ 471 00b8 06       		.uleb128 0x6
+ 472 00b9 88000000 		.4byte	0x88
+ 473 00bd 02       		.uleb128 0x2
+ 474 00be 08       		.byte	0x8
+ 475 00bf 04       		.byte	0x4
+ 476 00c0 0F020000 		.4byte	.LASF17
+ 477 00c4 02       		.uleb128 0x2
+ 478 00c5 04       		.byte	0x4
+ 479 00c6 07       		.byte	0x7
+ 480 00c7 1B020000 		.4byte	.LASF18
+ 481 00cb 07       		.uleb128 0x7
+ 482 00cc 88000000 		.4byte	0x88
+ 483 00d0 DB000000 		.4byte	0xdb
+ 484 00d4 08       		.uleb128 0x8
+ 485 00d5 C4000000 		.4byte	0xc4
+ 486 00d9 03       		.byte	0x3
+ 487 00da 00       		.byte	0
+ 488 00db 09       		.uleb128 0x9
+ 489 00dc F0020000 		.4byte	.LASF21
+ 490 00e0 01       		.byte	0x1
+ 491 00e1 A4       		.byte	0xa4
+ 492 00e2 00000000 		.4byte	.LFB69
+ 493 00e6 10000000 		.4byte	.LFE69-.LFB69
+ 494 00ea 01       		.uleb128 0x1
+ 495 00eb 9C       		.byte	0x9c
+ 496 00ec 18010000 		.4byte	0x118
+ 497 00f0 0A       		.uleb128 0xa
+ 498 00f1 44000000 		.4byte	.LASF19
+ 499 00f5 01       		.byte	0x1
+ 500 00f6 A4       		.byte	0xa4
+ 501 00f7 25000000 		.4byte	0x25
+ 502 00fb 01       		.uleb128 0x1
+ 503 00fc 50       		.byte	0x50
+ 504 00fd 0A       		.uleb128 0xa
+ 505 00fe 03010000 		.4byte	.LASF20
+ 506 0102 01       		.byte	0x1
+ 507 0103 A4       		.byte	0xa4
+ 508 0104 18010000 		.4byte	0x118
+ 509 0108 01       		.uleb128 0x1
+ 510 0109 51       		.byte	0x51
+ 511 010a 0B       		.uleb128 0xb
+ 512 010b 52010000 		.4byte	.LASF25
+ 513 010f 01       		.byte	0x1
+ 514 0110 A6       		.byte	0xa6
+ 515 0111 93000000 		.4byte	0x93
+ 516 0115 01       		.uleb128 0x1
+ 517 0116 50       		.byte	0x50
+ 518 0117 00       		.byte	0
+ 519 0118 0C       		.uleb128 0xc
+ 520 0119 04       		.byte	0x4
+ 521 011a 88000000 		.4byte	0x88
+ 522 011e 09       		.uleb128 0x9
+ 523 011f 50000000 		.4byte	.LASF22
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccIPL47e.s 			page 16
+
+
+ 524 0123 01       		.byte	0x1
+ 525 0124 BD       		.byte	0xbd
+ 526 0125 00000000 		.4byte	.LFB70
+ 527 0129 10000000 		.4byte	.LFE70-.LFB70
+ 528 012d 01       		.uleb128 0x1
+ 529 012e 9C       		.byte	0x9c
+ 530 012f 4E010000 		.4byte	0x14e
+ 531 0133 0A       		.uleb128 0xa
+ 532 0134 BC000000 		.4byte	.LASF23
+ 533 0138 01       		.byte	0x1
+ 534 0139 BD       		.byte	0xbd
+ 535 013a 93000000 		.4byte	0x93
+ 536 013e 01       		.uleb128 0x1
+ 537 013f 50       		.byte	0x50
+ 538 0140 0A       		.uleb128 0xa
+ 539 0141 03010000 		.4byte	.LASF20
+ 540 0145 01       		.byte	0x1
+ 541 0146 BD       		.byte	0xbd
+ 542 0147 18010000 		.4byte	0x118
+ 543 014b 01       		.uleb128 0x1
+ 544 014c 51       		.byte	0x51
+ 545 014d 00       		.byte	0
+ 546 014e 0D       		.uleb128 0xd
+ 547 014f 36000000 		.4byte	.LASF28
+ 548 0153 01       		.byte	0x1
+ 549 0154 D3       		.byte	0xd3
+ 550 0155 25000000 		.4byte	0x25
+ 551 0159 00000000 		.4byte	.LFB71
+ 552 015d 2A000000 		.4byte	.LFE71-.LFB71
+ 553 0161 01       		.uleb128 0x1
+ 554 0162 9C       		.byte	0x9c
+ 555 0163 94010000 		.4byte	0x194
+ 556 0167 0E       		.uleb128 0xe
+ 557 0168 C5020000 		.4byte	.LASF24
+ 558 016c 01       		.byte	0x1
+ 559 016d D3       		.byte	0xd3
+ 560 016e 88000000 		.4byte	0x88
+ 561 0172 00000000 		.4byte	.LLST0
+ 562 0176 0F       		.uleb128 0xf
+ 563 0177 EE000000 		.4byte	.LASF26
+ 564 017b 01       		.byte	0x1
+ 565 017c D6       		.byte	0xd6
+ 566 017d 94010000 		.4byte	0x194
+ 567 0181 21000000 		.4byte	.LLST1
+ 568 0185 0B       		.uleb128 0xb
+ 569 0186 0F010000 		.4byte	.LASF27
+ 570 018a 01       		.byte	0x1
+ 571 018b D7       		.byte	0xd7
+ 572 018c CB000000 		.4byte	0xcb
+ 573 0190 02       		.uleb128 0x2
+ 574 0191 91       		.byte	0x91
+ 575 0192 7C       		.sleb128 -4
+ 576 0193 00       		.byte	0
+ 577 0194 0C       		.uleb128 0xc
+ 578 0195 04       		.byte	0x4
+ 579 0196 AC000000 		.4byte	0xac
+ 580 019a 0D       		.uleb128 0xd
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccIPL47e.s 			page 17
+
+
+ 581 019b 0F000000 		.4byte	.LASF29
+ 582 019f 01       		.byte	0x1
+ 583 01a0 F2       		.byte	0xf2
+ 584 01a1 93000000 		.4byte	0x93
+ 585 01a5 00000000 		.4byte	.LFB72
+ 586 01a9 2A000000 		.4byte	.LFE72-.LFB72
+ 587 01ad 01       		.uleb128 0x1
+ 588 01ae 9C       		.byte	0x9c
+ 589 01af E0010000 		.4byte	0x1e0
+ 590 01b3 0E       		.uleb128 0xe
+ 591 01b4 C5020000 		.4byte	.LASF24
+ 592 01b8 01       		.byte	0x1
+ 593 01b9 F2       		.byte	0xf2
+ 594 01ba 88000000 		.4byte	0x88
+ 595 01be 44000000 		.4byte	.LLST2
+ 596 01c2 0F       		.uleb128 0xf
+ 597 01c3 EE000000 		.4byte	.LASF26
+ 598 01c7 01       		.byte	0x1
+ 599 01c8 F5       		.byte	0xf5
+ 600 01c9 94010000 		.4byte	0x194
+ 601 01cd 65000000 		.4byte	.LLST3
+ 602 01d1 0B       		.uleb128 0xb
+ 603 01d2 0F010000 		.4byte	.LASF27
+ 604 01d6 01       		.byte	0x1
+ 605 01d7 F6       		.byte	0xf6
+ 606 01d8 CB000000 		.4byte	0xcb
+ 607 01dc 02       		.uleb128 0x2
+ 608 01dd 91       		.byte	0x91
+ 609 01de 7C       		.sleb128 -4
+ 610 01df 00       		.byte	0
+ 611 01e0 10       		.uleb128 0x10
+ 612 01e1 76000000 		.4byte	.LASF30
+ 613 01e5 01       		.byte	0x1
+ 614 01e6 2E01     		.2byte	0x12e
+ 615 01e8 00000000 		.4byte	.LFB74
+ 616 01ec 1E000000 		.4byte	.LFE74-.LFB74
+ 617 01f0 01       		.uleb128 0x1
+ 618 01f1 9C       		.byte	0x9c
+ 619 01f2 80020000 		.4byte	0x280
+ 620 01f6 11       		.uleb128 0x11
+ 621 01f7 BC000000 		.4byte	.LASF23
+ 622 01fb 01       		.byte	0x1
+ 623 01fc 2E01     		.2byte	0x12e
+ 624 01fe 93000000 		.4byte	0x93
+ 625 0202 88000000 		.4byte	.LLST4
+ 626 0206 11       		.uleb128 0x11
+ 627 0207 C5020000 		.4byte	.LASF24
+ 628 020b 01       		.byte	0x1
+ 629 020c 2E01     		.2byte	0x12e
+ 630 020e 88000000 		.4byte	0x88
+ 631 0212 A9000000 		.4byte	.LLST5
+ 632 0216 12       		.uleb128 0x12
+ 633 0217 0F010000 		.4byte	.LASF27
+ 634 021b 01       		.byte	0x1
+ 635 021c 3001     		.2byte	0x130
+ 636 021e CB000000 		.4byte	0xcb
+ 637 0222 02       		.uleb128 0x2
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccIPL47e.s 			page 18
+
+
+ 638 0223 91       		.byte	0x91
+ 639 0224 74       		.sleb128 -12
+ 640 0225 13       		.uleb128 0x13
+ 641 0226 12000000 		.4byte	.LBB2
+ 642 022a 08000000 		.4byte	.LBE2-.LBB2
+ 643 022e 5B020000 		.4byte	0x25b
+ 644 0232 14       		.uleb128 0x14
+ 645 0233 00000000 		.4byte	.LASF32
+ 646 0237 01       		.byte	0x1
+ 647 0238 1C01     		.2byte	0x11c
+ 648 023a 6F000000 		.4byte	0x6f
+ 649 023e 44020000 		.4byte	0x244
+ 650 0242 15       		.uleb128 0x15
+ 651 0243 00       		.byte	0
+ 652 0244 16       		.uleb128 0x16
+ 653 0245 1A000000 		.4byte	.LVL16
+ 654 0249 53040000 		.4byte	0x453
+ 655 024d 17       		.uleb128 0x17
+ 656 024e 01       		.uleb128 0x1
+ 657 024f 50       		.byte	0x50
+ 658 0250 02       		.uleb128 0x2
+ 659 0251 91       		.byte	0x91
+ 660 0252 74       		.sleb128 -12
+ 661 0253 17       		.uleb128 0x17
+ 662 0254 01       		.uleb128 0x1
+ 663 0255 51       		.byte	0x51
+ 664 0256 02       		.uleb128 0x2
+ 665 0257 74       		.byte	0x74
+ 666 0258 00       		.sleb128 0
+ 667 0259 00       		.byte	0
+ 668 025a 00       		.byte	0
+ 669 025b 18       		.uleb128 0x18
+ 670 025c 0C000000 		.4byte	.LVL14
+ 671 0260 1E010000 		.4byte	0x11e
+ 672 0264 76020000 		.4byte	0x276
+ 673 0268 17       		.uleb128 0x17
+ 674 0269 01       		.uleb128 0x1
+ 675 026a 50       		.byte	0x50
+ 676 026b 03       		.uleb128 0x3
+ 677 026c F3       		.byte	0xf3
+ 678 026d 01       		.uleb128 0x1
+ 679 026e 50       		.byte	0x50
+ 680 026f 17       		.uleb128 0x17
+ 681 0270 01       		.uleb128 0x1
+ 682 0271 51       		.byte	0x51
+ 683 0272 02       		.uleb128 0x2
+ 684 0273 91       		.byte	0x91
+ 685 0274 74       		.sleb128 -12
+ 686 0275 00       		.byte	0
+ 687 0276 19       		.uleb128 0x19
+ 688 0277 10000000 		.4byte	.LVL15
+ 689 027b 5F040000 		.4byte	0x45f
+ 690 027f 00       		.byte	0
+ 691 0280 10       		.uleb128 0x10
+ 692 0281 99000000 		.4byte	.LASF31
+ 693 0285 01       		.byte	0x1
+ 694 0286 1101     		.2byte	0x111
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccIPL47e.s 			page 19
+
+
+ 695 0288 00000000 		.4byte	.LFB73
+ 696 028c 1E000000 		.4byte	.LFE73-.LFB73
+ 697 0290 01       		.uleb128 0x1
+ 698 0291 9C       		.byte	0x9c
+ 699 0292 22030000 		.4byte	0x322
+ 700 0296 11       		.uleb128 0x11
+ 701 0297 44000000 		.4byte	.LASF19
+ 702 029b 01       		.byte	0x1
+ 703 029c 1101     		.2byte	0x111
+ 704 029e 25000000 		.4byte	0x25
+ 705 02a2 CA000000 		.4byte	.LLST6
+ 706 02a6 11       		.uleb128 0x11
+ 707 02a7 C5020000 		.4byte	.LASF24
+ 708 02ab 01       		.byte	0x1
+ 709 02ac 1101     		.2byte	0x111
+ 710 02ae 88000000 		.4byte	0x88
+ 711 02b2 ED000000 		.4byte	.LLST7
+ 712 02b6 12       		.uleb128 0x12
+ 713 02b7 0F010000 		.4byte	.LASF27
+ 714 02bb 01       		.byte	0x1
+ 715 02bc 1301     		.2byte	0x113
+ 716 02be CB000000 		.4byte	0xcb
+ 717 02c2 02       		.uleb128 0x2
+ 718 02c3 91       		.byte	0x91
+ 719 02c4 74       		.sleb128 -12
+ 720 02c5 13       		.uleb128 0x13
+ 721 02c6 12000000 		.4byte	.LBB3
+ 722 02ca 08000000 		.4byte	.LBE3-.LBB3
+ 723 02ce FB020000 		.4byte	0x2fb
+ 724 02d2 14       		.uleb128 0x14
+ 725 02d3 00000000 		.4byte	.LASF32
+ 726 02d7 01       		.byte	0x1
+ 727 02d8 1C01     		.2byte	0x11c
+ 728 02da 6F000000 		.4byte	0x6f
+ 729 02de E4020000 		.4byte	0x2e4
+ 730 02e2 15       		.uleb128 0x15
+ 731 02e3 00       		.byte	0
+ 732 02e4 16       		.uleb128 0x16
+ 733 02e5 1A000000 		.4byte	.LVL21
+ 734 02e9 53040000 		.4byte	0x453
+ 735 02ed 17       		.uleb128 0x17
+ 736 02ee 01       		.uleb128 0x1
+ 737 02ef 50       		.byte	0x50
+ 738 02f0 02       		.uleb128 0x2
+ 739 02f1 91       		.byte	0x91
+ 740 02f2 74       		.sleb128 -12
+ 741 02f3 17       		.uleb128 0x17
+ 742 02f4 01       		.uleb128 0x1
+ 743 02f5 51       		.byte	0x51
+ 744 02f6 02       		.uleb128 0x2
+ 745 02f7 74       		.byte	0x74
+ 746 02f8 00       		.sleb128 0
+ 747 02f9 00       		.byte	0
+ 748 02fa 00       		.byte	0
+ 749 02fb 18       		.uleb128 0x18
+ 750 02fc 0C000000 		.4byte	.LVL19
+ 751 0300 DB000000 		.4byte	0xdb
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccIPL47e.s 			page 20
+
+
+ 752 0304 18030000 		.4byte	0x318
+ 753 0308 17       		.uleb128 0x17
+ 754 0309 01       		.uleb128 0x1
+ 755 030a 50       		.byte	0x50
+ 756 030b 05       		.uleb128 0x5
+ 757 030c F3       		.byte	0xf3
+ 758 030d 03       		.uleb128 0x3
+ 759 030e F5       		.byte	0xf5
+ 760 030f 00       		.uleb128 0
+ 761 0310 25       		.uleb128 0x25
+ 762 0311 17       		.uleb128 0x17
+ 763 0312 01       		.uleb128 0x1
+ 764 0313 51       		.byte	0x51
+ 765 0314 02       		.uleb128 0x2
+ 766 0315 91       		.byte	0x91
+ 767 0316 74       		.sleb128 -12
+ 768 0317 00       		.byte	0
+ 769 0318 19       		.uleb128 0x19
+ 770 0319 10000000 		.4byte	.LVL20
+ 771 031d 5F040000 		.4byte	0x45f
+ 772 0321 00       		.byte	0
+ 773 0322 1A       		.uleb128 0x1a
+ 774 0323 1B010000 		.4byte	.LASF34
+ 775 0327 01       		.byte	0x1
+ 776 0328 3D       		.byte	0x3d
+ 777 0329 00000000 		.4byte	.LFB64
+ 778 032d 08000000 		.4byte	.LFE64-.LFB64
+ 779 0331 01       		.uleb128 0x1
+ 780 0332 9C       		.byte	0x9c
+ 781 0333 52030000 		.4byte	0x352
+ 782 0337 1B       		.uleb128 0x1b
+ 783 0338 3C020000 		.4byte	.LASF33
+ 784 033c 01       		.byte	0x1
+ 785 033d 3F       		.byte	0x3f
+ 786 033e 6F000000 		.4byte	0x6f
+ 787 0342 48030000 		.4byte	0x348
+ 788 0346 15       		.uleb128 0x15
+ 789 0347 00       		.byte	0
+ 790 0348 19       		.uleb128 0x19
+ 791 0349 06000000 		.4byte	.LVL22
+ 792 034d 6A040000 		.4byte	0x46a
+ 793 0351 00       		.byte	0
+ 794 0352 1C       		.uleb128 0x1c
+ 795 0353 4B020000 		.4byte	.LASF36
+ 796 0357 01       		.byte	0x1
+ 797 0358 51       		.byte	0x51
+ 798 0359 93000000 		.4byte	0x93
+ 799 035d 00000000 		.4byte	.LFB65
+ 800 0361 08000000 		.4byte	.LFE65-.LFB65
+ 801 0365 01       		.uleb128 0x1
+ 802 0366 9C       		.byte	0x9c
+ 803 0367 84030000 		.4byte	0x384
+ 804 036b 0E       		.uleb128 0xe
+ 805 036c C5020000 		.4byte	.LASF24
+ 806 0370 01       		.byte	0x1
+ 807 0371 51       		.byte	0x51
+ 808 0372 88000000 		.4byte	0x88
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccIPL47e.s 			page 21
+
+
+ 809 0376 0E010000 		.4byte	.LLST8
+ 810 037a 19       		.uleb128 0x19
+ 811 037b 06000000 		.4byte	.LVL24
+ 812 037f 9A010000 		.4byte	0x19a
+ 813 0383 00       		.byte	0
+ 814 0384 1A       		.uleb128 0x1a
+ 815 0385 D4020000 		.4byte	.LASF35
+ 816 0389 01       		.byte	0x1
+ 817 038a 64       		.byte	0x64
+ 818 038b 00000000 		.4byte	.LFB66
+ 819 038f 08000000 		.4byte	.LFE66-.LFB66
+ 820 0393 01       		.uleb128 0x1
+ 821 0394 9C       		.byte	0x9c
+ 822 0395 C9030000 		.4byte	0x3c9
+ 823 0399 0E       		.uleb128 0xe
+ 824 039a BC000000 		.4byte	.LASF23
+ 825 039e 01       		.byte	0x1
+ 826 039f 64       		.byte	0x64
+ 827 03a0 93000000 		.4byte	0x93
+ 828 03a4 2F010000 		.4byte	.LLST9
+ 829 03a8 0E       		.uleb128 0xe
+ 830 03a9 C5020000 		.4byte	.LASF24
+ 831 03ad 01       		.byte	0x1
+ 832 03ae 64       		.byte	0x64
+ 833 03af 88000000 		.4byte	0x88
+ 834 03b3 50010000 		.4byte	.LLST10
+ 835 03b7 16       		.uleb128 0x16
+ 836 03b8 06000000 		.4byte	.LVL26
+ 837 03bc E0010000 		.4byte	0x1e0
+ 838 03c0 17       		.uleb128 0x17
+ 839 03c1 01       		.uleb128 0x1
+ 840 03c2 50       		.byte	0x50
+ 841 03c3 03       		.uleb128 0x3
+ 842 03c4 F3       		.byte	0xf3
+ 843 03c5 01       		.uleb128 0x1
+ 844 03c6 50       		.byte	0x50
+ 845 03c7 00       		.byte	0
+ 846 03c8 00       		.byte	0
+ 847 03c9 1C       		.uleb128 0x1c
+ 848 03ca 65010000 		.4byte	.LASF37
+ 849 03ce 01       		.byte	0x1
+ 850 03cf 75       		.byte	0x75
+ 851 03d0 25000000 		.4byte	0x25
+ 852 03d4 00000000 		.4byte	.LFB67
+ 853 03d8 08000000 		.4byte	.LFE67-.LFB67
+ 854 03dc 01       		.uleb128 0x1
+ 855 03dd 9C       		.byte	0x9c
+ 856 03de FB030000 		.4byte	0x3fb
+ 857 03e2 0E       		.uleb128 0xe
+ 858 03e3 C5020000 		.4byte	.LASF24
+ 859 03e7 01       		.byte	0x1
+ 860 03e8 75       		.byte	0x75
+ 861 03e9 88000000 		.4byte	0x88
+ 862 03ed 71010000 		.4byte	.LLST11
+ 863 03f1 19       		.uleb128 0x19
+ 864 03f2 06000000 		.4byte	.LVL28
+ 865 03f6 4E010000 		.4byte	0x14e
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccIPL47e.s 			page 22
+
+
+ 866 03fa 00       		.byte	0
+ 867 03fb 1A       		.uleb128 0x1a
+ 868 03fc A8000000 		.4byte	.LASF38
+ 869 0400 01       		.byte	0x1
+ 870 0401 88       		.byte	0x88
+ 871 0402 00000000 		.4byte	.LFB68
+ 872 0406 08000000 		.4byte	.LFE68-.LFB68
+ 873 040a 01       		.uleb128 0x1
+ 874 040b 9C       		.byte	0x9c
+ 875 040c 42040000 		.4byte	0x442
+ 876 0410 0E       		.uleb128 0xe
+ 877 0411 44000000 		.4byte	.LASF19
+ 878 0415 01       		.byte	0x1
+ 879 0416 88       		.byte	0x88
+ 880 0417 25000000 		.4byte	0x25
+ 881 041b 92010000 		.4byte	.LLST12
+ 882 041f 0E       		.uleb128 0xe
+ 883 0420 C5020000 		.4byte	.LASF24
+ 884 0424 01       		.byte	0x1
+ 885 0425 88       		.byte	0x88
+ 886 0426 88000000 		.4byte	0x88
+ 887 042a B5010000 		.4byte	.LLST13
+ 888 042e 16       		.uleb128 0x16
+ 889 042f 06000000 		.4byte	.LVL30
+ 890 0433 80020000 		.4byte	0x280
+ 891 0437 17       		.uleb128 0x17
+ 892 0438 01       		.uleb128 0x1
+ 893 0439 50       		.byte	0x50
+ 894 043a 05       		.uleb128 0x5
+ 895 043b F3       		.byte	0xf3
+ 896 043c 03       		.uleb128 0x3
+ 897 043d F5       		.byte	0xf5
+ 898 043e 00       		.uleb128 0
+ 899 043f 25       		.uleb128 0x25
+ 900 0440 00       		.byte	0
+ 901 0441 00       		.byte	0
+ 902 0442 1D       		.uleb128 0x1d
+ 903 0443 74010000 		.4byte	.LASF43
+ 904 0447 06       		.byte	0x6
+ 905 0448 2A06     		.2byte	0x62a
+ 906 044a 4E040000 		.4byte	0x44e
+ 907 044e 06       		.uleb128 0x6
+ 908 044f 7D000000 		.4byte	0x7d
+ 909 0453 1E       		.uleb128 0x1e
+ 910 0454 00000000 		.4byte	.LASF32
+ 911 0458 00000000 		.4byte	.LASF32
+ 912 045c 01       		.byte	0x1
+ 913 045d 1C01     		.2byte	0x11c
+ 914 045f 1F       		.uleb128 0x1f
+ 915 0460 24020000 		.4byte	.LASF39
+ 916 0464 24020000 		.4byte	.LASF39
+ 917 0468 05       		.byte	0x5
+ 918 0469 46       		.byte	0x46
+ 919 046a 1F       		.uleb128 0x1f
+ 920 046b 3C020000 		.4byte	.LASF33
+ 921 046f 3C020000 		.4byte	.LASF33
+ 922 0473 01       		.byte	0x1
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccIPL47e.s 			page 23
+
+
+ 923 0474 3F       		.byte	0x3f
+ 924 0475 00       		.byte	0
+ 925              		.section	.debug_abbrev,"",%progbits
+ 926              	.Ldebug_abbrev0:
+ 927 0000 01       		.uleb128 0x1
+ 928 0001 11       		.uleb128 0x11
+ 929 0002 01       		.byte	0x1
+ 930 0003 25       		.uleb128 0x25
+ 931 0004 0E       		.uleb128 0xe
+ 932 0005 13       		.uleb128 0x13
+ 933 0006 0B       		.uleb128 0xb
+ 934 0007 03       		.uleb128 0x3
+ 935 0008 0E       		.uleb128 0xe
+ 936 0009 1B       		.uleb128 0x1b
+ 937 000a 0E       		.uleb128 0xe
+ 938 000b 55       		.uleb128 0x55
+ 939 000c 17       		.uleb128 0x17
+ 940 000d 11       		.uleb128 0x11
+ 941 000e 01       		.uleb128 0x1
+ 942 000f 10       		.uleb128 0x10
+ 943 0010 17       		.uleb128 0x17
+ 944 0011 00       		.byte	0
+ 945 0012 00       		.byte	0
+ 946 0013 02       		.uleb128 0x2
+ 947 0014 24       		.uleb128 0x24
+ 948 0015 00       		.byte	0
+ 949 0016 0B       		.uleb128 0xb
+ 950 0017 0B       		.uleb128 0xb
+ 951 0018 3E       		.uleb128 0x3e
+ 952 0019 0B       		.uleb128 0xb
+ 953 001a 03       		.uleb128 0x3
+ 954 001b 0E       		.uleb128 0xe
+ 955 001c 00       		.byte	0
+ 956 001d 00       		.byte	0
+ 957 001e 03       		.uleb128 0x3
+ 958 001f 16       		.uleb128 0x16
+ 959 0020 00       		.byte	0
+ 960 0021 03       		.uleb128 0x3
+ 961 0022 0E       		.uleb128 0xe
+ 962 0023 3A       		.uleb128 0x3a
+ 963 0024 0B       		.uleb128 0xb
+ 964 0025 3B       		.uleb128 0x3b
+ 965 0026 0B       		.uleb128 0xb
+ 966 0027 49       		.uleb128 0x49
+ 967 0028 13       		.uleb128 0x13
+ 968 0029 00       		.byte	0
+ 969 002a 00       		.byte	0
+ 970 002b 04       		.uleb128 0x4
+ 971 002c 24       		.uleb128 0x24
+ 972 002d 00       		.byte	0
+ 973 002e 0B       		.uleb128 0xb
+ 974 002f 0B       		.uleb128 0xb
+ 975 0030 3E       		.uleb128 0x3e
+ 976 0031 0B       		.uleb128 0xb
+ 977 0032 03       		.uleb128 0x3
+ 978 0033 08       		.uleb128 0x8
+ 979 0034 00       		.byte	0
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccIPL47e.s 			page 24
+
+
+ 980 0035 00       		.byte	0
+ 981 0036 05       		.uleb128 0x5
+ 982 0037 16       		.uleb128 0x16
+ 983 0038 00       		.byte	0
+ 984 0039 03       		.uleb128 0x3
+ 985 003a 0E       		.uleb128 0xe
+ 986 003b 3A       		.uleb128 0x3a
+ 987 003c 0B       		.uleb128 0xb
+ 988 003d 3B       		.uleb128 0x3b
+ 989 003e 05       		.uleb128 0x5
+ 990 003f 49       		.uleb128 0x49
+ 991 0040 13       		.uleb128 0x13
+ 992 0041 00       		.byte	0
+ 993 0042 00       		.byte	0
+ 994 0043 06       		.uleb128 0x6
+ 995 0044 35       		.uleb128 0x35
+ 996 0045 00       		.byte	0
+ 997 0046 49       		.uleb128 0x49
+ 998 0047 13       		.uleb128 0x13
+ 999 0048 00       		.byte	0
+ 1000 0049 00       		.byte	0
+ 1001 004a 07       		.uleb128 0x7
+ 1002 004b 01       		.uleb128 0x1
+ 1003 004c 01       		.byte	0x1
+ 1004 004d 49       		.uleb128 0x49
+ 1005 004e 13       		.uleb128 0x13
+ 1006 004f 01       		.uleb128 0x1
+ 1007 0050 13       		.uleb128 0x13
+ 1008 0051 00       		.byte	0
+ 1009 0052 00       		.byte	0
+ 1010 0053 08       		.uleb128 0x8
+ 1011 0054 21       		.uleb128 0x21
+ 1012 0055 00       		.byte	0
+ 1013 0056 49       		.uleb128 0x49
+ 1014 0057 13       		.uleb128 0x13
+ 1015 0058 2F       		.uleb128 0x2f
+ 1016 0059 0B       		.uleb128 0xb
+ 1017 005a 00       		.byte	0
+ 1018 005b 00       		.byte	0
+ 1019 005c 09       		.uleb128 0x9
+ 1020 005d 2E       		.uleb128 0x2e
+ 1021 005e 01       		.byte	0x1
+ 1022 005f 03       		.uleb128 0x3
+ 1023 0060 0E       		.uleb128 0xe
+ 1024 0061 3A       		.uleb128 0x3a
+ 1025 0062 0B       		.uleb128 0xb
+ 1026 0063 3B       		.uleb128 0x3b
+ 1027 0064 0B       		.uleb128 0xb
+ 1028 0065 27       		.uleb128 0x27
+ 1029 0066 19       		.uleb128 0x19
+ 1030 0067 11       		.uleb128 0x11
+ 1031 0068 01       		.uleb128 0x1
+ 1032 0069 12       		.uleb128 0x12
+ 1033 006a 06       		.uleb128 0x6
+ 1034 006b 40       		.uleb128 0x40
+ 1035 006c 18       		.uleb128 0x18
+ 1036 006d 9742     		.uleb128 0x2117
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccIPL47e.s 			page 25
+
+
+ 1037 006f 19       		.uleb128 0x19
+ 1038 0070 01       		.uleb128 0x1
+ 1039 0071 13       		.uleb128 0x13
+ 1040 0072 00       		.byte	0
+ 1041 0073 00       		.byte	0
+ 1042 0074 0A       		.uleb128 0xa
+ 1043 0075 05       		.uleb128 0x5
+ 1044 0076 00       		.byte	0
+ 1045 0077 03       		.uleb128 0x3
+ 1046 0078 0E       		.uleb128 0xe
+ 1047 0079 3A       		.uleb128 0x3a
+ 1048 007a 0B       		.uleb128 0xb
+ 1049 007b 3B       		.uleb128 0x3b
+ 1050 007c 0B       		.uleb128 0xb
+ 1051 007d 49       		.uleb128 0x49
+ 1052 007e 13       		.uleb128 0x13
+ 1053 007f 02       		.uleb128 0x2
+ 1054 0080 18       		.uleb128 0x18
+ 1055 0081 00       		.byte	0
+ 1056 0082 00       		.byte	0
+ 1057 0083 0B       		.uleb128 0xb
+ 1058 0084 34       		.uleb128 0x34
+ 1059 0085 00       		.byte	0
+ 1060 0086 03       		.uleb128 0x3
+ 1061 0087 0E       		.uleb128 0xe
+ 1062 0088 3A       		.uleb128 0x3a
+ 1063 0089 0B       		.uleb128 0xb
+ 1064 008a 3B       		.uleb128 0x3b
+ 1065 008b 0B       		.uleb128 0xb
+ 1066 008c 49       		.uleb128 0x49
+ 1067 008d 13       		.uleb128 0x13
+ 1068 008e 02       		.uleb128 0x2
+ 1069 008f 18       		.uleb128 0x18
+ 1070 0090 00       		.byte	0
+ 1071 0091 00       		.byte	0
+ 1072 0092 0C       		.uleb128 0xc
+ 1073 0093 0F       		.uleb128 0xf
+ 1074 0094 00       		.byte	0
+ 1075 0095 0B       		.uleb128 0xb
+ 1076 0096 0B       		.uleb128 0xb
+ 1077 0097 49       		.uleb128 0x49
+ 1078 0098 13       		.uleb128 0x13
+ 1079 0099 00       		.byte	0
+ 1080 009a 00       		.byte	0
+ 1081 009b 0D       		.uleb128 0xd
+ 1082 009c 2E       		.uleb128 0x2e
+ 1083 009d 01       		.byte	0x1
+ 1084 009e 03       		.uleb128 0x3
+ 1085 009f 0E       		.uleb128 0xe
+ 1086 00a0 3A       		.uleb128 0x3a
+ 1087 00a1 0B       		.uleb128 0xb
+ 1088 00a2 3B       		.uleb128 0x3b
+ 1089 00a3 0B       		.uleb128 0xb
+ 1090 00a4 27       		.uleb128 0x27
+ 1091 00a5 19       		.uleb128 0x19
+ 1092 00a6 49       		.uleb128 0x49
+ 1093 00a7 13       		.uleb128 0x13
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccIPL47e.s 			page 26
+
+
+ 1094 00a8 11       		.uleb128 0x11
+ 1095 00a9 01       		.uleb128 0x1
+ 1096 00aa 12       		.uleb128 0x12
+ 1097 00ab 06       		.uleb128 0x6
+ 1098 00ac 40       		.uleb128 0x40
+ 1099 00ad 18       		.uleb128 0x18
+ 1100 00ae 9742     		.uleb128 0x2117
+ 1101 00b0 19       		.uleb128 0x19
+ 1102 00b1 01       		.uleb128 0x1
+ 1103 00b2 13       		.uleb128 0x13
+ 1104 00b3 00       		.byte	0
+ 1105 00b4 00       		.byte	0
+ 1106 00b5 0E       		.uleb128 0xe
+ 1107 00b6 05       		.uleb128 0x5
+ 1108 00b7 00       		.byte	0
+ 1109 00b8 03       		.uleb128 0x3
+ 1110 00b9 0E       		.uleb128 0xe
+ 1111 00ba 3A       		.uleb128 0x3a
+ 1112 00bb 0B       		.uleb128 0xb
+ 1113 00bc 3B       		.uleb128 0x3b
+ 1114 00bd 0B       		.uleb128 0xb
+ 1115 00be 49       		.uleb128 0x49
+ 1116 00bf 13       		.uleb128 0x13
+ 1117 00c0 02       		.uleb128 0x2
+ 1118 00c1 17       		.uleb128 0x17
+ 1119 00c2 00       		.byte	0
+ 1120 00c3 00       		.byte	0
+ 1121 00c4 0F       		.uleb128 0xf
+ 1122 00c5 34       		.uleb128 0x34
+ 1123 00c6 00       		.byte	0
+ 1124 00c7 03       		.uleb128 0x3
+ 1125 00c8 0E       		.uleb128 0xe
+ 1126 00c9 3A       		.uleb128 0x3a
+ 1127 00ca 0B       		.uleb128 0xb
+ 1128 00cb 3B       		.uleb128 0x3b
+ 1129 00cc 0B       		.uleb128 0xb
+ 1130 00cd 49       		.uleb128 0x49
+ 1131 00ce 13       		.uleb128 0x13
+ 1132 00cf 02       		.uleb128 0x2
+ 1133 00d0 17       		.uleb128 0x17
+ 1134 00d1 00       		.byte	0
+ 1135 00d2 00       		.byte	0
+ 1136 00d3 10       		.uleb128 0x10
+ 1137 00d4 2E       		.uleb128 0x2e
+ 1138 00d5 01       		.byte	0x1
+ 1139 00d6 03       		.uleb128 0x3
+ 1140 00d7 0E       		.uleb128 0xe
+ 1141 00d8 3A       		.uleb128 0x3a
+ 1142 00d9 0B       		.uleb128 0xb
+ 1143 00da 3B       		.uleb128 0x3b
+ 1144 00db 05       		.uleb128 0x5
+ 1145 00dc 27       		.uleb128 0x27
+ 1146 00dd 19       		.uleb128 0x19
+ 1147 00de 11       		.uleb128 0x11
+ 1148 00df 01       		.uleb128 0x1
+ 1149 00e0 12       		.uleb128 0x12
+ 1150 00e1 06       		.uleb128 0x6
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccIPL47e.s 			page 27
+
+
+ 1151 00e2 40       		.uleb128 0x40
+ 1152 00e3 18       		.uleb128 0x18
+ 1153 00e4 9742     		.uleb128 0x2117
+ 1154 00e6 19       		.uleb128 0x19
+ 1155 00e7 01       		.uleb128 0x1
+ 1156 00e8 13       		.uleb128 0x13
+ 1157 00e9 00       		.byte	0
+ 1158 00ea 00       		.byte	0
+ 1159 00eb 11       		.uleb128 0x11
+ 1160 00ec 05       		.uleb128 0x5
+ 1161 00ed 00       		.byte	0
+ 1162 00ee 03       		.uleb128 0x3
+ 1163 00ef 0E       		.uleb128 0xe
+ 1164 00f0 3A       		.uleb128 0x3a
+ 1165 00f1 0B       		.uleb128 0xb
+ 1166 00f2 3B       		.uleb128 0x3b
+ 1167 00f3 05       		.uleb128 0x5
+ 1168 00f4 49       		.uleb128 0x49
+ 1169 00f5 13       		.uleb128 0x13
+ 1170 00f6 02       		.uleb128 0x2
+ 1171 00f7 17       		.uleb128 0x17
+ 1172 00f8 00       		.byte	0
+ 1173 00f9 00       		.byte	0
+ 1174 00fa 12       		.uleb128 0x12
+ 1175 00fb 34       		.uleb128 0x34
+ 1176 00fc 00       		.byte	0
+ 1177 00fd 03       		.uleb128 0x3
+ 1178 00fe 0E       		.uleb128 0xe
+ 1179 00ff 3A       		.uleb128 0x3a
+ 1180 0100 0B       		.uleb128 0xb
+ 1181 0101 3B       		.uleb128 0x3b
+ 1182 0102 05       		.uleb128 0x5
+ 1183 0103 49       		.uleb128 0x49
+ 1184 0104 13       		.uleb128 0x13
+ 1185 0105 02       		.uleb128 0x2
+ 1186 0106 18       		.uleb128 0x18
+ 1187 0107 00       		.byte	0
+ 1188 0108 00       		.byte	0
+ 1189 0109 13       		.uleb128 0x13
+ 1190 010a 0B       		.uleb128 0xb
+ 1191 010b 01       		.byte	0x1
+ 1192 010c 11       		.uleb128 0x11
+ 1193 010d 01       		.uleb128 0x1
+ 1194 010e 12       		.uleb128 0x12
+ 1195 010f 06       		.uleb128 0x6
+ 1196 0110 01       		.uleb128 0x1
+ 1197 0111 13       		.uleb128 0x13
+ 1198 0112 00       		.byte	0
+ 1199 0113 00       		.byte	0
+ 1200 0114 14       		.uleb128 0x14
+ 1201 0115 2E       		.uleb128 0x2e
+ 1202 0116 01       		.byte	0x1
+ 1203 0117 3F       		.uleb128 0x3f
+ 1204 0118 19       		.uleb128 0x19
+ 1205 0119 03       		.uleb128 0x3
+ 1206 011a 0E       		.uleb128 0xe
+ 1207 011b 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccIPL47e.s 			page 28
+
+
+ 1208 011c 0B       		.uleb128 0xb
+ 1209 011d 3B       		.uleb128 0x3b
+ 1210 011e 05       		.uleb128 0x5
+ 1211 011f 49       		.uleb128 0x49
+ 1212 0120 13       		.uleb128 0x13
+ 1213 0121 3C       		.uleb128 0x3c
+ 1214 0122 19       		.uleb128 0x19
+ 1215 0123 01       		.uleb128 0x1
+ 1216 0124 13       		.uleb128 0x13
+ 1217 0125 00       		.byte	0
+ 1218 0126 00       		.byte	0
+ 1219 0127 15       		.uleb128 0x15
+ 1220 0128 18       		.uleb128 0x18
+ 1221 0129 00       		.byte	0
+ 1222 012a 00       		.byte	0
+ 1223 012b 00       		.byte	0
+ 1224 012c 16       		.uleb128 0x16
+ 1225 012d 898201   		.uleb128 0x4109
+ 1226 0130 01       		.byte	0x1
+ 1227 0131 11       		.uleb128 0x11
+ 1228 0132 01       		.uleb128 0x1
+ 1229 0133 31       		.uleb128 0x31
+ 1230 0134 13       		.uleb128 0x13
+ 1231 0135 00       		.byte	0
+ 1232 0136 00       		.byte	0
+ 1233 0137 17       		.uleb128 0x17
+ 1234 0138 8A8201   		.uleb128 0x410a
+ 1235 013b 00       		.byte	0
+ 1236 013c 02       		.uleb128 0x2
+ 1237 013d 18       		.uleb128 0x18
+ 1238 013e 9142     		.uleb128 0x2111
+ 1239 0140 18       		.uleb128 0x18
+ 1240 0141 00       		.byte	0
+ 1241 0142 00       		.byte	0
+ 1242 0143 18       		.uleb128 0x18
+ 1243 0144 898201   		.uleb128 0x4109
+ 1244 0147 01       		.byte	0x1
+ 1245 0148 11       		.uleb128 0x11
+ 1246 0149 01       		.uleb128 0x1
+ 1247 014a 31       		.uleb128 0x31
+ 1248 014b 13       		.uleb128 0x13
+ 1249 014c 01       		.uleb128 0x1
+ 1250 014d 13       		.uleb128 0x13
+ 1251 014e 00       		.byte	0
+ 1252 014f 00       		.byte	0
+ 1253 0150 19       		.uleb128 0x19
+ 1254 0151 898201   		.uleb128 0x4109
+ 1255 0154 00       		.byte	0
+ 1256 0155 11       		.uleb128 0x11
+ 1257 0156 01       		.uleb128 0x1
+ 1258 0157 31       		.uleb128 0x31
+ 1259 0158 13       		.uleb128 0x13
+ 1260 0159 00       		.byte	0
+ 1261 015a 00       		.byte	0
+ 1262 015b 1A       		.uleb128 0x1a
+ 1263 015c 2E       		.uleb128 0x2e
+ 1264 015d 01       		.byte	0x1
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccIPL47e.s 			page 29
+
+
+ 1265 015e 3F       		.uleb128 0x3f
+ 1266 015f 19       		.uleb128 0x19
+ 1267 0160 03       		.uleb128 0x3
+ 1268 0161 0E       		.uleb128 0xe
+ 1269 0162 3A       		.uleb128 0x3a
+ 1270 0163 0B       		.uleb128 0xb
+ 1271 0164 3B       		.uleb128 0x3b
+ 1272 0165 0B       		.uleb128 0xb
+ 1273 0166 27       		.uleb128 0x27
+ 1274 0167 19       		.uleb128 0x19
+ 1275 0168 11       		.uleb128 0x11
+ 1276 0169 01       		.uleb128 0x1
+ 1277 016a 12       		.uleb128 0x12
+ 1278 016b 06       		.uleb128 0x6
+ 1279 016c 40       		.uleb128 0x40
+ 1280 016d 18       		.uleb128 0x18
+ 1281 016e 9742     		.uleb128 0x2117
+ 1282 0170 19       		.uleb128 0x19
+ 1283 0171 01       		.uleb128 0x1
+ 1284 0172 13       		.uleb128 0x13
+ 1285 0173 00       		.byte	0
+ 1286 0174 00       		.byte	0
+ 1287 0175 1B       		.uleb128 0x1b
+ 1288 0176 2E       		.uleb128 0x2e
+ 1289 0177 01       		.byte	0x1
+ 1290 0178 3F       		.uleb128 0x3f
+ 1291 0179 19       		.uleb128 0x19
+ 1292 017a 03       		.uleb128 0x3
+ 1293 017b 0E       		.uleb128 0xe
+ 1294 017c 3A       		.uleb128 0x3a
+ 1295 017d 0B       		.uleb128 0xb
+ 1296 017e 3B       		.uleb128 0x3b
+ 1297 017f 0B       		.uleb128 0xb
+ 1298 0180 49       		.uleb128 0x49
+ 1299 0181 13       		.uleb128 0x13
+ 1300 0182 3C       		.uleb128 0x3c
+ 1301 0183 19       		.uleb128 0x19
+ 1302 0184 01       		.uleb128 0x1
+ 1303 0185 13       		.uleb128 0x13
+ 1304 0186 00       		.byte	0
+ 1305 0187 00       		.byte	0
+ 1306 0188 1C       		.uleb128 0x1c
+ 1307 0189 2E       		.uleb128 0x2e
+ 1308 018a 01       		.byte	0x1
+ 1309 018b 3F       		.uleb128 0x3f
+ 1310 018c 19       		.uleb128 0x19
+ 1311 018d 03       		.uleb128 0x3
+ 1312 018e 0E       		.uleb128 0xe
+ 1313 018f 3A       		.uleb128 0x3a
+ 1314 0190 0B       		.uleb128 0xb
+ 1315 0191 3B       		.uleb128 0x3b
+ 1316 0192 0B       		.uleb128 0xb
+ 1317 0193 27       		.uleb128 0x27
+ 1318 0194 19       		.uleb128 0x19
+ 1319 0195 49       		.uleb128 0x49
+ 1320 0196 13       		.uleb128 0x13
+ 1321 0197 11       		.uleb128 0x11
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccIPL47e.s 			page 30
+
+
+ 1322 0198 01       		.uleb128 0x1
+ 1323 0199 12       		.uleb128 0x12
+ 1324 019a 06       		.uleb128 0x6
+ 1325 019b 40       		.uleb128 0x40
+ 1326 019c 18       		.uleb128 0x18
+ 1327 019d 9742     		.uleb128 0x2117
+ 1328 019f 19       		.uleb128 0x19
+ 1329 01a0 01       		.uleb128 0x1
+ 1330 01a1 13       		.uleb128 0x13
+ 1331 01a2 00       		.byte	0
+ 1332 01a3 00       		.byte	0
+ 1333 01a4 1D       		.uleb128 0x1d
+ 1334 01a5 34       		.uleb128 0x34
+ 1335 01a6 00       		.byte	0
+ 1336 01a7 03       		.uleb128 0x3
+ 1337 01a8 0E       		.uleb128 0xe
+ 1338 01a9 3A       		.uleb128 0x3a
+ 1339 01aa 0B       		.uleb128 0xb
+ 1340 01ab 3B       		.uleb128 0x3b
+ 1341 01ac 05       		.uleb128 0x5
+ 1342 01ad 49       		.uleb128 0x49
+ 1343 01ae 13       		.uleb128 0x13
+ 1344 01af 3F       		.uleb128 0x3f
+ 1345 01b0 19       		.uleb128 0x19
+ 1346 01b1 3C       		.uleb128 0x3c
+ 1347 01b2 19       		.uleb128 0x19
+ 1348 01b3 00       		.byte	0
+ 1349 01b4 00       		.byte	0
+ 1350 01b5 1E       		.uleb128 0x1e
+ 1351 01b6 2E       		.uleb128 0x2e
+ 1352 01b7 00       		.byte	0
+ 1353 01b8 3F       		.uleb128 0x3f
+ 1354 01b9 19       		.uleb128 0x19
+ 1355 01ba 3C       		.uleb128 0x3c
+ 1356 01bb 19       		.uleb128 0x19
+ 1357 01bc 6E       		.uleb128 0x6e
+ 1358 01bd 0E       		.uleb128 0xe
+ 1359 01be 03       		.uleb128 0x3
+ 1360 01bf 0E       		.uleb128 0xe
+ 1361 01c0 3A       		.uleb128 0x3a
+ 1362 01c1 0B       		.uleb128 0xb
+ 1363 01c2 3B       		.uleb128 0x3b
+ 1364 01c3 05       		.uleb128 0x5
+ 1365 01c4 00       		.byte	0
+ 1366 01c5 00       		.byte	0
+ 1367 01c6 1F       		.uleb128 0x1f
+ 1368 01c7 2E       		.uleb128 0x2e
+ 1369 01c8 00       		.byte	0
+ 1370 01c9 3F       		.uleb128 0x3f
+ 1371 01ca 19       		.uleb128 0x19
+ 1372 01cb 3C       		.uleb128 0x3c
+ 1373 01cc 19       		.uleb128 0x19
+ 1374 01cd 6E       		.uleb128 0x6e
+ 1375 01ce 0E       		.uleb128 0xe
+ 1376 01cf 03       		.uleb128 0x3
+ 1377 01d0 0E       		.uleb128 0xe
+ 1378 01d1 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccIPL47e.s 			page 31
+
+
+ 1379 01d2 0B       		.uleb128 0xb
+ 1380 01d3 3B       		.uleb128 0x3b
+ 1381 01d4 0B       		.uleb128 0xb
+ 1382 01d5 00       		.byte	0
+ 1383 01d6 00       		.byte	0
+ 1384 01d7 00       		.byte	0
+ 1385              		.section	.debug_loc,"",%progbits
+ 1386              	.Ldebug_loc0:
+ 1387              	.LLST0:
+ 1388 0000 00000000 		.4byte	.LVL2
+ 1389 0004 04000000 		.4byte	.LVL4
+ 1390 0008 0100     		.2byte	0x1
+ 1391 000a 50       		.byte	0x50
+ 1392 000b 04000000 		.4byte	.LVL4
+ 1393 000f 2A000000 		.4byte	.LFE71
+ 1394 0013 0400     		.2byte	0x4
+ 1395 0015 F3       		.byte	0xf3
+ 1396 0016 01       		.uleb128 0x1
+ 1397 0017 50       		.byte	0x50
+ 1398 0018 9F       		.byte	0x9f
+ 1399 0019 00000000 		.4byte	0
+ 1400 001d 00000000 		.4byte	0
+ 1401              	.LLST1:
+ 1402 0021 02000000 		.4byte	.LVL3
+ 1403 0025 0C000000 		.4byte	.LVL5
+ 1404 0029 0600     		.2byte	0x6
+ 1405 002b 0C       		.byte	0xc
+ 1406 002c 00800040 		.4byte	0x40008000
+ 1407 0030 9F       		.byte	0x9f
+ 1408 0031 0C000000 		.4byte	.LVL5
+ 1409 0035 26000000 		.4byte	.LVL6
+ 1410 0039 0100     		.2byte	0x1
+ 1411 003b 50       		.byte	0x50
+ 1412 003c 00000000 		.4byte	0
+ 1413 0040 00000000 		.4byte	0
+ 1414              	.LLST2:
+ 1415 0044 00000000 		.4byte	.LVL7
+ 1416 0048 04000000 		.4byte	.LVL9
+ 1417 004c 0100     		.2byte	0x1
+ 1418 004e 50       		.byte	0x50
+ 1419 004f 04000000 		.4byte	.LVL9
+ 1420 0053 2A000000 		.4byte	.LFE72
+ 1421 0057 0400     		.2byte	0x4
+ 1422 0059 F3       		.byte	0xf3
+ 1423 005a 01       		.uleb128 0x1
+ 1424 005b 50       		.byte	0x50
+ 1425 005c 9F       		.byte	0x9f
+ 1426 005d 00000000 		.4byte	0
+ 1427 0061 00000000 		.4byte	0
+ 1428              	.LLST3:
+ 1429 0065 02000000 		.4byte	.LVL8
+ 1430 0069 0C000000 		.4byte	.LVL10
+ 1431 006d 0600     		.2byte	0x6
+ 1432 006f 0C       		.byte	0xc
+ 1433 0070 00800040 		.4byte	0x40008000
+ 1434 0074 9F       		.byte	0x9f
+ 1435 0075 0C000000 		.4byte	.LVL10
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccIPL47e.s 			page 32
+
+
+ 1436 0079 26000000 		.4byte	.LVL11
+ 1437 007d 0100     		.2byte	0x1
+ 1438 007f 50       		.byte	0x50
+ 1439 0080 00000000 		.4byte	0
+ 1440 0084 00000000 		.4byte	0
+ 1441              	.LLST4:
+ 1442 0088 00000000 		.4byte	.LVL12
+ 1443 008c 0B000000 		.4byte	.LVL14-1
+ 1444 0090 0100     		.2byte	0x1
+ 1445 0092 50       		.byte	0x50
+ 1446 0093 0B000000 		.4byte	.LVL14-1
+ 1447 0097 1E000000 		.4byte	.LFE74
+ 1448 009b 0400     		.2byte	0x4
+ 1449 009d F3       		.byte	0xf3
+ 1450 009e 01       		.uleb128 0x1
+ 1451 009f 50       		.byte	0x50
+ 1452 00a0 9F       		.byte	0x9f
+ 1453 00a1 00000000 		.4byte	0
+ 1454 00a5 00000000 		.4byte	0
+ 1455              	.LLST5:
+ 1456 00a9 00000000 		.4byte	.LVL12
+ 1457 00ad 08000000 		.4byte	.LVL13
+ 1458 00b1 0100     		.2byte	0x1
+ 1459 00b3 51       		.byte	0x51
+ 1460 00b4 08000000 		.4byte	.LVL13
+ 1461 00b8 1E000000 		.4byte	.LFE74
+ 1462 00bc 0400     		.2byte	0x4
+ 1463 00be F3       		.byte	0xf3
+ 1464 00bf 01       		.uleb128 0x1
+ 1465 00c0 51       		.byte	0x51
+ 1466 00c1 9F       		.byte	0x9f
+ 1467 00c2 00000000 		.4byte	0
+ 1468 00c6 00000000 		.4byte	0
+ 1469              	.LLST6:
+ 1470 00ca 00000000 		.4byte	.LVL17
+ 1471 00ce 0B000000 		.4byte	.LVL19-1
+ 1472 00d2 0100     		.2byte	0x1
+ 1473 00d4 50       		.byte	0x50
+ 1474 00d5 0B000000 		.4byte	.LVL19-1
+ 1475 00d9 1E000000 		.4byte	.LFE73
+ 1476 00dd 0600     		.2byte	0x6
+ 1477 00df F3       		.byte	0xf3
+ 1478 00e0 03       		.uleb128 0x3
+ 1479 00e1 F5       		.byte	0xf5
+ 1480 00e2 00       		.uleb128 0
+ 1481 00e3 25       		.uleb128 0x25
+ 1482 00e4 9F       		.byte	0x9f
+ 1483 00e5 00000000 		.4byte	0
+ 1484 00e9 00000000 		.4byte	0
+ 1485              	.LLST7:
+ 1486 00ed 00000000 		.4byte	.LVL17
+ 1487 00f1 08000000 		.4byte	.LVL18
+ 1488 00f5 0100     		.2byte	0x1
+ 1489 00f7 51       		.byte	0x51
+ 1490 00f8 08000000 		.4byte	.LVL18
+ 1491 00fc 1E000000 		.4byte	.LFE73
+ 1492 0100 0400     		.2byte	0x4
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccIPL47e.s 			page 33
+
+
+ 1493 0102 F3       		.byte	0xf3
+ 1494 0103 01       		.uleb128 0x1
+ 1495 0104 51       		.byte	0x51
+ 1496 0105 9F       		.byte	0x9f
+ 1497 0106 00000000 		.4byte	0
+ 1498 010a 00000000 		.4byte	0
+ 1499              	.LLST8:
+ 1500 010e 00000000 		.4byte	.LVL23
+ 1501 0112 05000000 		.4byte	.LVL24-1
+ 1502 0116 0100     		.2byte	0x1
+ 1503 0118 50       		.byte	0x50
+ 1504 0119 05000000 		.4byte	.LVL24-1
+ 1505 011d 08000000 		.4byte	.LFE65
+ 1506 0121 0400     		.2byte	0x4
+ 1507 0123 F3       		.byte	0xf3
+ 1508 0124 01       		.uleb128 0x1
+ 1509 0125 50       		.byte	0x50
+ 1510 0126 9F       		.byte	0x9f
+ 1511 0127 00000000 		.4byte	0
+ 1512 012b 00000000 		.4byte	0
+ 1513              	.LLST9:
+ 1514 012f 00000000 		.4byte	.LVL25
+ 1515 0133 05000000 		.4byte	.LVL26-1
+ 1516 0137 0100     		.2byte	0x1
+ 1517 0139 50       		.byte	0x50
+ 1518 013a 05000000 		.4byte	.LVL26-1
+ 1519 013e 08000000 		.4byte	.LFE66
+ 1520 0142 0400     		.2byte	0x4
+ 1521 0144 F3       		.byte	0xf3
+ 1522 0145 01       		.uleb128 0x1
+ 1523 0146 50       		.byte	0x50
+ 1524 0147 9F       		.byte	0x9f
+ 1525 0148 00000000 		.4byte	0
+ 1526 014c 00000000 		.4byte	0
+ 1527              	.LLST10:
+ 1528 0150 00000000 		.4byte	.LVL25
+ 1529 0154 05000000 		.4byte	.LVL26-1
+ 1530 0158 0100     		.2byte	0x1
+ 1531 015a 51       		.byte	0x51
+ 1532 015b 05000000 		.4byte	.LVL26-1
+ 1533 015f 08000000 		.4byte	.LFE66
+ 1534 0163 0400     		.2byte	0x4
+ 1535 0165 F3       		.byte	0xf3
+ 1536 0166 01       		.uleb128 0x1
+ 1537 0167 51       		.byte	0x51
+ 1538 0168 9F       		.byte	0x9f
+ 1539 0169 00000000 		.4byte	0
+ 1540 016d 00000000 		.4byte	0
+ 1541              	.LLST11:
+ 1542 0171 00000000 		.4byte	.LVL27
+ 1543 0175 05000000 		.4byte	.LVL28-1
+ 1544 0179 0100     		.2byte	0x1
+ 1545 017b 50       		.byte	0x50
+ 1546 017c 05000000 		.4byte	.LVL28-1
+ 1547 0180 08000000 		.4byte	.LFE67
+ 1548 0184 0400     		.2byte	0x4
+ 1549 0186 F3       		.byte	0xf3
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccIPL47e.s 			page 34
+
+
+ 1550 0187 01       		.uleb128 0x1
+ 1551 0188 50       		.byte	0x50
+ 1552 0189 9F       		.byte	0x9f
+ 1553 018a 00000000 		.4byte	0
+ 1554 018e 00000000 		.4byte	0
+ 1555              	.LLST12:
+ 1556 0192 00000000 		.4byte	.LVL29
+ 1557 0196 05000000 		.4byte	.LVL30-1
+ 1558 019a 0100     		.2byte	0x1
+ 1559 019c 50       		.byte	0x50
+ 1560 019d 05000000 		.4byte	.LVL30-1
+ 1561 01a1 08000000 		.4byte	.LFE68
+ 1562 01a5 0600     		.2byte	0x6
+ 1563 01a7 F3       		.byte	0xf3
+ 1564 01a8 03       		.uleb128 0x3
+ 1565 01a9 F5       		.byte	0xf5
+ 1566 01aa 00       		.uleb128 0
+ 1567 01ab 25       		.uleb128 0x25
+ 1568 01ac 9F       		.byte	0x9f
+ 1569 01ad 00000000 		.4byte	0
+ 1570 01b1 00000000 		.4byte	0
+ 1571              	.LLST13:
+ 1572 01b5 00000000 		.4byte	.LVL29
+ 1573 01b9 05000000 		.4byte	.LVL30-1
+ 1574 01bd 0100     		.2byte	0x1
+ 1575 01bf 51       		.byte	0x51
+ 1576 01c0 05000000 		.4byte	.LVL30-1
+ 1577 01c4 08000000 		.4byte	.LFE68
+ 1578 01c8 0400     		.2byte	0x4
+ 1579 01ca F3       		.byte	0xf3
+ 1580 01cb 01       		.uleb128 0x1
+ 1581 01cc 51       		.byte	0x51
+ 1582 01cd 9F       		.byte	0x9f
+ 1583 01ce 00000000 		.4byte	0
+ 1584 01d2 00000000 		.4byte	0
+ 1585              		.section	.debug_aranges,"",%progbits
+ 1586 0000 6C000000 		.4byte	0x6c
+ 1587 0004 0200     		.2byte	0x2
+ 1588 0006 00000000 		.4byte	.Ldebug_info0
+ 1589 000a 04       		.byte	0x4
+ 1590 000b 00       		.byte	0
+ 1591 000c 0000     		.2byte	0
+ 1592 000e 0000     		.2byte	0
+ 1593 0010 00000000 		.4byte	.LFB69
+ 1594 0014 10000000 		.4byte	.LFE69-.LFB69
+ 1595 0018 00000000 		.4byte	.LFB70
+ 1596 001c 10000000 		.4byte	.LFE70-.LFB70
+ 1597 0020 00000000 		.4byte	.LFB71
+ 1598 0024 2A000000 		.4byte	.LFE71-.LFB71
+ 1599 0028 00000000 		.4byte	.LFB72
+ 1600 002c 2A000000 		.4byte	.LFE72-.LFB72
+ 1601 0030 00000000 		.4byte	.LFB74
+ 1602 0034 1E000000 		.4byte	.LFE74-.LFB74
+ 1603 0038 00000000 		.4byte	.LFB73
+ 1604 003c 1E000000 		.4byte	.LFE73-.LFB73
+ 1605 0040 00000000 		.4byte	.LFB64
+ 1606 0044 08000000 		.4byte	.LFE64-.LFB64
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccIPL47e.s 			page 35
+
+
+ 1607 0048 00000000 		.4byte	.LFB65
+ 1608 004c 08000000 		.4byte	.LFE65-.LFB65
+ 1609 0050 00000000 		.4byte	.LFB66
+ 1610 0054 08000000 		.4byte	.LFE66-.LFB66
+ 1611 0058 00000000 		.4byte	.LFB67
+ 1612 005c 08000000 		.4byte	.LFE67-.LFB67
+ 1613 0060 00000000 		.4byte	.LFB68
+ 1614 0064 08000000 		.4byte	.LFE68-.LFB68
+ 1615 0068 00000000 		.4byte	0
+ 1616 006c 00000000 		.4byte	0
+ 1617              		.section	.debug_ranges,"",%progbits
+ 1618              	.Ldebug_ranges0:
+ 1619 0000 00000000 		.4byte	.LFB69
+ 1620 0004 10000000 		.4byte	.LFE69
+ 1621 0008 00000000 		.4byte	.LFB70
+ 1622 000c 10000000 		.4byte	.LFE70
+ 1623 0010 00000000 		.4byte	.LFB71
+ 1624 0014 2A000000 		.4byte	.LFE71
+ 1625 0018 00000000 		.4byte	.LFB72
+ 1626 001c 2A000000 		.4byte	.LFE72
+ 1627 0020 00000000 		.4byte	.LFB74
+ 1628 0024 1E000000 		.4byte	.LFE74
+ 1629 0028 00000000 		.4byte	.LFB73
+ 1630 002c 1E000000 		.4byte	.LFE73
+ 1631 0030 00000000 		.4byte	.LFB64
+ 1632 0034 08000000 		.4byte	.LFE64
+ 1633 0038 00000000 		.4byte	.LFB65
+ 1634 003c 08000000 		.4byte	.LFE65
+ 1635 0040 00000000 		.4byte	.LFB66
+ 1636 0044 08000000 		.4byte	.LFE66
+ 1637 0048 00000000 		.4byte	.LFB67
+ 1638 004c 08000000 		.4byte	.LFE67
+ 1639 0050 00000000 		.4byte	.LFB68
+ 1640 0054 08000000 		.4byte	.LFE68
+ 1641 0058 00000000 		.4byte	0
+ 1642 005c 00000000 		.4byte	0
+ 1643              		.section	.debug_line,"",%progbits
+ 1644              	.Ldebug_line0:
+ 1645 0000 46020000 		.section	.debug_str,"MS",%progbits,1
+ 1645      02006E01 
+ 1645      00000201 
+ 1645      FB0E0D00 
+ 1645      01010101 
+ 1646              	.LASF32:
+ 1647 0000 45455052 		.ascii	"EEPROM_1_Write\000"
+ 1647      4F4D5F31 
+ 1647      5F577269 
+ 1647      746500
+ 1648              	.LASF29:
+ 1649 000f 65657072 		.ascii	"eepromReadRowUINT32\000"
+ 1649      6F6D5265 
+ 1649      6164526F 
+ 1649      7755494E 
+ 1649      54333200 
+ 1650              	.LASF10:
+ 1651 0023 5F5F696E 		.ascii	"__int32_t\000"
+ 1651      7433325F 
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccIPL47e.s 			page 36
+
+
+ 1651      7400
+ 1652              	.LASF5:
+ 1653 002d 6C6F6E67 		.ascii	"long int\000"
+ 1653      20696E74 
+ 1653      00
+ 1654              	.LASF28:
+ 1655 0036 65657072 		.ascii	"eepromReadRow\000"
+ 1655      6F6D5265 
+ 1655      6164526F 
+ 1655      7700
+ 1656              	.LASF19:
+ 1657 0044 666C6F61 		.ascii	"floatNumber\000"
+ 1657      744E756D 
+ 1657      62657200 
+ 1658              	.LASF22:
+ 1659 0050 65657072 		.ascii	"eepromUINT32ToByteArray\000"
+ 1659      6F6D5549 
+ 1659      4E543332 
+ 1659      546F4279 
+ 1659      74654172 
+ 1660              	.LASF11:
+ 1661 0068 696E7433 		.ascii	"int32_t\000"
+ 1661      325F7400 
+ 1662              	.LASF0:
+ 1663 0070 666C6F61 		.ascii	"float\000"
+ 1663      7400
+ 1664              	.LASF30:
+ 1665 0076 65657072 		.ascii	"eepromWriteRowUint32\000"
+ 1665      6F6D5772 
+ 1665      69746552 
+ 1665      6F775569 
+ 1665      6E743332 
+ 1666              	.LASF2:
+ 1667 008b 756E7369 		.ascii	"unsigned char\000"
+ 1667      676E6564 
+ 1667      20636861 
+ 1667      7200
+ 1668              	.LASF31:
+ 1669 0099 65657072 		.ascii	"eepromWriteRow\000"
+ 1669      6F6D5772 
+ 1669      69746552 
+ 1669      6F7700
+ 1670              	.LASF38:
+ 1671 00a8 65657072 		.ascii	"eepromSetFloat\000"
+ 1671      6F6D5365 
+ 1671      74466C6F 
+ 1671      617400
+ 1672              	.LASF16:
+ 1673 00b7 72656738 		.ascii	"reg8\000"
+ 1673      00
+ 1674              	.LASF23:
+ 1675 00bc 55494E54 		.ascii	"UINT32Number\000"
+ 1675      33324E75 
+ 1675      6D626572 
+ 1675      00
+ 1676              	.LASF6:
+ 1677 00c9 6C6F6E67 		.ascii	"long unsigned int\000"
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccIPL47e.s 			page 37
+
+
+ 1677      20756E73 
+ 1677      69676E65 
+ 1677      6420696E 
+ 1677      7400
+ 1678              	.LASF4:
+ 1679 00db 73686F72 		.ascii	"short unsigned int\000"
+ 1679      7420756E 
+ 1679      7369676E 
+ 1679      65642069 
+ 1679      6E7400
+ 1680              	.LASF26:
+ 1681 00ee 45657072 		.ascii	"EepromPointer\000"
+ 1681      6F6D506F 
+ 1681      696E7465 
+ 1681      7200
+ 1682              	.LASF14:
+ 1683 00fc 646F7562 		.ascii	"double\000"
+ 1683      6C6500
+ 1684              	.LASF20:
+ 1685 0103 72657475 		.ascii	"returnArray\000"
+ 1685      726E4172 
+ 1685      72617900 
+ 1686              	.LASF27:
+ 1687 010f 65657072 		.ascii	"eepromArray\000"
+ 1687      6F6D4172 
+ 1687      72617900 
+ 1688              	.LASF34:
+ 1689 011b 65657072 		.ascii	"eeprom_Init\000"
+ 1689      6F6D5F49 
+ 1689      6E697400 
+ 1690              	.LASF13:
+ 1691 0127 75696E74 		.ascii	"uint32\000"
+ 1691      333200
+ 1692              	.LASF9:
+ 1693 012e 756E7369 		.ascii	"unsigned int\000"
+ 1693      676E6564 
+ 1693      20696E74 
+ 1693      00
+ 1694              	.LASF8:
+ 1695 013b 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1695      206C6F6E 
+ 1695      6720756E 
+ 1695      7369676E 
+ 1695      65642069 
+ 1696              	.LASF25:
+ 1697 0152 666C6F61 		.ascii	"floatNumber_UINT32\000"
+ 1697      744E756D 
+ 1697      6265725F 
+ 1697      55494E54 
+ 1697      333200
+ 1698              	.LASF37:
+ 1699 0165 65657072 		.ascii	"eepromGetFloat\000"
+ 1699      6F6D4765 
+ 1699      74466C6F 
+ 1699      617400
+ 1700              	.LASF43:
+ 1701 0174 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccIPL47e.s 			page 38
+
+
+ 1701      52784275 
+ 1701      66666572 
+ 1701      00
+ 1702              	.LASF40:
+ 1703 0181 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1703      43313120 
+ 1703      352E342E 
+ 1703      31203230 
+ 1703      31363036 
+ 1704 01b4 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 1704      20726576 
+ 1704      6973696F 
+ 1704      6E203233 
+ 1704      37373135 
+ 1705 01e7 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1705      66756E63 
+ 1705      74696F6E 
+ 1705      2D736563 
+ 1705      74696F6E 
+ 1706              	.LASF17:
+ 1707 020f 6C6F6E67 		.ascii	"long double\000"
+ 1707      20646F75 
+ 1707      626C6500 
+ 1708              	.LASF18:
+ 1709 021b 73697A65 		.ascii	"sizetype\000"
+ 1709      74797065 
+ 1709      00
+ 1710              	.LASF39:
+ 1711 0224 43795365 		.ascii	"CySetTemp\000"
+ 1711      7454656D 
+ 1711      7000
+ 1712              	.LASF7:
+ 1713 022e 6C6F6E67 		.ascii	"long long int\000"
+ 1713      206C6F6E 
+ 1713      6720696E 
+ 1713      7400
+ 1714              	.LASF33:
+ 1715 023c 45455052 		.ascii	"EEPROM_1_Start\000"
+ 1715      4F4D5F31 
+ 1715      5F537461 
+ 1715      727400
+ 1716              	.LASF36:
+ 1717 024b 65657072 		.ascii	"eepromGetUint32\000"
+ 1717      6F6D4765 
+ 1717      7455696E 
+ 1717      74333200 
+ 1718              	.LASF3:
+ 1719 025b 73686F72 		.ascii	"short int\000"
+ 1719      7420696E 
+ 1719      7400
+ 1720              	.LASF12:
+ 1721 0265 75696E74 		.ascii	"uint8\000"
+ 1721      3800
+ 1722              	.LASF42:
+ 1723 026b 433A5C5F 		.ascii	"C:\\_User\\GitHub Projects\\PulseGen\\PulseGen.cywr"
+ 1723      55736572 
+ 1723      5C476974 
+ARM GAS  C:\Users\BRIAN~1.SEA\AppData\Local\Temp\ccIPL47e.s 			page 39
+
+
+ 1723      48756220 
+ 1723      50726F6A 
+ 1724 029a 6B5F2E41 		.ascii	"k_.Archive01\\Design93\\PulseGenerator.cydsn\000"
+ 1724      72636869 
+ 1724      76653031 
+ 1724      5C446573 
+ 1724      69676E39 
+ 1725              	.LASF24:
+ 1726 02c5 65657072 		.ascii	"eepromRow\000"
+ 1726      6F6D526F 
+ 1726      7700
+ 1727              	.LASF15:
+ 1728 02cf 63686172 		.ascii	"char\000"
+ 1728      00
+ 1729              	.LASF35:
+ 1730 02d4 65657072 		.ascii	"eepromSetUint32\000"
+ 1730      6F6D5365 
+ 1730      7455696E 
+ 1730      74333200 
+ 1731              	.LASF1:
+ 1732 02e4 7369676E 		.ascii	"signed char\000"
+ 1732      65642063 
+ 1732      68617200 
+ 1733              	.LASF21:
+ 1734 02f0 65657072 		.ascii	"eepromFloatToByteArray\000"
+ 1734      6F6D466C 
+ 1734      6F617454 
+ 1734      6F427974 
+ 1734      65417272 
+ 1735              	.LASF41:
+ 1736 0307 2E2E5C41 		.ascii	"..\\AMC_Lib\\src\\eeprom_amc.c\000"
+ 1736      4D435F4C 
+ 1736      69625C73 
+ 1736      72635C65 
+ 1736      6570726F 
+ 1737              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

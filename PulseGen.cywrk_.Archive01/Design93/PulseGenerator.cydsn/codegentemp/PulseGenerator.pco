@@ -1,0 +1,41 @@
+# PulseGenerator
+# 2021-08-12 02:17:56Z
+
+# IO_0@[IOP=(1)][IoId=(0)] is reserved: SWDDebugEnabled
+dont_use_io iocell 1 0
+# IO_1@[IOP=(1)][IoId=(1)] is reserved: SWDDebugEnabled
+dont_use_io iocell 1 1
+# IO_3@[IOP=(1)][IoId=(3)] is reserved: SWDDebugEnabled
+dont_use_io iocell 1 3
+set_location "ClockBlock" clockblockcell -1 -1 0
+set_io "PulseTrainOut(0)" iocell 3 7
+set_io "\USBFS:Dm(0)\" iocell 15 7
+set_location "\USBFS:Dp\" logicalport -1 -1 15
+set_io "\USBFS:Dp(0)\" iocell 15 6
+set_io "Enable(0)" iocell 3 1
+set_io "Direction(0)" iocell 0 1
+set_location "\Timer1:TimerUDB:status_tc\" 2 1 0 2
+set_location "Net_1437" 3 1 0 2
+set_location "\Timer1:TimerUDB:sCTRLReg:SyncCtl:ctrlreg\" 2 1 6
+set_location "\Timer1:TimerUDB:rstSts:stsreg\" 2 1 4
+set_location "\Timer1:TimerUDB:sT32:timerdp:u0\" 2 0 2
+set_location "\Timer1:TimerUDB:sT32:timerdp:u1\" 3 0 2
+set_location "\Timer1:TimerUDB:sT32:timerdp:u2\" 3 1 2
+set_location "\Timer1:TimerUDB:sT32:timerdp:u3\" 2 1 2
+set_location "\TrigPulseTrain:Sync:ctrl_reg\" 2 0 6
+set_location "\USBFS:dp_int\" interrupt -1 -1 12
+set_location "\USBFS:USB\" usbcell -1 -1 0
+set_location "\USBFS:ep_2\" interrupt -1 -1 1
+set_location "\USBFS:ep_1\" interrupt -1 -1 0
+set_location "\USBFS:ep_0\" interrupt -1 -1 24
+set_location "\USBFS:bus_reset\" interrupt -1 -1 23
+set_location "\USBFS:arb_int\" interrupt -1 -1 22
+set_location "\USBFS:sof_int\" interrupt -1 -1 21
+set_location "\EnableAndDirection:Sync:ctrl_reg\" 3 0 6
+set_location "\Sync_1:genblk1[0]:INST\" 3 0 5 0
+set_location "\Timer1:TimerUDB:run_mode\" 2 0 1 1
+set_location "Net_1576" 2 1 0 0
+set_location "\Timer1:TimerUDB:timer_enable\" 2 0 0 0
+set_location "\Timer1:TimerUDB:trig_disable\" 2 0 0 1
+set_location "cydff_1" 3 1 0 0
+set_location "Net_1114" 3 1 1 2

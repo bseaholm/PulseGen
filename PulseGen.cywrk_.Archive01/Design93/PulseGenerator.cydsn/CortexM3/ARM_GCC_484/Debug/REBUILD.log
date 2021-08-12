@@ -1,0 +1,74 @@
+--------------- Rebuild Started: 08/21/2015 09:51:41 Project: PulseGenerator, Configuration: ARM GCC 4.8.4 Debug ---------------
+Deleting file ".\CortexM3\ARM_GCC_484\Debug\main.o"
+Deleting file ".\CortexM3\ARM_GCC_484\Debug\cyfitter_cfg.o"
+Deleting file ".\CortexM3\ARM_GCC_484\Debug\cymetadata.o"
+Deleting file ".\CortexM3\ARM_GCC_484\Debug\Clock_1.o"
+Deleting file ".\CortexM3\ARM_GCC_484\Debug\TrigPulseTrain.o"
+Deleting file ".\CortexM3\ARM_GCC_484\Debug\TrigPulseTrain_PM.o"
+Deleting file ".\CortexM3\ARM_GCC_484\Debug\Cm3Start.o"
+Deleting file ".\CortexM3\ARM_GCC_484\Debug\CyBootAsmGnu.o"
+Deleting file ".\CortexM3\ARM_GCC_484\Debug\CyDmac.o"
+Deleting file ".\CortexM3\ARM_GCC_484\Debug\CyFlash.o"
+Deleting file ".\CortexM3\ARM_GCC_484\Debug\CyLib.o"
+Deleting file ".\CortexM3\ARM_GCC_484\Debug\cyPm.o"
+Deleting file ".\CortexM3\ARM_GCC_484\Debug\CySpc.o"
+Deleting file ".\CortexM3\ARM_GCC_484\Debug\cyutils.o"
+Deleting file ".\CortexM3\ARM_GCC_484\Debug\TRIGout.o"
+Deleting file ".\CortexM3\ARM_GCC_484\Debug\PulseTrainOut.o"
+Deleting file ".\CortexM3\ARM_GCC_484\Debug\Tc.o"
+Deleting file ".\CortexM3\ARM_GCC_484\Debug\Timer1.o"
+Deleting file ".\CortexM3\ARM_GCC_484\Debug\Timer1_PM.o"
+Deleting file ".\CortexM3\ARM_GCC_484\Debug\Dout.o"
+Deleting file ".\CortexM3\ARM_GCC_484\Debug\PulseGenerator.hex"
+Deleting file ".\CortexM3\ARM_GCC_484\Debug\PulseGenerator.elf"
+Deleting file ".\CortexM3\ARM_GCC_484\Debug\PulseGenerator.map"
+Deleting file ".\PulseGenerator.cycdx"
+Deleting file ".\PulseGenerator.rpt"
+Deleting file ".\PulseGenerator_timing.html"
+Deleting file ".\CortexM3\ARM_GCC_484\Debug\.deps\C_FILE.P"
+Deleting file ".\CortexM3\ARM_GCC_484\Debug\.deps\ARM_C_FILE.P"
+Deleting file ".\CortexM3\ARM_GCC_484\Debug\.deps\GNU_ARM_ASM_FILE.P"
+cydsfit.exe -.appdatapath "C:\Users\Dana\AppData\Local\Cypress Semiconductor\PSoC Creator\3.2" -.fdsnotice -.fdswarpdepfile=warp_dependencies.txt -.fdselabdepfile=elab_dependencies.txt -.fdsbldfile=generated_files.txt -p "C:\Users\Dana\Documents\PSoC Creator\Design93\PulseGenerator.cydsn\PulseGenerator.cyprj" -d CY8C5868AXI-LP035 -s "C:\Users\Dana\Documents\PSoC Creator\Design93\PulseGenerator.cydsn\Generated_Source\PSoC5" -- -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE
+Elaborating Design...
+HDL Generation ...
+Synthesis ...
+Place and Route ...
+Tech mapping ...
+Analog Placement ...
+Analog Routing ...
+Analog Code Generation ...
+Digital Placement ...
+Digital Routing ...
+Bitstream Generation ...
+Static timing analysis ...
+API Generation ...
+Dependency Generation ...
+Clean Temporary Files ...
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_484\Debug/main.lst -g -D DEBUG -Wall -ffunction-sections -Og -c .\main.c -o .\CortexM3\ARM_GCC_484\Debug\main.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_484\Debug/cyfitter_cfg.lst -g -D DEBUG -Wall -ffunction-sections -Og -c .\Generated_Source\PSoC5\cyfitter_cfg.c -o .\CortexM3\ARM_GCC_484\Debug\cyfitter_cfg.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_484\Debug/cymetadata.lst -g -D DEBUG -Wall -ffunction-sections -Og -c .\Generated_Source\PSoC5\cymetadata.c -o .\CortexM3\ARM_GCC_484\Debug\cymetadata.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_484\Debug/Clock_1.lst -g -D DEBUG -Wall -ffunction-sections -Og -c .\Generated_Source\PSoC5\Clock_1.c -o .\CortexM3\ARM_GCC_484\Debug\Clock_1.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_484\Debug/TrigPulseTrain.lst -g -D DEBUG -Wall -ffunction-sections -Og -c .\Generated_Source\PSoC5\TrigPulseTrain.c -o .\CortexM3\ARM_GCC_484\Debug\TrigPulseTrain.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_484\Debug/TrigPulseTrain_PM.lst -g -D DEBUG -Wall -ffunction-sections -Og -c .\Generated_Source\PSoC5\TrigPulseTrain_PM.c -o .\CortexM3\ARM_GCC_484\Debug\TrigPulseTrain_PM.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_484\Debug/Cm3Start.lst -g -D DEBUG -Wall -ffunction-sections -Og -c .\Generated_Source\PSoC5\Cm3Start.c -o .\CortexM3\ARM_GCC_484\Debug\Cm3Start.o
+arm-none-eabi-as.exe -mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -alh=.\CortexM3\ARM_GCC_484\Debug/CyBootAsmGnu.lst -g -W -o .\CortexM3\ARM_GCC_484\Debug\CyBootAsmGnu.o .\Generated_Source\PSoC5\CyBootAsmGnu.s
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_484\Debug/CyDmac.lst -g -D DEBUG -Wall -ffunction-sections -Og -c .\Generated_Source\PSoC5\CyDmac.c -o .\CortexM3\ARM_GCC_484\Debug\CyDmac.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_484\Debug/CyFlash.lst -g -D DEBUG -Wall -ffunction-sections -Og -c .\Generated_Source\PSoC5\CyFlash.c -o .\CortexM3\ARM_GCC_484\Debug\CyFlash.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_484\Debug/CyLib.lst -g -D DEBUG -Wall -ffunction-sections -Og -c .\Generated_Source\PSoC5\CyLib.c -o .\CortexM3\ARM_GCC_484\Debug\CyLib.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_484\Debug/cyPm.lst -g -D DEBUG -Wall -ffunction-sections -Og -c .\Generated_Source\PSoC5\cyPm.c -o .\CortexM3\ARM_GCC_484\Debug\cyPm.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_484\Debug/CySpc.lst -g -D DEBUG -Wall -ffunction-sections -Og -c .\Generated_Source\PSoC5\CySpc.c -o .\CortexM3\ARM_GCC_484\Debug\CySpc.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_484\Debug/cyutils.lst -g -D DEBUG -Wall -ffunction-sections -Og -c .\Generated_Source\PSoC5\cyutils.c -o .\CortexM3\ARM_GCC_484\Debug\cyutils.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_484\Debug/TRIGout.lst -g -D DEBUG -Wall -ffunction-sections -Og -c .\Generated_Source\PSoC5\TRIGout.c -o .\CortexM3\ARM_GCC_484\Debug\TRIGout.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_484\Debug/PulseTrainOut.lst -g -D DEBUG -Wall -ffunction-sections -Og -c .\Generated_Source\PSoC5\PulseTrainOut.c -o .\CortexM3\ARM_GCC_484\Debug\PulseTrainOut.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_484\Debug/Tc.lst -g -D DEBUG -Wall -ffunction-sections -Og -c .\Generated_Source\PSoC5\Tc.c -o .\CortexM3\ARM_GCC_484\Debug\Tc.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_484\Debug/Timer1.lst -g -D DEBUG -Wall -ffunction-sections -Og -c .\Generated_Source\PSoC5\Timer1.c -o .\CortexM3\ARM_GCC_484\Debug\Timer1.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_484\Debug/Timer1_PM.lst -g -D DEBUG -Wall -ffunction-sections -Og -c .\Generated_Source\PSoC5\Timer1_PM.c -o .\CortexM3\ARM_GCC_484\Debug\Timer1_PM.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_484\Debug/Dout.lst -g -D DEBUG -Wall -ffunction-sections -Og -c .\Generated_Source\PSoC5\Dout.c -o .\CortexM3\ARM_GCC_484\Debug\Dout.o
+arm-none-eabi-ar.exe -rs .\CortexM3\ARM_GCC_484\Debug\PulseGenerator.a .\CortexM3\ARM_GCC_484\Debug\cyfitter_cfg.o .\CortexM3\ARM_GCC_484\Debug\Clock_1.o .\CortexM3\ARM_GCC_484\Debug\TrigPulseTrain.o .\CortexM3\ARM_GCC_484\Debug\TrigPulseTrain_PM.o .\CortexM3\ARM_GCC_484\Debug\CyBootAsmGnu.o .\CortexM3\ARM_GCC_484\Debug\CyDmac.o .\CortexM3\ARM_GCC_484\Debug\CyFlash.o .\CortexM3\ARM_GCC_484\Debug\CyLib.o .\CortexM3\ARM_GCC_484\Debug\cyPm.o .\CortexM3\ARM_GCC_484\Debug\CySpc.o .\CortexM3\ARM_GCC_484\Debug\cyutils.o .\CortexM3\ARM_GCC_484\Debug\TRIGout.o .\CortexM3\ARM_GCC_484\Debug\PulseTrainOut.o .\CortexM3\ARM_GCC_484\Debug\Tc.o .\CortexM3\ARM_GCC_484\Debug\Timer1.o .\CortexM3\ARM_GCC_484\Debug\Timer1_PM.o .\CortexM3\ARM_GCC_484\Debug\Dout.o
+arm-none-eabi-ar.exe: creating .\CortexM3\ARM_GCC_484\Debug\PulseGenerator.a
+arm-none-eabi-gcc.exe -Wl,--start-group -o .\CortexM3\ARM_GCC_484\Debug\PulseGenerator.elf .\CortexM3\ARM_GCC_484\Debug\main.o .\CortexM3\ARM_GCC_484\Debug\cymetadata.o .\CortexM3\ARM_GCC_484\Debug\Cm3Start.o .\CortexM3\ARM_GCC_484\Debug\PulseGenerator.a "C:\Program Files (x86)\Cypress\PSoC Creator\3.2\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CortexM3\ARM_GCC_484\Debug\CyComponentLibrary.a" -mcpu=cortex-m3 -mthumb -g -ffunction-sections -Og -Wl,-Map,.\CortexM3\ARM_GCC_484\Debug/PulseGenerator.map -T Generated_Source\PSoC5\cm3gcc.ld -specs=nano.specs -Wl,--gc-sections -Wl,--end-group
+cyelftool.exe -C "C:\Users\Dana\Documents\PSoC Creator\Design93\PulseGenerator.cydsn\CortexM3\ARM_GCC_484\Debug\PulseGenerator.elf" --flash_row_size 256 --flash_size 262144
+cyelftool.exe -S "C:\Users\Dana\Documents\PSoC Creator\Design93\PulseGenerator.cydsn\CortexM3\ARM_GCC_484\Debug\PulseGenerator.elf"
+Flash used: 1280 of 262144 bytes (0.5 %).
+SRAM used: 2493 of 65536 bytes (3.8 %). Stack: 2048 bytes. Heap: 128 bytes.
+--------------- Rebuild Succeeded: 08/21/2015 09:52:46 ---------------

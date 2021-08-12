@@ -1,0 +1,918 @@
+ARM GAS  C:\Users\Dana\AppData\Local\Temp\ccquDhOh.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"cymetadata.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.global	cy_metadata
+  19              		.global	cy_meta_flashprotect
+  20              		.global	cy_meta_wonvl
+  21              		.global	cy_meta_custnvl
+  22              		.global	cy_meta_configecc
+  23              		.section	.cyconfigecc,"a",%progbits
+  24              		.align	2
+  25              		.type	cy_meta_configecc, %object
+  26              		.size	cy_meta_configecc, 400
+  27              	cy_meta_configecc:
+  28 0000 02       		.byte	2
+  29 0001 52       		.byte	82
+  30 0002 00       		.byte	0
+  31 0003 40       		.byte	64
+  32 0004 01       		.byte	1
+  33 0005 64       		.byte	100
+  34 0006 00       		.byte	0
+  35 0007 40       		.byte	64
+  36 0008 02       		.byte	2
+  37 0009 03       		.byte	3
+  38 000a 01       		.byte	1
+  39 000b 40       		.byte	64
+  40 000c 01       		.byte	1
+  41 000d 05       		.byte	5
+  42 000e 01       		.byte	1
+  43 000f 40       		.byte	64
+  44 0010 01       		.byte	1
+  45 0011 09       		.byte	9
+  46 0012 01       		.byte	1
+  47 0013 40       		.byte	64
+  48 0014 33       		.byte	51
+  49 0015 0A       		.byte	10
+  50 0016 01       		.byte	1
+  51 0017 40       		.byte	64
+  52 0018 28       		.byte	40
+  53 0019 0B       		.byte	11
+  54 001a 01       		.byte	1
+  55 001b 40       		.byte	64
+  56 001c 0E       		.byte	14
+  57 001d 0C       		.byte	12
+ARM GAS  C:\Users\Dana\AppData\Local\Temp\ccquDhOh.s 			page 2
+
+
+  58 001e 01       		.byte	1
+  59 001f 40       		.byte	64
+  60 0020 0F       		.byte	15
+  61 0021 0D       		.byte	13
+  62 0022 01       		.byte	1
+  63 0023 40       		.byte	64
+  64 0024 01       		.byte	1
+  65 0025 15       		.byte	21
+  66 0026 01       		.byte	1
+  67 0027 40       		.byte	64
+  68 0028 01       		.byte	1
+  69 0029 19       		.byte	25
+  70 002a 01       		.byte	1
+  71 002b 40       		.byte	64
+  72 002c 02       		.byte	2
+  73 002d 1B       		.byte	27
+  74 002e 01       		.byte	1
+  75 002f 40       		.byte	64
+  76 0030 03       		.byte	3
+  77 0031 41       		.byte	65
+  78 0032 01       		.byte	1
+  79 0033 40       		.byte	64
+  80 0034 05       		.byte	5
+  81 0035 42       		.byte	66
+  82 0036 01       		.byte	1
+  83 0037 40       		.byte	64
+  84 0038 03       		.byte	3
+  85 0039 43       		.byte	67
+  86 003a 01       		.byte	1
+  87 003b 40       		.byte	64
+  88 003c 05       		.byte	5
+  89 003d 48       		.byte	72
+  90 003e 01       		.byte	1
+  91 003f 40       		.byte	64
+  92 0040 0A       		.byte	10
+  93 0041 49       		.byte	73
+  94 0042 01       		.byte	1
+  95 0043 40       		.byte	64
+  96 0044 03       		.byte	3
+  97 0045 50       		.byte	80
+  98 0046 01       		.byte	1
+  99 0047 40       		.byte	64
+ 100 0048 18       		.byte	24
+ 101 0049 22       		.byte	34
+ 102 004a 19       		.byte	25
+ 103 004b 08       		.byte	8
+ 104 004c 8B       		.byte	-117
+ 105 004d 0D       		.byte	13
+ 106 004e E2       		.byte	-30
+ 107 004f 08       		.byte	8
+ 108 0050 E6       		.byte	-26
+ 109 0051 02       		.byte	2
+ 110 0052 E2       		.byte	-30
+ 111 0053 12       		.byte	18
+ 112 0054 9D       		.byte	-99
+ 113 0055 80       		.byte	-128
+ 114 0056 56       		.byte	86
+ARM GAS  C:\Users\Dana\AppData\Local\Temp\ccquDhOh.s 			page 3
+
+
+ 115 0057 08       		.byte	8
+ 116 0058 5B       		.byte	91
+ 117 0059 04       		.byte	4
+ 118 005a 5D       		.byte	93
+ 119 005b 90       		.byte	-112
+ 120 005c 82       		.byte	-126
+ 121 005d 27       		.byte	39
+ 122 005e 8B       		.byte	-117
+ 123 005f 01       		.byte	1
+ 124 0060 8C       		.byte	-116
+ 125 0061 1F       		.byte	31
+ 126 0062 94       		.byte	-108
+ 127 0063 02       		.byte	2
+ 128 0064 96       		.byte	-106
+ 129 0065 48       		.byte	72
+ 130 0066 98       		.byte	-104
+ 131 0067 01       		.byte	1
+ 132 0068 9A       		.byte	-102
+ 133 0069 08       		.byte	8
+ 134 006a 9B       		.byte	-101
+ 135 006b 01       		.byte	1
+ 136 006c 9C       		.byte	-100
+ 137 006d 07       		.byte	7
+ 138 006e 9E       		.byte	-98
+ 139 006f 10       		.byte	16
+ 140 0070 A4       		.byte	-92
+ 141 0071 04       		.byte	4
+ 142 0072 A6       		.byte	-90
+ 143 0073 48       		.byte	72
+ 144 0074 B0       		.byte	-80
+ 145 0075 40       		.byte	64
+ 146 0076 B2       		.byte	-78
+ 147 0077 20       		.byte	32
+ 148 0078 B4       		.byte	-76
+ 149 0079 07       		.byte	7
+ 150 007a B5       		.byte	-75
+ 151 007b 01       		.byte	1
+ 152 007c B6       		.byte	-74
+ 153 007d 18       		.byte	24
+ 154 007e BE       		.byte	-66
+ 155 007f 01       		.byte	1
+ 156 0080 C0       		.byte	-64
+ 157 0081 23       		.byte	35
+ 158 0082 C1       		.byte	-63
+ 159 0083 04       		.byte	4
+ 160 0084 C5       		.byte	-59
+ 161 0085 EC       		.byte	-20
+ 162 0086 C6       		.byte	-58
+ 163 0087 20       		.byte	32
+ 164 0088 C8       		.byte	-56
+ 165 0089 0B       		.byte	11
+ 166 008a C9       		.byte	-55
+ 167 008b FF       		.byte	-1
+ 168 008c CA       		.byte	-54
+ 169 008d FF       		.byte	-1
+ 170 008e CB       		.byte	-53
+ 171 008f FF       		.byte	-1
+ARM GAS  C:\Users\Dana\AppData\Local\Temp\ccquDhOh.s 			page 4
+
+
+ 172 0090 CF       		.byte	-49
+ 173 0091 01       		.byte	1
+ 174 0092 D0       		.byte	-48
+ 175 0093 18       		.byte	24
+ 176 0094 D2       		.byte	-46
+ 177 0095 01       		.byte	1
+ 178 0096 D3       		.byte	-45
+ 179 0097 01       		.byte	1
+ 180 0098 D4       		.byte	-44
+ 181 0099 01       		.byte	1
+ 182 009a D6       		.byte	-42
+ 183 009b 10       		.byte	16
+ 184 009c D8       		.byte	-40
+ 185 009d 0B       		.byte	11
+ 186 009e D9       		.byte	-39
+ 187 009f 0B       		.byte	11
+ 188 00a0 DA       		.byte	-38
+ 189 00a1 0B       		.byte	11
+ 190 00a2 DB       		.byte	-37
+ 191 00a3 0B       		.byte	11
+ 192 00a4 DC       		.byte	-36
+ 193 00a5 99       		.byte	-103
+ 194 00a6 DD       		.byte	-35
+ 195 00a7 99       		.byte	-103
+ 196 00a8 DF       		.byte	-33
+ 197 00a9 05       		.byte	5
+ 198 00aa E0       		.byte	-32
+ 199 00ab 40       		.byte	64
+ 200 00ac E2       		.byte	-30
+ 201 00ad 40       		.byte	64
+ 202 00ae E4       		.byte	-28
+ 203 00af 40       		.byte	64
+ 204 00b0 E5       		.byte	-27
+ 205 00b1 40       		.byte	64
+ 206 00b2 E6       		.byte	-26
+ 207 00b3 80       		.byte	-128
+ 208 00b4 E8       		.byte	-24
+ 209 00b5 80       		.byte	-128
+ 210 00b6 EA       		.byte	-22
+ 211 00b7 80       		.byte	-128
+ 212 00b8 EC       		.byte	-20
+ 213 00b9 80       		.byte	-128
+ 214 00ba EE       		.byte	-18
+ 215 00bb 80       		.byte	-128
+ 216 00bc 06       		.byte	6
+ 217 00bd 80       		.byte	-128
+ 218 00be 07       		.byte	7
+ 219 00bf 01       		.byte	1
+ 220 00c0 0D       		.byte	13
+ 221 00c1 20       		.byte	32
+ 222 00c2 0E       		.byte	14
+ 223 00c3 22       		.byte	34
+ 224 00c4 16       		.byte	22
+ 225 00c5 20       		.byte	32
+ 226 00c6 1D       		.byte	29
+ 227 00c7 20       		.byte	32
+ 228 00c8 1E       		.byte	30
+ARM GAS  C:\Users\Dana\AppData\Local\Temp\ccquDhOh.s 			page 5
+
+
+ 229 00c9 62       		.byte	98
+ 230 00ca 26       		.byte	38
+ 231 00cb 20       		.byte	32
+ 232 00cc 36       		.byte	54
+ 233 00cd 10       		.byte	16
+ 234 00ce 3E       		.byte	62
+ 235 00cf 20       		.byte	32
+ 236 00d0 45       		.byte	69
+ 237 00d1 20       		.byte	32
+ 238 00d2 46       		.byte	70
+ 239 00d3 20       		.byte	32
+ 240 00d4 47       		.byte	71
+ 241 00d5 01       		.byte	1
+ 242 00d6 4D       		.byte	77
+ 243 00d7 04       		.byte	4
+ 244 00d8 4F       		.byte	79
+ 245 00d9 01       		.byte	1
+ 246 00da 56       		.byte	86
+ 247 00db 20       		.byte	32
+ 248 00dc 59       		.byte	89
+ 249 00dd 80       		.byte	-128
+ 250 00de 5D       		.byte	93
+ 251 00df 04       		.byte	4
+ 252 00e0 5E       		.byte	94
+ 253 00e1 40       		.byte	64
+ 254 00e2 5F       		.byte	95
+ 255 00e3 01       		.byte	1
+ 256 00e4 62       		.byte	98
+ 257 00e5 C0       		.byte	-64
+ 258 00e6 6F       		.byte	111
+ 259 00e7 03       		.byte	3
+ 260 00e8 7E       		.byte	126
+ 261 00e9 80       		.byte	-128
+ 262 00ea 7F       		.byte	127
+ 263 00eb 02       		.byte	2
+ 264 00ec 87       		.byte	-121
+ 265 00ed 01       		.byte	1
+ 266 00ee 8E       		.byte	-114
+ 267 00ef 20       		.byte	32
+ 268 00f0 9A       		.byte	-102
+ 269 00f1 80       		.byte	-128
+ 270 00f2 9E       		.byte	-98
+ 271 00f3 40       		.byte	64
+ 272 00f4 A6       		.byte	-90
+ 273 00f5 A0       		.byte	-96
+ 274 00f6 A7       		.byte	-89
+ 275 00f7 02       		.byte	2
+ 276 00f8 C0       		.byte	-64
+ 277 00f9 90       		.byte	-112
+ 278 00fa C2       		.byte	-62
+ 279 00fb E0       		.byte	-32
+ 280 00fc C4       		.byte	-60
+ 281 00fd 20       		.byte	32
+ 282 00fe CC       		.byte	-52
+ 283 00ff 20       		.byte	32
+ 284 0100 CE       		.byte	-50
+ 285 0101 20       		.byte	32
+ARM GAS  C:\Users\Dana\AppData\Local\Temp\ccquDhOh.s 			page 6
+
+
+ 286 0102 D0       		.byte	-48
+ 287 0103 E0       		.byte	-32
+ 288 0104 D6       		.byte	-42
+ 289 0105 D8       		.byte	-40
+ 290 0106 D8       		.byte	-40
+ 291 0107 08       		.byte	8
+ 292 0108 DE       		.byte	-34
+ 293 0109 90       		.byte	-112
+ 294 010a E2       		.byte	-30
+ 295 010b 10       		.byte	16
+ 296 010c 02       		.byte	2
+ 297 010d 02       		.byte	2
+ 298 010e 1A       		.byte	26
+ 299 010f 02       		.byte	2
+ 300 0110 2E       		.byte	46
+ 301 0111 01       		.byte	1
+ 302 0112 32       		.byte	50
+ 303 0113 02       		.byte	2
+ 304 0114 34       		.byte	52
+ 305 0115 01       		.byte	1
+ 306 0116 3D       		.byte	61
+ 307 0117 01       		.byte	1
+ 308 0118 3E       		.byte	62
+ 309 0119 04       		.byte	4
+ 310 011a 52       		.byte	82
+ 311 011b 80       		.byte	-128
+ 312 011c 58       		.byte	88
+ 313 011d 1B       		.byte	27
+ 314 011e 59       		.byte	89
+ 315 011f 0A       		.byte	10
+ 316 0120 5B       		.byte	91
+ 317 0121 0B       		.byte	11
+ 318 0122 5C       		.byte	92
+ 319 0123 99       		.byte	-103
+ 320 0124 5D       		.byte	93
+ 321 0125 90       		.byte	-112
+ 322 0126 5F       		.byte	95
+ 323 0127 01       		.byte	1
+ 324 0128 06       		.byte	6
+ 325 0129 40       		.byte	64
+ 326 012a 0D       		.byte	13
+ 327 012b 20       		.byte	32
+ 328 012c 17       		.byte	23
+ 329 012d 40       		.byte	64
+ 330 012e 1D       		.byte	29
+ 331 012f 20       		.byte	32
+ 332 0130 1F       		.byte	31
+ 333 0131 08       		.byte	8
+ 334 0132 27       		.byte	39
+ 335 0133 40       		.byte	64
+ 336 0134 76       		.byte	118
+ 337 0135 80       		.byte	-128
+ 338 0136 7E       		.byte	126
+ 339 0137 A0       		.byte	-96
+ 340 0138 7F       		.byte	127
+ 341 0139 02       		.byte	2
+ 342 013a 85       		.byte	-123
+ARM GAS  C:\Users\Dana\AppData\Local\Temp\ccquDhOh.s 			page 7
+
+
+ 343 013b 20       		.byte	32
+ 344 013c 87       		.byte	-121
+ 345 013d 08       		.byte	8
+ 346 013e C0       		.byte	-64
+ 347 013f 10       		.byte	16
+ 348 0140 C2       		.byte	-62
+ 349 0141 40       		.byte	64
+ 350 0142 C4       		.byte	-60
+ 351 0143 80       		.byte	-128
+ 352 0144 DE       		.byte	-34
+ 353 0145 D0       		.byte	-48
+ 354 0146 EC       		.byte	-20
+ 355 0147 80       		.byte	-128
+ 356 0148 9D       		.byte	-99
+ 357 0149 80       		.byte	-128
+ 358 014a B1       		.byte	-79
+ 359 014b 80       		.byte	-128
+ 360 014c EC       		.byte	-20
+ 361 014d 80       		.byte	-128
+ 362 014e 86       		.byte	-122
+ 363 014f 41       		.byte	65
+ 364 0150 E2       		.byte	-30
+ 365 0151 10       		.byte	16
+ 366 0152 E6       		.byte	-26
+ 367 0153 40       		.byte	64
+ 368 0154 86       		.byte	-122
+ 369 0155 80       		.byte	-128
+ 370 0156 8F       		.byte	-113
+ 371 0157 40       		.byte	64
+ 372 0158 92       		.byte	-110
+ 373 0159 02       		.byte	2
+ 374 015a 9A       		.byte	-102
+ 375 015b 40       		.byte	64
+ 376 015c E2       		.byte	-30
+ 377 015d 40       		.byte	64
+ 378 015e 92       		.byte	-110
+ 379 015f 02       		.byte	2
+ 380 0160 9A       		.byte	-102
+ 381 0161 C0       		.byte	-64
+ 382 0162 9B       		.byte	-101
+ 383 0163 40       		.byte	64
+ 384 0164 27       		.byte	39
+ 385 0165 08       		.byte	8
+ 386 0166 92       		.byte	-110
+ 387 0167 02       		.byte	2
+ 388 0168 9A       		.byte	-102
+ 389 0169 C0       		.byte	-64
+ 390 016a 9B       		.byte	-101
+ 391 016b 40       		.byte	64
+ 392 016c C8       		.byte	-56
+ 393 016d 20       		.byte	32
+ 394 016e 56       		.byte	86
+ 395 016f 40       		.byte	64
+ 396 0170 5A       		.byte	90
+ 397 0171 02       		.byte	2
+ 398 0172 5B       		.byte	91
+ 399 0173 40       		.byte	64
+ARM GAS  C:\Users\Dana\AppData\Local\Temp\ccquDhOh.s 			page 8
+
+
+ 400 0174 66       		.byte	102
+ 401 0175 80       		.byte	-128
+ 402 0176 92       		.byte	-110
+ 403 0177 02       		.byte	2
+ 404 0178 9A       		.byte	-102
+ 405 0179 C0       		.byte	-64
+ 406 017a 9B       		.byte	-101
+ 407 017b 40       		.byte	64
+ 408 017c B3       		.byte	-77
+ 409 017d 08       		.byte	8
+ 410 017e D4       		.byte	-44
+ 411 017f C0       		.byte	-64
+ 412 0180 D6       		.byte	-42
+ 413 0181 C0       		.byte	-64
+ 414 0182 01       		.byte	1
+ 415 0183 01       		.byte	1
+ 416 0184 0D       		.byte	13
+ 417 0185 01       		.byte	1
+ 418 0186 0F       		.byte	15
+ 419 0187 01       		.byte	1
+ 420 0188 00       		.byte	0
+ 421 0189 AA       		.byte	-86
+ 422 018a AA       		.byte	-86
+ 423 018b 00       		.byte	0
+ 424 018c AA       		.byte	-86
+ 425 018d 00       		.byte	0
+ 426 018e 00       		.byte	0
+ 427 018f 00       		.byte	0
+ 428              		.section	.cywolatch,"a",%progbits
+ 429              		.align	2
+ 430              		.type	cy_meta_wonvl, %object
+ 431              		.size	cy_meta_wonvl, 4
+ 432              	cy_meta_wonvl:
+ 433 0000 BC       		.byte	-68
+ 434 0001 90       		.byte	-112
+ 435 0002 AC       		.byte	-84
+ 436 0003 AF       		.byte	-81
+ 437              		.section	.cycustnvl,"a",%progbits
+ 438              		.align	2
+ 439              		.type	cy_meta_custnvl, %object
+ 440              		.size	cy_meta_custnvl, 4
+ 441              	cy_meta_custnvl:
+ 442 0000 00       		.byte	0
+ 443 0001 00       		.byte	0
+ 444 0002 40       		.byte	64
+ 445 0003 05       		.byte	5
+ 446              		.section	.cymeta,"a",%progbits
+ 447              		.align	2
+ 448              		.type	cy_metadata, %object
+ 449              		.size	cy_metadata, 12
+ 450              	cy_metadata:
+ 451 0000 00       		.byte	0
+ 452 0001 01       		.byte	1
+ 453 0002 2E       		.byte	46
+ 454 0003 12       		.byte	18
+ 455 0004 30       		.byte	48
+ 456 0005 69       		.byte	105
+ARM GAS  C:\Users\Dana\AppData\Local\Temp\ccquDhOh.s 			page 9
+
+
+ 457 0006 00       		.byte	0
+ 458 0007 01       		.byte	1
+ 459 0008 00       		.byte	0
+ 460 0009 00       		.byte	0
+ 461 000a 00       		.byte	0
+ 462 000b 00       		.byte	0
+ 463              		.section	.cyflashprotect,"a",%progbits
+ 464              		.align	2
+ 465              		.type	cy_meta_flashprotect, %object
+ 466              		.size	cy_meta_flashprotect, 256
+ 467              	cy_meta_flashprotect:
+ 468 0000 00000000 		.space	256
+ 468      00000000 
+ 468      00000000 
+ 468      00000000 
+ 468      00000000 
+ 469              		.text
+ 470              	.Letext0:
+ 471              		.file 1 ".\\Generated_Source\\PSoC5\\cymetadata.c"
+ 472              		.file 2 ".\\Generated_Source\\PSoC5\\cytypes.h"
+ 473              		.section	.debug_info,"",%progbits
+ 474              	.Ldebug_info0:
+ 475 0000 36010000 		.4byte	0x136
+ 476 0004 0400     		.2byte	0x4
+ 477 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 478 000a 04       		.byte	0x4
+ 479 000b 01       		.uleb128 0x1
+ 480 000c 1E010000 		.4byte	.LASF18
+ 481 0010 01       		.byte	0x1
+ 482 0011 00000000 		.4byte	.LASF19
+ 483 0015 A1000000 		.4byte	.LASF20
+ 484 0019 00000000 		.4byte	.Ldebug_line0
+ 485 001d 02       		.uleb128 0x2
+ 486 001e 01       		.byte	0x1
+ 487 001f 06       		.byte	0x6
+ 488 0020 CF010000 		.4byte	.LASF0
+ 489 0024 02       		.uleb128 0x2
+ 490 0025 01       		.byte	0x1
+ 491 0026 08       		.byte	0x8
+ 492 0027 38000000 		.4byte	.LASF1
+ 493 002b 02       		.uleb128 0x2
+ 494 002c 02       		.byte	0x2
+ 495 002d 05       		.byte	0x5
+ 496 002e B6010000 		.4byte	.LASF2
+ 497 0032 02       		.uleb128 0x2
+ 498 0033 02       		.byte	0x2
+ 499 0034 07       		.byte	0x7
+ 500 0035 58000000 		.4byte	.LASF3
+ 501 0039 02       		.uleb128 0x2
+ 502 003a 04       		.byte	0x4
+ 503 003b 05       		.byte	0x5
+ 504 003c C6010000 		.4byte	.LASF4
+ 505 0040 02       		.uleb128 0x2
+ 506 0041 04       		.byte	0x4
+ 507 0042 07       		.byte	0x7
+ 508 0043 46000000 		.4byte	.LASF5
+ 509 0047 02       		.uleb128 0x2
+ARM GAS  C:\Users\Dana\AppData\Local\Temp\ccquDhOh.s 			page 10
+
+
+ 510 0048 08       		.byte	0x8
+ 511 0049 05       		.byte	0x5
+ 512 004a A3010000 		.4byte	.LASF6
+ 513 004e 02       		.uleb128 0x2
+ 514 004f 08       		.byte	0x8
+ 515 0050 07       		.byte	0x7
+ 516 0051 E4000000 		.4byte	.LASF7
+ 517 0055 03       		.uleb128 0x3
+ 518 0056 04       		.byte	0x4
+ 519 0057 05       		.byte	0x5
+ 520 0058 696E7400 		.ascii	"int\000"
+ 521 005c 02       		.uleb128 0x2
+ 522 005d 04       		.byte	0x4
+ 523 005e 07       		.byte	0x7
+ 524 005f 94000000 		.4byte	.LASF8
+ 525 0063 04       		.uleb128 0x4
+ 526 0064 C0010000 		.4byte	.LASF21
+ 527 0068 02       		.byte	0x2
+ 528 0069 B4       		.byte	0xb4
+ 529 006a 24000000 		.4byte	0x24
+ 530 006e 02       		.uleb128 0x2
+ 531 006f 04       		.byte	0x4
+ 532 0070 04       		.byte	0x4
+ 533 0071 32000000 		.4byte	.LASF9
+ 534 0075 02       		.uleb128 0x2
+ 535 0076 08       		.byte	0x8
+ 536 0077 04       		.byte	0x4
+ 537 0078 6B000000 		.4byte	.LASF10
+ 538 007c 02       		.uleb128 0x2
+ 539 007d 01       		.byte	0x1
+ 540 007e 08       		.byte	0x8
+ 541 007f B1010000 		.4byte	.LASF11
+ 542 0083 05       		.uleb128 0x5
+ 543 0084 63000000 		.4byte	0x63
+ 544 0088 94000000 		.4byte	0x94
+ 545 008c 06       		.uleb128 0x6
+ 546 008d 94000000 		.4byte	0x94
+ 547 0091 8F01     		.2byte	0x18f
+ 548 0093 00       		.byte	0
+ 549 0094 02       		.uleb128 0x2
+ 550 0095 04       		.byte	0x4
+ 551 0096 07       		.byte	0x7
+ 552 0097 9A010000 		.4byte	.LASF12
+ 553 009b 07       		.uleb128 0x7
+ 554 009c 82000000 		.4byte	.LASF13
+ 555 00a0 01       		.byte	0x1
+ 556 00a1 1C       		.byte	0x1c
+ 557 00a2 AC000000 		.4byte	0xac
+ 558 00a6 05       		.uleb128 0x5
+ 559 00a7 03       		.byte	0x3
+ 560 00a8 00000000 		.4byte	cy_meta_configecc
+ 561 00ac 08       		.uleb128 0x8
+ 562 00ad 83000000 		.4byte	0x83
+ 563 00b1 05       		.uleb128 0x5
+ 564 00b2 63000000 		.4byte	0x63
+ 565 00b6 C1000000 		.4byte	0xc1
+ 566 00ba 09       		.uleb128 0x9
+ARM GAS  C:\Users\Dana\AppData\Local\Temp\ccquDhOh.s 			page 11
+
+
+ 567 00bb 94000000 		.4byte	0x94
+ 568 00bf 03       		.byte	0x3
+ 569 00c0 00       		.byte	0
+ 570 00c1 07       		.uleb128 0x7
+ 571 00c2 72000000 		.4byte	.LASF14
+ 572 00c6 01       		.byte	0x1
+ 573 00c7 58       		.byte	0x58
+ 574 00c8 D2000000 		.4byte	0xd2
+ 575 00cc 05       		.uleb128 0x5
+ 576 00cd 03       		.byte	0x3
+ 577 00ce 00000000 		.4byte	cy_meta_custnvl
+ 578 00d2 08       		.uleb128 0x8
+ 579 00d3 B1000000 		.4byte	0xb1
+ 580 00d7 07       		.uleb128 0x7
+ 581 00d8 10010000 		.4byte	.LASF15
+ 582 00dc 01       		.byte	0x1
+ 583 00dd 63       		.byte	0x63
+ 584 00de E8000000 		.4byte	0xe8
+ 585 00e2 05       		.uleb128 0x5
+ 586 00e3 03       		.byte	0x3
+ 587 00e4 00000000 		.4byte	cy_meta_wonvl
+ 588 00e8 08       		.uleb128 0x8
+ 589 00e9 B1000000 		.4byte	0xb1
+ 590 00ed 05       		.uleb128 0x5
+ 591 00ee 63000000 		.4byte	0x63
+ 592 00f2 FD000000 		.4byte	0xfd
+ 593 00f6 09       		.uleb128 0x9
+ 594 00f7 94000000 		.4byte	0x94
+ 595 00fb FF       		.byte	0xff
+ 596 00fc 00       		.byte	0
+ 597 00fd 07       		.uleb128 0x7
+ 598 00fe FB000000 		.4byte	.LASF16
+ 599 0102 01       		.byte	0x1
+ 600 0103 6E       		.byte	0x6e
+ 601 0104 0E010000 		.4byte	0x10e
+ 602 0108 05       		.uleb128 0x5
+ 603 0109 03       		.byte	0x3
+ 604 010a 00000000 		.4byte	cy_meta_flashprotect
+ 605 010e 08       		.uleb128 0x8
+ 606 010f ED000000 		.4byte	0xed
+ 607 0113 05       		.uleb128 0x5
+ 608 0114 63000000 		.4byte	0x63
+ 609 0118 23010000 		.4byte	0x123
+ 610 011c 09       		.uleb128 0x9
+ 611 011d 94000000 		.4byte	0x94
+ 612 0121 0B       		.byte	0xb
+ 613 0122 00       		.byte	0
+ 614 0123 07       		.uleb128 0x7
+ 615 0124 26000000 		.4byte	.LASF17
+ 616 0128 01       		.byte	0x1
+ 617 0129 98       		.byte	0x98
+ 618 012a 34010000 		.4byte	0x134
+ 619 012e 05       		.uleb128 0x5
+ 620 012f 03       		.byte	0x3
+ 621 0130 00000000 		.4byte	cy_metadata
+ 622 0134 08       		.uleb128 0x8
+ 623 0135 13010000 		.4byte	0x113
+ARM GAS  C:\Users\Dana\AppData\Local\Temp\ccquDhOh.s 			page 12
+
+
+ 624 0139 00       		.byte	0
+ 625              		.section	.debug_abbrev,"",%progbits
+ 626              	.Ldebug_abbrev0:
+ 627 0000 01       		.uleb128 0x1
+ 628 0001 11       		.uleb128 0x11
+ 629 0002 01       		.byte	0x1
+ 630 0003 25       		.uleb128 0x25
+ 631 0004 0E       		.uleb128 0xe
+ 632 0005 13       		.uleb128 0x13
+ 633 0006 0B       		.uleb128 0xb
+ 634 0007 03       		.uleb128 0x3
+ 635 0008 0E       		.uleb128 0xe
+ 636 0009 1B       		.uleb128 0x1b
+ 637 000a 0E       		.uleb128 0xe
+ 638 000b 10       		.uleb128 0x10
+ 639 000c 17       		.uleb128 0x17
+ 640 000d 00       		.byte	0
+ 641 000e 00       		.byte	0
+ 642 000f 02       		.uleb128 0x2
+ 643 0010 24       		.uleb128 0x24
+ 644 0011 00       		.byte	0
+ 645 0012 0B       		.uleb128 0xb
+ 646 0013 0B       		.uleb128 0xb
+ 647 0014 3E       		.uleb128 0x3e
+ 648 0015 0B       		.uleb128 0xb
+ 649 0016 03       		.uleb128 0x3
+ 650 0017 0E       		.uleb128 0xe
+ 651 0018 00       		.byte	0
+ 652 0019 00       		.byte	0
+ 653 001a 03       		.uleb128 0x3
+ 654 001b 24       		.uleb128 0x24
+ 655 001c 00       		.byte	0
+ 656 001d 0B       		.uleb128 0xb
+ 657 001e 0B       		.uleb128 0xb
+ 658 001f 3E       		.uleb128 0x3e
+ 659 0020 0B       		.uleb128 0xb
+ 660 0021 03       		.uleb128 0x3
+ 661 0022 08       		.uleb128 0x8
+ 662 0023 00       		.byte	0
+ 663 0024 00       		.byte	0
+ 664 0025 04       		.uleb128 0x4
+ 665 0026 16       		.uleb128 0x16
+ 666 0027 00       		.byte	0
+ 667 0028 03       		.uleb128 0x3
+ 668 0029 0E       		.uleb128 0xe
+ 669 002a 3A       		.uleb128 0x3a
+ 670 002b 0B       		.uleb128 0xb
+ 671 002c 3B       		.uleb128 0x3b
+ 672 002d 0B       		.uleb128 0xb
+ 673 002e 49       		.uleb128 0x49
+ 674 002f 13       		.uleb128 0x13
+ 675 0030 00       		.byte	0
+ 676 0031 00       		.byte	0
+ 677 0032 05       		.uleb128 0x5
+ 678 0033 01       		.uleb128 0x1
+ 679 0034 01       		.byte	0x1
+ 680 0035 49       		.uleb128 0x49
+ARM GAS  C:\Users\Dana\AppData\Local\Temp\ccquDhOh.s 			page 13
+
+
+ 681 0036 13       		.uleb128 0x13
+ 682 0037 01       		.uleb128 0x1
+ 683 0038 13       		.uleb128 0x13
+ 684 0039 00       		.byte	0
+ 685 003a 00       		.byte	0
+ 686 003b 06       		.uleb128 0x6
+ 687 003c 21       		.uleb128 0x21
+ 688 003d 00       		.byte	0
+ 689 003e 49       		.uleb128 0x49
+ 690 003f 13       		.uleb128 0x13
+ 691 0040 2F       		.uleb128 0x2f
+ 692 0041 05       		.uleb128 0x5
+ 693 0042 00       		.byte	0
+ 694 0043 00       		.byte	0
+ 695 0044 07       		.uleb128 0x7
+ 696 0045 34       		.uleb128 0x34
+ 697 0046 00       		.byte	0
+ 698 0047 03       		.uleb128 0x3
+ 699 0048 0E       		.uleb128 0xe
+ 700 0049 3A       		.uleb128 0x3a
+ 701 004a 0B       		.uleb128 0xb
+ 702 004b 3B       		.uleb128 0x3b
+ 703 004c 0B       		.uleb128 0xb
+ 704 004d 49       		.uleb128 0x49
+ 705 004e 13       		.uleb128 0x13
+ 706 004f 3F       		.uleb128 0x3f
+ 707 0050 19       		.uleb128 0x19
+ 708 0051 02       		.uleb128 0x2
+ 709 0052 18       		.uleb128 0x18
+ 710 0053 00       		.byte	0
+ 711 0054 00       		.byte	0
+ 712 0055 08       		.uleb128 0x8
+ 713 0056 26       		.uleb128 0x26
+ 714 0057 00       		.byte	0
+ 715 0058 49       		.uleb128 0x49
+ 716 0059 13       		.uleb128 0x13
+ 717 005a 00       		.byte	0
+ 718 005b 00       		.byte	0
+ 719 005c 09       		.uleb128 0x9
+ 720 005d 21       		.uleb128 0x21
+ 721 005e 00       		.byte	0
+ 722 005f 49       		.uleb128 0x49
+ 723 0060 13       		.uleb128 0x13
+ 724 0061 2F       		.uleb128 0x2f
+ 725 0062 0B       		.uleb128 0xb
+ 726 0063 00       		.byte	0
+ 727 0064 00       		.byte	0
+ 728 0065 00       		.byte	0
+ 729              		.section	.debug_aranges,"",%progbits
+ 730 0000 14000000 		.4byte	0x14
+ 731 0004 0200     		.2byte	0x2
+ 732 0006 00000000 		.4byte	.Ldebug_info0
+ 733 000a 04       		.byte	0x4
+ 734 000b 00       		.byte	0
+ 735 000c 0000     		.2byte	0
+ 736 000e 0000     		.2byte	0
+ 737 0010 00000000 		.4byte	0
+ARM GAS  C:\Users\Dana\AppData\Local\Temp\ccquDhOh.s 			page 14
+
+
+ 738 0014 00000000 		.4byte	0
+ 739              		.section	.debug_line,"",%progbits
+ 740              	.Ldebug_line0:
+ 741 0000 4F000000 		.section	.debug_str,"MS",%progbits,1
+ 741      02004900 
+ 741      00000201 
+ 741      FB0E0D00 
+ 741      01010101 
+ 742              	.LASF19:
+ 743 0000 2E5C4765 		.ascii	".\\Generated_Source\\PSoC5\\cymetadata.c\000"
+ 743      6E657261 
+ 743      7465645F 
+ 743      536F7572 
+ 743      63655C50 
+ 744              	.LASF17:
+ 745 0026 63795F6D 		.ascii	"cy_metadata\000"
+ 745      65746164 
+ 745      61746100 
+ 746              	.LASF9:
+ 747 0032 666C6F61 		.ascii	"float\000"
+ 747      7400
+ 748              	.LASF1:
+ 749 0038 756E7369 		.ascii	"unsigned char\000"
+ 749      676E6564 
+ 749      20636861 
+ 749      7200
+ 750              	.LASF5:
+ 751 0046 6C6F6E67 		.ascii	"long unsigned int\000"
+ 751      20756E73 
+ 751      69676E65 
+ 751      6420696E 
+ 751      7400
+ 752              	.LASF3:
+ 753 0058 73686F72 		.ascii	"short unsigned int\000"
+ 753      7420756E 
+ 753      7369676E 
+ 753      65642069 
+ 753      6E7400
+ 754              	.LASF10:
+ 755 006b 646F7562 		.ascii	"double\000"
+ 755      6C6500
+ 756              	.LASF14:
+ 757 0072 63795F6D 		.ascii	"cy_meta_custnvl\000"
+ 757      6574615F 
+ 757      63757374 
+ 757      6E766C00 
+ 758              	.LASF13:
+ 759 0082 63795F6D 		.ascii	"cy_meta_configecc\000"
+ 759      6574615F 
+ 759      636F6E66 
+ 759      69676563 
+ 759      6300
+ 760              	.LASF8:
+ 761 0094 756E7369 		.ascii	"unsigned int\000"
+ 761      676E6564 
+ 761      20696E74 
+ 761      00
+ARM GAS  C:\Users\Dana\AppData\Local\Temp\ccquDhOh.s 			page 15
+
+
+ 762              	.LASF20:
+ 763 00a1 433A5C55 		.ascii	"C:\\Users\\Dana\\Documents\\PSoC Creator\\Design93\\"
+ 763      73657273 
+ 763      5C44616E 
+ 763      615C446F 
+ 763      63756D65 
+ 764 00cf 50756C73 		.ascii	"PulseGenerator.cydsn\000"
+ 764      6547656E 
+ 764      65726174 
+ 764      6F722E63 
+ 764      7964736E 
+ 765              	.LASF7:
+ 766 00e4 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 766      206C6F6E 
+ 766      6720756E 
+ 766      7369676E 
+ 766      65642069 
+ 767              	.LASF16:
+ 768 00fb 63795F6D 		.ascii	"cy_meta_flashprotect\000"
+ 768      6574615F 
+ 768      666C6173 
+ 768      6870726F 
+ 768      74656374 
+ 769              	.LASF15:
+ 770 0110 63795F6D 		.ascii	"cy_meta_wonvl\000"
+ 770      6574615F 
+ 770      776F6E76 
+ 770      6C00
+ 771              	.LASF18:
+ 772 011e 474E5520 		.ascii	"GNU C 4.8.4 20140526 (release) [ARM/embedded-4_8-br"
+ 772      4320342E 
+ 772      382E3420 
+ 772      32303134 
+ 772      30353236 
+ 773 0151 616E6368 		.ascii	"anch revision 211358] -mcpu=cortex-m3 -mthumb -g -O"
+ 773      20726576 
+ 773      6973696F 
+ 773      6E203231 
+ 773      31333538 
+ 774 0184 67202D66 		.ascii	"g -ffunction-sections\000"
+ 774      66756E63 
+ 774      74696F6E 
+ 774      2D736563 
+ 774      74696F6E 
+ 775              	.LASF12:
+ 776 019a 73697A65 		.ascii	"sizetype\000"
+ 776      74797065 
+ 776      00
+ 777              	.LASF6:
+ 778 01a3 6C6F6E67 		.ascii	"long long int\000"
+ 778      206C6F6E 
+ 778      6720696E 
+ 778      7400
+ 779              	.LASF11:
+ 780 01b1 63686172 		.ascii	"char\000"
+ 780      00
+ 781              	.LASF2:
+ARM GAS  C:\Users\Dana\AppData\Local\Temp\ccquDhOh.s 			page 16
+
+
+ 782 01b6 73686F72 		.ascii	"short int\000"
+ 782      7420696E 
+ 782      7400
+ 783              	.LASF21:
+ 784 01c0 75696E74 		.ascii	"uint8\000"
+ 784      3800
+ 785              	.LASF4:
+ 786 01c6 6C6F6E67 		.ascii	"long int\000"
+ 786      20696E74 
+ 786      00
+ 787              	.LASF0:
+ 788 01cf 7369676E 		.ascii	"signed char\000"
+ 788      65642063 
+ 788      68617200 
+ 789              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.8.4 20140526 (release) [ARM/embedded-4_8-br
